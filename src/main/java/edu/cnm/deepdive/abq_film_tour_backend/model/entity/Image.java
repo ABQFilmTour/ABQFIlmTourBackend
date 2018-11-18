@@ -88,5 +88,5 @@ public class Image {
     this.source = source;
   }
 
-  
+
 }
