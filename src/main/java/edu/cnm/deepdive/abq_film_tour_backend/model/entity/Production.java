@@ -24,19 +24,24 @@ public class Production {
       nullable = false, updatable = false)
   private UUID id;
 
+  @Column(nullable = false, updatable = false)
   //corresponds to i in omdbapi
   private String imdbId;
 
+  @Column(nullable = false, updatable = false)
   //corresponds to t in omdbapi
   private String title;
 
+  @Column(nullable = false, updatable = false)
   //corresponds to type in omdbapi
   //valid options - movie, series, episode
   private String type;
 
+  @Column(nullable = false, updatable = false)
   //corresponds to type in omdbapi
   private int year;
 
+  @Column(nullable = false, updatable = false)
   //corresponds to plot in omdbapi
   private String plot;
 
