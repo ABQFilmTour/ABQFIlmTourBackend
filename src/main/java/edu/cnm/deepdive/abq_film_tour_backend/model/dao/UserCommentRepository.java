@@ -9,15 +9,9 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserCommentRepository extends CrudRepository<UserComment, UUID> {
 
 
-//TODO add delete and insert
+  List<UserComment> findAllByOrderByFilmlocationAsc();
 
-  @Query(value = "SELECT * FROM UserComment "
-      + "WHERE film_location_id = :filmLocationId ORDER BY timestamp",
-  nativeQuery = true)
-  List<UserComment> selectByLocation(long filmLocationId);
-
-  @Query(value = "SELECT * FROM UserComment WHERE user_id = :userId ORDER BY timestamp",
-  nativeQuery = true)
-  List<UserComment> selectByUser(long userId);
+  //FIXME add user getters and setters to UserComment entity
+  List<UserComment> findAllByOrderByUserAsc();
 
 }

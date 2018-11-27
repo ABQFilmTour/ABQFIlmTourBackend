@@ -7,12 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ImageRepository extends CrudRepository<Image, UUID> {
-  @Query(value = "SELECT * FROM Image "
-      + "WHERE film_location_id = :filmLocationId ORDER BY timestamp",
-      nativeQuery = true)
-  List<Image> selectByLocation(long filmLocationId);
 
-  @Query(value = "SELECT * FROM Image WHERE image_id = :imageId ORDER BY timestamp",
-      nativeQuery = true)
-  List<Image> selectByUser(long imageId);
+  List<Image> findAllByOrderByFilmlocationAsc();
+
+//FIXME add user getters and setters to Image entity
+  List<Image> findAllByOrderByUserAsc();
 }
