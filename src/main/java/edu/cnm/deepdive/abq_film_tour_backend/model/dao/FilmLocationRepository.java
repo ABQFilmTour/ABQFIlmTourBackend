@@ -1,5 +1,9 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.dao;
 
-public interface FilmLocationRepository {
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
+import java.util.UUID;
+import org.springframework.data.repository.CrudRepository;
+
+public interface FilmLocationRepository extends CrudRepository<FilmLocation, UUID> {
 
 }
