@@ -6,8 +6,8 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.Id;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class Production {
 
   @Id
-  @GeneratedValue(generator = "uuid2")
+  @GeneratedValue(generator = "uui2d")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   @Column(name = "production_id", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)

@@ -58,7 +58,7 @@ public class Image {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "film_location_id", nullable = false, updatable = false)
   @OnDelete(action = OnDeleteAction.CASCADE)
-  private Source source;
+  private FilmLocation source;
 
   public static EntityLinks getEntityLinks() {
     return entityLinks;
@@ -72,7 +72,7 @@ public class Image {
     return created;
   }
 
-  public Source getSource() {
+  public FilmLocation getSource() {
     return source;
   }
 
@@ -84,7 +84,7 @@ public class Image {
     this.created = created;
   }
 
-  public void setSource(Source source) {
+  public void setSource(FilmLocation source) {
     this.source = source;
   }
 

@@ -11,7 +11,6 @@ public interface UserCommentRepository extends CrudRepository<UserComment, UUID>
 
 //TODO add delete and insert
 
-
   @Query(value = "SELECT * FROM UserComment "
       + "WHERE film_location_id = :filmLocationId ORDER BY timestamp",
   nativeQuery = true)

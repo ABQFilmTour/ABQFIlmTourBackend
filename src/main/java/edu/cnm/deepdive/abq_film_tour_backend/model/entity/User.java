@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -13,7 +16,11 @@ import org.springframework.stereotype.Component;
 @Entity
 public class User {
 
-  @Column (nullable = false, updatable = false)
+  @Id
+  @GeneratedValue(generator = "uui2d")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Column(name = "user_id", columnDefinition = "CHAR(16) FOR BIT DATA",
+      nullable = false, updatable = false)
   UUID id;
 
   //persistent Google Analytics user ID
