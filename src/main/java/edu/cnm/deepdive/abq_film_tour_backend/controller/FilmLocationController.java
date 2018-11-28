@@ -5,7 +5,6 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import java.util.List;
 import java.util.UUID;
-import javax.print.attribute.standard.Media;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.MediaType;
