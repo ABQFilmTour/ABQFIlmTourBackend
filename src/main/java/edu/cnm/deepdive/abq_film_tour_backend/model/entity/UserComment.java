@@ -89,7 +89,7 @@ public class UserComment {
       FilmLocation filmlocation) {
     this.filmlocation = filmlocation;
   }
-//TODO create Film Location
+
 //  public URI getHref() {
 //    return entityLinks.linkFor(UserComment.class, FilmLocation.getId())
 //        .slash(id)

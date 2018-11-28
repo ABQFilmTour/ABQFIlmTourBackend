@@ -1,12 +1,16 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.net.URI;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +18,18 @@ import org.springframework.stereotype.Component;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class FilmLocation {
+
+  private static EntityLinks entityLinks;
+
+  @PostConstruct
+  private void initEntityLinks() {
+    String ignore = entityLinks.toString();
+  }
+
+  @Autowired
+  private void setEntityLinks(EntityLinks entityLinks) {
+    FilmLocation.entityLinks = entityLinks;
+  }
 
   @Id
   @GeneratedValue(generator = "uui2d")
@@ -24,37 +40,24 @@ public class FilmLocation {
 
   //These fields exist in the city data but are critical to the entity and should be the minimum
   //requirements for submitted data.
-  @NonNull
-  @Column(nullable = false, updatable = false)
   private double longCoordinate;
-  @NonNull
-  @Column(nullable = false, updatable = false)
   private double latCoordinate;
 
   //Even if a location may not necessarily have a site name, it probably should be required if this
   //data will be displayed in a a table.
   @NonNull
-  @Column(nullable = false, updatable = false)
+  @Column(nullable = false)
   private String siteName;
 
   //Film and series listed on imdb are 7 digit ids prefixed with "tt".
   //can be accessed with www.omdbapi.com/
-  @NonNull
-  @Column(nullable = false, updatable = false)
   private String imdbid;
 
   //These fields exist in the city data and may be useful, perhaps could be mentioned in a comment,
   // but do not seem critically important.
-  @Column(nullable = true, updatable = false)
   private String address;
-  @Column(nullable = true, updatable = false)
   private long ShootDate;
-  @Column(nullable = true, updatable = false)
   private String originalDetails;
-
-  public FilmLocation() {
-    // empty constructor
-  }
 
   public UUID getId() {
     return id;
@@ -118,6 +121,10 @@ public class FilmLocation {
 
   public void setLatCoordinate(double latCoordinate) {
     this.latCoordinate = latCoordinate;
+  }
+
+  public URI getHref() {
+    return entityLinks.linkForSingleResource(FilmLocation.class, id).toUri();
   }
 
 }

@@ -10,6 +10,6 @@ public interface ImageRepository extends CrudRepository<Image, UUID> {
 
   List<Image> findAllByOrderByFilmlocationAsc();
 
-//FIXME add user getters and setters to Image entity
-  List<Image> findAllByOrderByUserAsc();
+////FIXME add user getters and setters to Image entity
+//  List<Image> findAllByOrderByUserAsc();
 }

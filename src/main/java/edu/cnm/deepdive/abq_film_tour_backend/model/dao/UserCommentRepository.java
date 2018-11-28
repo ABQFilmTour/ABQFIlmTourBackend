@@ -12,6 +12,6 @@ public interface UserCommentRepository extends CrudRepository<UserComment, UUID>
   List<UserComment> findAllByOrderByFilmlocationAsc();
 
   //FIXME add user getters and setters to UserComment entity
-  List<UserComment> findAllByOrderByUserAsc();
+//  List<UserComment> findAllByOrderByUserAsc();
 
 }
