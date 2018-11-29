@@ -40,8 +40,8 @@ public class UserCommentController {
     return ResponseEntity.created(userComment.getHref()).body(userComment);
   }
 
-  @GetMapping(value = "{imadeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public UserComment get(@PathVariable("userCommentId") UUID userCommentId){
+  @GetMapping(value = "{user_comments}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public UserComment get(@PathVariable("user_comments") UUID userCommentId){
     return userCommentRepository.findById(userCommentId).get();
   }
 
