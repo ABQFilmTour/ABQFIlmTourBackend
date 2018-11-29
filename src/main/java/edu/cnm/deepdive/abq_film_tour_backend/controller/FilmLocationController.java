@@ -128,7 +128,23 @@ public class FilmLocationController {
 
   @PatchMapping
   public void patch(@RequestBody FilmLocation filmLocation) {
+    // This will overwrite everything,
+    // if just changing one field all other current fields must be included
     filmLocationRepository.save(filmLocation);
+  }
+
+  @PatchMapping(value="{filmLocationId}/user_comments")
+  public void patch(@PathVariable UUID filmLocationId, @RequestBody UserComment userComment) {
+    // This will overwrite everything,
+    // if just changing one field all other current fields must be included
+    userCommentRepository.save(userComment);
+  }
+
+  @PatchMapping(value="{filmLocationId}/images/")
+  public void patch(@PathVariable UUID filmLocationId, @RequestBody Image image) {
+    // This will overwrite everything,
+    // if just changing one field all other current fields must be included
+    imageRepository.save(image);
   }
 
   @Transactional
