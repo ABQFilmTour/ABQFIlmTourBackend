@@ -56,7 +56,7 @@ public class Image {
 
 
   @NonNull
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "film_location_id", nullable = false, updatable = false)
   @OnDelete(action = OnDeleteAction.CASCADE)
   private FilmLocation filmLocation;

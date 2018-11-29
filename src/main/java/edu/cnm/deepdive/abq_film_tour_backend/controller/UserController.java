@@ -4,14 +4,9 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 import javax.transaction.Transactional;
-import org.hibernate.annotations.OnDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -35,8 +30,10 @@ public class UserController {
   private UserCommentRepository userCommentRepository;
 
   @Autowired
-  public UserController(UserRepository userRepository){
+  public UserController(UserRepository userRepository,
+      UserCommentRepository userCommentRepository){
     this.userRepository=userRepository;
+    this.userCommentRepository = userCommentRepository;
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,8 +60,7 @@ public class UserController {
     for (UserComment comment : userComments) {
       userCommentRepository.delete(comment);
     }
-    userCommentRepository.saveAll(userComments);
-    userRepository.deleteById(userId);
+    userRepository.delete(user);
   }
 
   }

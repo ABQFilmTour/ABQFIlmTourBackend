@@ -10,6 +10,7 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import java.util.List;
 import java.util.UUID;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,18 @@ public class FilmLocationController {
         (filmLocationRepository.findById(filmLocationId).get());
   }
 
+  @GetMapping(value = "{filmLocationId}/images/{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Image getImage(@PathVariable UUID filmLocationId, @PathVariable UUID imageId){
+    Image image = imageRepository.findById(imageId).get();
+    return image;
+  }
+
+  @DeleteMapping(value = "{filmLocationId}/images/{imageId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteImage(@PathVariable UUID filmLocationId, @PathVariable("imageId") UUID imageId){
+    imageRepository.deleteById(imageId);
+  }
+
   @PostMapping(value = "{filmLocationId}/user_comments", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserComment> post(@RequestBody UserComment userComment,
@@ -85,14 +98,14 @@ public class FilmLocationController {
   }
 
   @GetMapping(value = "{filmLocationId}/user_comments/{userCommentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public UserComment get(@PathVariable UUID filmLocationId, @PathVariable UUID userCommentId){
+  public UserComment getUserComment(@PathVariable UUID filmLocationId, @PathVariable UUID userCommentId){
     UserComment userComment = userCommentRepository.findById(userCommentId).get();
     return userComment;
   }
 
   @DeleteMapping(value = "{filmLocationId}/user_comments/{userCommentId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable UUID filmLocationId, @PathVariable("userCommentId") UUID userCommentId){
+  public void deleteUserComment(@PathVariable UUID filmLocationId, @PathVariable("userCommentId") UUID userCommentId){
     userCommentRepository.deleteById(userCommentId);
   }
 
@@ -113,15 +126,25 @@ public class FilmLocationController {
     return filmLocationRepository.findById(filmLocationId).get();
   }
 
-  @DeleteMapping(value = "{filmLocationId}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable("filmLocationId") UUID filmLocationId) {
-    filmLocationRepository.deleteById(filmLocationId);
-  }
-
   @PatchMapping
   public void patch(@RequestBody FilmLocation filmLocation) {
     filmLocationRepository.save(filmLocation);
   }
 
+  @Transactional
+  @DeleteMapping(value = "{filmLocationId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable("filmLocationId") UUID filmLocationId){
+    FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
+    List<UserComment> userComments = userCommentRepository.
+        findAllByFilmLocationOrderByCreatedDesc(filmLocation);
+    List<Image> images = imageRepository.findAllByFilmLocationOrderByCreatedDesc(filmLocation);
+    for (UserComment comment : userComments) {
+      userCommentRepository.delete(comment);
+    }
+    for (Image image : images) {
+      imageRepository.delete(image);
+    }
+    filmLocationRepository.delete(filmLocation);
+  }
 }
