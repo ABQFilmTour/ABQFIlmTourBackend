@@ -2,7 +2,6 @@ package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
@@ -63,7 +62,7 @@ public class UserComment {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "film_location_id", nullable = false, updatable = false)
   @OnDelete(action = OnDeleteAction.CASCADE)
-  private FilmLocation filmlocation;
+  private FilmLocation filmLocation;
 
   public UUID getId() {
     return id;
@@ -81,13 +80,13 @@ public class UserComment {
     this.text = text;
   }
 
-  public FilmLocation getFilmlocation() {
-    return filmlocation;
+  public FilmLocation getFilmLocation() {
+    return filmLocation;
   }
 
-  public void setFilmlocation(
+  public void setFilmLocation(
       FilmLocation filmlocation) {
-    this.filmlocation = filmlocation;
+    this.filmLocation = filmlocation;
   }
 
   public URI getHref() {

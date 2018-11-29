@@ -33,6 +33,7 @@ private ImageRepository imageRepository;
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Image> list(){return imageRepository.findAllByOrderByIdAsc();}
 
+  //FIXME Will not post.
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Image> post(@RequestBody Image image){
