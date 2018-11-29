@@ -1,9 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.User;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@ExposesResourceFor(User.class)
+@ExposesResourceFor(GoogleUser.class)
 @RequestMapping("/users")
 public class UserController {
 
@@ -33,17 +31,17 @@ public class UserController {
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<User> list(){return userRepository.findAllByOrderByFilmlocationAsc();}
+  public List<GoogleUser> list(){return userRepository.findAllByOrderByIdAsc();}
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<User> post(@RequestBody User user){
-    userRepository.save(user);
-    return ResponseEntity.created(user.getHref()).body(user);
+  public ResponseEntity<GoogleUser> post(@RequestBody GoogleUser googleUser){
+    userRepository.save(googleUser);
+    return ResponseEntity.created(googleUser.getHref()).body(googleUser);
   }
 
   @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public User get(@PathVariable("userId") UUID userId){
+  public GoogleUser get(@PathVariable("userId") UUID userId){
     return userRepository.findById(userId).get();
   }
 

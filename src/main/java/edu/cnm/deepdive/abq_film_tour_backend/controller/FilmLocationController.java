@@ -32,7 +32,7 @@ public class FilmLocationController {
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<FilmLocation> list() { return filmLocationRepository.findAllByOrderBySiteNameAsc();}
+  public List<FilmLocation> list() { return filmLocationRepository.findAllByOrderByIdAsc();}
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,5 +56,6 @@ public class FilmLocationController {
   public void patch(@PathVariable("filmLocationId") UUID filmLocationId) {
 //TODO patch
  }
+ //comment hello
 
 }

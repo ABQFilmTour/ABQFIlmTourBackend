@@ -23,8 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ExposesResourceFor(Image.class)
 @RequestMapping("/images")
 public class ImageController {
-
-  private ImageRepository imageRepository;
+private ImageRepository imageRepository;
 
   @Autowired
   public ImageController(ImageRepository imageRepository){
@@ -32,7 +31,7 @@ public class ImageController {
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Image> list(){return imageRepository.findAllByOrderByFilmlocationAsc();}
+  public List<Image> list(){return imageRepository.findAllByOrderByIdAsc();}
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)

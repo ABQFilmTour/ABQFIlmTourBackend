@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 import java.net.URI;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -15,10 +14,9 @@ import org.springframework.hateoas.EntityLinks;
 import org.springframework.stereotype.Component;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonView
 @Component
 @Entity
-public class User {
+public class GoogleUser {
 
   private static EntityLinks entityLinks;
 
@@ -29,7 +27,7 @@ public class User {
 
   @Autowired
   private void setEntityLinks(EntityLinks entityLinks) {
-    User.entityLinks = entityLinks;
+    GoogleUser.entityLinks = entityLinks;
   }
 
   @Id
@@ -40,14 +38,11 @@ public class User {
   UUID id;
 
   //persistent Google Analytics user ID
-  @Column (nullable = false, updatable = false)
   String googleId;
 
   //Google account name - maybe brea
-  @Column (nullable = false, updatable = false)
   String googleName;
 
-  @Column (nullable = false, updatable = false)
   String gmailAddress;
 
   public static EntityLinks getEntityLinks() {
@@ -86,5 +81,5 @@ public class User {
     this.gmailAddress = gmailAddress;
   }
 
-  public URI getHref(){return entityLinks.linkForSingleResource(User.class, id).toUri();}
+  public URI getHref(){return entityLinks.linkForSingleResource(GoogleUser.class, id).toUri();}
 }

@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface FilmLocationRepository extends CrudRepository<FilmLocation, UUID> {
 
-  List<FilmLocation> findAllByOrderBySiteNameAsc();
+  List<FilmLocation> findAllByOrderByIdAsc();
 
 }

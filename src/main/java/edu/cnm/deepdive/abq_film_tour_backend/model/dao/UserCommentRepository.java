@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserCommentRepository extends CrudRepository<UserComment, UUID> {
 
 
-  List<UserComment> findAllByOrderByFilmlocationAsc();
+  List<UserComment> findAllByOrderByIdAsc();
 
   //FIXME add user getters and setters to UserComment entity
 //  List<UserComment> findAllByOrderByUserAsc();

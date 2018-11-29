@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ImageRepository extends CrudRepository<Image, UUID> {
 
-  List<Image> findAllByOrderByFilmlocationAsc();
+  List<Image> findAllByOrderByIdAsc();
 
 ////FIXME add user getters and setters to Image entity
 //  List<Image> findAllByOrderByUserAsc();

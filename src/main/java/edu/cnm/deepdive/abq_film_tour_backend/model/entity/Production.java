@@ -1,21 +1,36 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
+import java.net.URI;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.lang.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityLinks;
 import org.springframework.stereotype.Component;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
-@JsonView
 @Component
 @Entity
 public class Production {
+
+  private static EntityLinks entityLinks;
+
+  @PostConstruct
+  private void initEntityLinks() {
+    //Sends a request to the entityLinks to ensure it gets set
+    String ignore = entityLinks.toString();
+  }
+
+  @Autowired
+  private void setEntityLinks(EntityLinks entityLinks) {
+    //Constructs entitylinks after init request is null
+    Production.entityLinks = entityLinks;
+  }
 
   @Id
   @GeneratedValue(generator = "uui2d")
@@ -24,24 +39,19 @@ public class Production {
       nullable = false, updatable = false)
   private UUID id;
 
-  @Column(nullable = false, updatable = false)
   //corresponds to i in omdbapi
   private String imdbId;
 
-  @Column(nullable = false, updatable = false)
   //corresponds to t in omdbapi
   private String title;
 
-  @Column(nullable = false, updatable = false)
   //corresponds to type in omdbapi
   //valid options - movie, series, episode
   private String type;
 
-  @Column(nullable = false, updatable = false)
   //corresponds to type in omdbapi
-  private int year;
+  private int releaseYear;
 
-  @Column(nullable = false, updatable = false)
   //corresponds to plot in omdbapi
   private String plot;
 
@@ -77,12 +87,12 @@ public class Production {
     this.type = type;
   }
 
-  public int getYear() {
-    return year;
+  public int getReleaseYear() {
+    return releaseYear;
   }
 
-  public void setYear(int year) {
-    this.year = year;
+  public void setReleaseYear(int releaseYear) {
+    this.releaseYear = releaseYear;
   }
 
   public String getPlot() {
@@ -91,6 +101,10 @@ public class Production {
 
   public void setPlot(String plot) {
     this.plot = plot;
+  }
+
+  public URI getHref() {
+    return entityLinks.linkForSingleResource(FilmLocation.class, id).toUri();
   }
 
 }

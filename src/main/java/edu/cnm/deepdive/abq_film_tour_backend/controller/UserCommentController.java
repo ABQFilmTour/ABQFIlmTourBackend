@@ -31,7 +31,7 @@ public class UserCommentController {
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<UserComment> list(){return userCommentRepository.findAllByOrderByFilmlocationAsc();}
+  public List<UserComment> list(){return userCommentRepository.findAllByOrderByIdAsc();}
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
