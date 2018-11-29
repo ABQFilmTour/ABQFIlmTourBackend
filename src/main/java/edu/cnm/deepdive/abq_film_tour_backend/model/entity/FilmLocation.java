@@ -23,11 +23,13 @@ public class FilmLocation {
 
   @PostConstruct
   private void initEntityLinks() {
+    //Sends a request to the entityLinks to ensure it gets set
     String ignore = entityLinks.toString();
   }
 
   @Autowired
   private void setEntityLinks(EntityLinks entityLinks) {
+    //Constructs entitylinks after init request is null
     FilmLocation.entityLinks = entityLinks;
   }
 
