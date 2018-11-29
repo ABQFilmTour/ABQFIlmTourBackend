@@ -52,6 +52,7 @@ public class FilmLocationController {
       @PathVariable UUID filmLocationId) {
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
     GoogleUser user = userRepository.findById(image.getUserId()).get();
+    image.setUserId(image.getUserId());
     image.setUser(user);
     image.setFilmLocation(filmLocation);
     imageRepository.save(image);
@@ -70,6 +71,7 @@ public class FilmLocationController {
       @PathVariable UUID filmLocationId) {
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
     GoogleUser user = userRepository.findById(userComment.getUserId()).get();
+    userComment.setUserId(userComment.getUserId());
     userComment.setUser(user);
     userComment.setFilmLocation(filmLocation);
     userCommentRepository.save(userComment);
@@ -80,6 +82,18 @@ public class FilmLocationController {
   public List<UserComment> getUserComments(@PathVariable UUID filmLocationId) {
     return userCommentRepository.findAllByFilmLocationOrderByCreatedDesc
         (filmLocationRepository.findById(filmLocationId).get());
+  }
+
+  @GetMapping(value = "{filmLocationId}/user_comments/{userCommentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public UserComment get(@PathVariable UUID filmLocationId, @PathVariable UUID userCommentId){
+    UserComment userComment = userCommentRepository.findById(userCommentId).get();
+    return userComment;
+  }
+
+  @DeleteMapping(value = "{filmLocationId}/user_comments/{userCommentId}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable UUID filmLocationId, @PathVariable("userCommentId") UUID userCommentId){
+    userCommentRepository.deleteById(userCommentId);
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

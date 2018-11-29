@@ -63,7 +63,7 @@ public class UserComment {
   private Date created;
 
   @NonNull
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "film_location_id", nullable = false, updatable = false)
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private FilmLocation filmLocation;
@@ -79,9 +79,8 @@ public class UserComment {
   @Transient
   private UUID userId;
 
-  @NonNull
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  @JoinColumn(name = "user_id", updatable = false)
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
 

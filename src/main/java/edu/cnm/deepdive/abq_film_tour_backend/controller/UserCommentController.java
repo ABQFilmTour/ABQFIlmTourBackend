@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +32,8 @@ public class UserCommentController {
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<UserComment> list(){return userCommentRepository.findAllByOrderByIdAsc();}
+  public List<UserComment> list(){
+    return userCommentRepository.findAllByOrderByIdAsc();}
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,7 +44,8 @@ public class UserCommentController {
 
   @GetMapping(value = "{user_comments}", produces = MediaType.APPLICATION_JSON_VALUE)
   public UserComment get(@PathVariable("user_comments") UUID userCommentId){
-    return userCommentRepository.findById(userCommentId).get();
+    UserComment userComment = userCommentRepository.findById(userCommentId).get();
+    return userComment;
   }
 
   @DeleteMapping(value = "{userCommentId}")
@@ -50,6 +53,5 @@ public class UserCommentController {
   public void delete(@PathVariable("userCommentId") UUID userCommentId){
     userCommentRepository.deleteById(userCommentId);
   }
-
 
 }

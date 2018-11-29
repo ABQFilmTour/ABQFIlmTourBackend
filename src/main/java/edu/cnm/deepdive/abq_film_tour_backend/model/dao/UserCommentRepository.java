@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.dao;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +15,6 @@ public interface UserCommentRepository extends CrudRepository<UserComment, UUID>
   
   List<UserComment> findAllByFilmLocationOrderByCreatedDesc(FilmLocation filmLocation);
 
-  //FIXME add user getters and setters to UserComment entity
-//  List<UserComment> findAllByOrderByUserAsc();
+  List<UserComment> findAllByUser(GoogleUser user);
 
 }

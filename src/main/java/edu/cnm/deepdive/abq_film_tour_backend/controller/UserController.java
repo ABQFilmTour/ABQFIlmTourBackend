@@ -1,9 +1,17 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
+import javax.transaction.Transactional;
+import org.hibernate.annotations.OnDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   private UserRepository userRepository;
+  private UserCommentRepository userCommentRepository;
 
   @Autowired
   public UserController(UserRepository userRepository){
@@ -45,10 +54,17 @@ public class UserController {
     return userRepository.findById(userId).get();
   }
 
+  @Transactional
   @DeleteMapping(value = "{userId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("userId") UUID userId){
+    GoogleUser user = userRepository.findById(userId).get();
+    List<UserComment> userComments = userCommentRepository.findAllByUser(user);
+    for (UserComment comment : userComments) {
+      userCommentRepository.delete(comment);
+    }
+    userCommentRepository.saveAll(userComments);
     userRepository.deleteById(userId);
   }
 
-}
+  }
