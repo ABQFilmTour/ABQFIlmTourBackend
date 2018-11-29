@@ -15,7 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -61,8 +63,33 @@ public class UserComment {
   @NonNull
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "film_location_id", nullable = false, updatable = false)
-  @OnDelete(action = OnDeleteAction.CASCADE)
+  @OnDelete(action = OnDeleteAction.NO_ACTION)
   private FilmLocation filmLocation;
+
+  public UUID getUserId() {
+    return userId;
+  }
+
+  public void setUserId(UUID userId) {
+    this.userId = userId;
+  }
+
+  @Transient
+  private UUID userId;
+
+  @NonNull
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  @OnDelete(action = OnDeleteAction.NO_ACTION)
+  private GoogleUser user;
+
+  public GoogleUser getUser() {
+    return user;
+  }
+
+  public void setUser(GoogleUser user) {
+    this.user = user;
+  }
 
   public UUID getId() {
     return id;

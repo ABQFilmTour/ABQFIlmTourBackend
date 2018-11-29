@@ -2,7 +2,9 @@ package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import java.util.List;
 import java.util.UUID;
@@ -28,12 +30,15 @@ public class FilmLocationController {
 
   private FilmLocationRepository filmLocationRepository;
   private UserCommentRepository userCommentRepository;
+  private UserRepository userRepository;
 
   @Autowired
   public FilmLocationController(FilmLocationRepository filmLocationRepository,
-      UserCommentRepository userCommentRepository) {
+      UserCommentRepository userCommentRepository,
+      UserRepository userRepository) {
     this.filmLocationRepository = filmLocationRepository;
     this.userCommentRepository = userCommentRepository;
+    this.userRepository = userRepository;
   }
 
   @PostMapping(value = "{filmLocationId}/user_comments", consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -41,6 +46,8 @@ public class FilmLocationController {
   public ResponseEntity<UserComment> post(@RequestBody UserComment userComment,
       @PathVariable UUID filmLocationId) {
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
+    GoogleUser user = userRepository.findById(userComment.getUserId()).get();
+    userComment.setUser(user);
     userComment.setFilmLocation(filmLocation);
     userCommentRepository.save(userComment);
     return ResponseEntity.created(userComment.getHref()).body(userComment);
