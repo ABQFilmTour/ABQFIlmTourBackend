@@ -1,10 +1,12 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ImageRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import java.util.List;
 import java.util.UUID;
@@ -31,14 +33,35 @@ public class FilmLocationController {
   private FilmLocationRepository filmLocationRepository;
   private UserCommentRepository userCommentRepository;
   private UserRepository userRepository;
+  private ImageRepository imageRepository;
 
   @Autowired
   public FilmLocationController(FilmLocationRepository filmLocationRepository,
       UserCommentRepository userCommentRepository,
-      UserRepository userRepository) {
+      UserRepository userRepository,
+      ImageRepository imageRepository) {
     this.filmLocationRepository = filmLocationRepository;
     this.userCommentRepository = userCommentRepository;
     this.userRepository = userRepository;
+    this.imageRepository = imageRepository;
+  }
+
+  @PostMapping(value = "{filmLocationId}/images", consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Image> post(@RequestBody Image image,
+      @PathVariable UUID filmLocationId) {
+    FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
+    GoogleUser user = userRepository.findById(image.getUserId()).get();
+    image.setUser(user);
+    image.setFilmLocation(filmLocation);
+    imageRepository.save(image);
+    return ResponseEntity.created(image.getHref()).body(image);
+  }
+
+  @GetMapping(value = "{filmLocationId}/images", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Image> getImages(@PathVariable UUID filmLocationId) {
+    return imageRepository.findAllByFilmLocationOrderByCreatedDesc
+        (filmLocationRepository.findById(filmLocationId).get());
   }
 
   @PostMapping(value = "{filmLocationId}/user_comments", consumes = MediaType.APPLICATION_JSON_VALUE,

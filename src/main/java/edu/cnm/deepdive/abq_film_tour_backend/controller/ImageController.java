@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +32,6 @@ private ImageRepository imageRepository;
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Image> list(){return imageRepository.findAllByOrderByIdAsc();}
 
-  //FIXME Will not post.
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Image> post(@RequestBody Image image){
@@ -41,7 +39,7 @@ private ImageRepository imageRepository;
     return ResponseEntity.created(image.getHref()).body(image);
   }
 
-  @GetMapping(value = "{imadeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Image get(@PathVariable("imageId") UUID imageId){
     return imageRepository.findById(imageId).get();
   }

@@ -14,11 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.Source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
@@ -59,7 +59,42 @@ public class Image {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "film_location_id", nullable = false, updatable = false)
   @OnDelete(action = OnDeleteAction.CASCADE)
-  private FilmLocation filmlocation;
+  private FilmLocation filmLocation;
+
+  public UUID getUserId() {
+    return userId;
+  }
+
+  public void setUserId(UUID userId) {
+    this.userId = userId;
+  }
+
+  public GoogleUser getUser() {
+    return user;
+  }
+
+  public void setUser(GoogleUser user) {
+    this.user = user;
+  }
+
+  @Transient
+  private UUID userId;
+
+  @NonNull
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id", nullable = false, updatable = false)
+  @OnDelete(action = OnDeleteAction.NO_ACTION)
+  private GoogleUser user;
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  private String description;
 
   public Image(){
     //empty constructor
@@ -77,8 +112,8 @@ public class Image {
     return created;
   }
 
-  public FilmLocation getFilmlocation() {
-    return filmlocation;
+  public FilmLocation getFilmLocation() {
+    return filmLocation;
   }
 
   public void setId(UUID id) {
@@ -89,9 +124,9 @@ public class Image {
     this.created = created;
   }
 
-  public void setFilmlocation(
-      FilmLocation filmlocation) {
-    this.filmlocation = filmlocation;
+  public void setFilmLocation(
+      FilmLocation filmLocation) {
+    this.filmLocation = filmLocation;
   }
 
   public URI getHref(){return entityLinks.linkForSingleResource(Image.class, id).toUri();}
