@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -60,6 +61,10 @@ public class Image {
   @OnDelete(action = OnDeleteAction.CASCADE)
   private FilmLocation filmlocation;
 
+  public Image(){
+    //empty constructor
+  }
+
   public static EntityLinks getEntityLinks() {
     return entityLinks;
   }
@@ -88,6 +93,8 @@ public class Image {
       FilmLocation filmlocation) {
     this.filmlocation = filmlocation;
   }
+
+  public URI getHref(){return entityLinks.linkForSingleResource(Image.class, id).toUri();}
 
 
 }
