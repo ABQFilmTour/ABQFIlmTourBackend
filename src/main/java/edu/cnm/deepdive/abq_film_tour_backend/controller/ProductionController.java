@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,6 +54,13 @@ public class ProductionController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("productionId") UUID productionId) {
     productionRepository.deleteById(productionId);
+  }
+
+  @PatchMapping
+  public void patch(@RequestBody Production production) {
+    // This will overwrite everything,
+    // if just changing one field all other current fields must be included
+    productionRepository.save(production);
   }
 
 }
