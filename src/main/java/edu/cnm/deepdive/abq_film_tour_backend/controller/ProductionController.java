@@ -1,6 +1,8 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
 import java.util.List;
 import java.util.UUID;
@@ -24,10 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductionController {
 
   ProductionRepository productionRepository;
-  
+  FilmLocationRepository filmLocationRepository;
+
   @Autowired
-  public ProductionController(ProductionRepository productionRepository) {
+  public ProductionController(ProductionRepository productionRepository, FilmLocationRepository filmLocationRepository) {
     this.productionRepository = productionRepository;
+    this.filmLocationRepository = filmLocationRepository;
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

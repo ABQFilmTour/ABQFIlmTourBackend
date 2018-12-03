@@ -7,12 +7,20 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
@@ -71,12 +79,19 @@ public class FilmLocation {
 
   //Film and series listed on imdb are 7 digit ids prefixed with "tt".
   //can be accessed with www.omdbapi.com/
-  private String imdbid;
+  private String imdbId;
+
+  @Transient
+  private String productionId;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @OnDelete(action = OnDeleteAction.NO_ACTION)
+  private Production production;
 
   //These fields exist in the city data and may be useful, perhaps could be mentioned in a comment,
   // but do not seem critically important.
   private String address;
-  private long ShootDate;
+  private long shootDate;
   private String originalDetails;
 
   public UUID getId() {
@@ -95,12 +110,12 @@ public class FilmLocation {
     this.siteName = siteName;
   }
 
-  public String getImdbid() {
-    return imdbid;
+  public String getImdbId() {
+    return imdbId;
   }
 
-  public void setImdbid(String imdbid) {
-    this.imdbid = imdbid;
+  public void setImdbId(String imdbId) {
+    this.imdbId = imdbId;
   }
 
   public String getAddress() {
@@ -112,11 +127,11 @@ public class FilmLocation {
   }
 
   public long getShootDate() {
-    return ShootDate;
+    return shootDate;
   }
 
   public void setShootDate(long shootDate) {
-    ShootDate = shootDate;
+    this.shootDate = shootDate;
   }
 
   public String getOriginalDetails() {
@@ -141,6 +156,22 @@ public class FilmLocation {
 
   public void setLatCoordinate(double latCoordinate) {
     this.latCoordinate = latCoordinate;
+  }
+
+  public Production getProduction() {
+    return production;
+  }
+
+  public void setProduction(Production production) {
+    this.production = production;
+  }
+
+  public String getProductionId() {
+    return productionId;
+  }
+
+  public void setProductionId(String productionId) {
+    this.productionId = productionId;
   }
 
   public URI getHref() {

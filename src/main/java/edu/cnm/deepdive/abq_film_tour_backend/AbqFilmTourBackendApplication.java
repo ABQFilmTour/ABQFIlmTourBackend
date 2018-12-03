@@ -2,6 +2,7 @@ package edu.cnm.deepdive.abq_film_tour_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.hateoas.config.EnableEntityLinks;
 
 @EnableEntityLinks
@@ -9,6 +10,7 @@ import org.springframework.hateoas.config.EnableEntityLinks;
 public class AbqFilmTourBackendApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(AbqFilmTourBackendApplication.class, args);
+    ConfigurableApplicationContext context = SpringApplication.run(AbqFilmTourBackendApplication.class, args);
+    context.getBean(Test.class).postSomething();
   }
 }

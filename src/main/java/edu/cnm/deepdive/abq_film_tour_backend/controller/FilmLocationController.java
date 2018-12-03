@@ -2,11 +2,13 @@ package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ImageRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import java.util.List;
 import java.util.UUID;
@@ -35,16 +37,19 @@ public class FilmLocationController {
   private UserCommentRepository userCommentRepository;
   private UserRepository userRepository;
   private ImageRepository imageRepository;
+  private ProductionRepository productionRepository;
 
   @Autowired
   public FilmLocationController(FilmLocationRepository filmLocationRepository,
       UserCommentRepository userCommentRepository,
       UserRepository userRepository,
-      ImageRepository imageRepository) {
+      ImageRepository imageRepository,
+      ProductionRepository productionRepository) {
     this.filmLocationRepository = filmLocationRepository;
     this.userCommentRepository = userCommentRepository;
     this.userRepository = userRepository;
     this.imageRepository = imageRepository;
+    this.productionRepository = productionRepository;
   }
 
   @PostMapping(value = "{filmLocationId}/images", consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -117,6 +122,10 @@ public class FilmLocationController {
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<FilmLocation> post(@RequestBody FilmLocation filmLocation) {
+    if (filmLocation.getProductionId() != null) {
+      filmLocation.setProduction(
+          productionRepository.findById(UUID.fromString(filmLocation.getProductionId())).get());
+    }
     filmLocationRepository.save(filmLocation);
     return ResponseEntity.created(filmLocation.getHref()).body(filmLocation);
   }

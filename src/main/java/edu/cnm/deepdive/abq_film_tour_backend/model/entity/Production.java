@@ -6,11 +6,17 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
