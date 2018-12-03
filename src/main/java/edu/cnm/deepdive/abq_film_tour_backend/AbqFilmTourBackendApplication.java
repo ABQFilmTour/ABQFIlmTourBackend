@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.abq_film_tour_backend;
 
+import java.io.IOException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,6 +12,10 @@ public class AbqFilmTourBackendApplication {
 
   public static void main(String[] args) {
     ConfigurableApplicationContext context = SpringApplication.run(AbqFilmTourBackendApplication.class, args);
-    context.getBean(Test.class).postSomething();
+    try {
+      context.getBean(Test.class).postSomething();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
