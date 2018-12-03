@@ -13,7 +13,8 @@ public class AbqFilmTourBackendApplication {
   public static void main(String[] args) {
     ConfigurableApplicationContext context = SpringApplication.run(AbqFilmTourBackendApplication.class, args);
     try {
-      context.getBean(Test.class).postSomething();
+      context.getBean(Parser.class).postSomething();
+      context.getBean(Parser.class).populateDatabase();
     } catch (IOException e) {
       e.printStackTrace();
     }
