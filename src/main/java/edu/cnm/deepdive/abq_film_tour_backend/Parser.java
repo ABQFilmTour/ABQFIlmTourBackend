@@ -68,7 +68,6 @@ public class Parser {
 
   public void populateDatabase() throws IOException {
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-    //TODO Only run this if database has not already been populated
     int failures = 0;
     int successes = 0;
     GoogleUser cityUser = new GoogleUser();
@@ -80,9 +79,10 @@ public class Parser {
     CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withQuote(null));
     for (CSVRecord record : csvParser.getRecords()) {
       System.out.println(record);
-      if (record.getRecordNumber() > 1) {
+      if (record.getRecordNumber() > 1) { //Skips header
         try {
           FilmLocation newLocation = new FilmLocation();
+          newLocation.setUser(cityUser);
           if (!record.get(INDEX_IMDB).equals(NOT_APPLICABLE))
             newLocation.setImdbId(record.get(INDEX_IMDB)
                 .substring(URL_SUBSTRING_BEGIN, URL_SUBSTRING_END)); //Slices the ID from the URL
@@ -96,7 +96,6 @@ public class Parser {
             newLocation.setOriginalDetails(record.get(INDEX_ORIGINALDETAILS));
           successes++;
           filmLocationRepository.save(newLocation);
-          //TODO Require a user ID to represent the submitter of a film location (in this case the city)
 
           StringBuilder cityPost = new StringBuilder();
           if (newLocation.getShootDate() != 0) {

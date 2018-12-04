@@ -68,14 +68,6 @@ public class UserComment {
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private FilmLocation filmLocation;
 
-  public UUID getUserId() {
-    return userId;
-  }
-
-  public void setUserId(UUID userId) {
-    this.userId = userId;
-  }
-
   @Transient
   private UUID userId;
 
@@ -83,6 +75,14 @@ public class UserComment {
   @JoinColumn(name = "user_id", updatable = false)
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
+
+  public UUID getUserId() {
+    return userId;
+  }
+
+  public void setUserId(UUID userId) {
+    this.userId = userId;
+  }
 
   public GoogleUser getUser() {
     return user;

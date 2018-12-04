@@ -126,6 +126,9 @@ public class FilmLocationController {
       filmLocation.setProduction(
           productionRepository.findById(UUID.fromString(filmLocation.getProductionId())).get());
     }
+    GoogleUser user = userRepository.findById(filmLocation.getUserId()).get();
+    filmLocation.setUserId(filmLocation.getUserId());
+    filmLocation.setUser(user);
     filmLocationRepository.save(filmLocation);
     return ResponseEntity.created(filmLocation.getHref()).body(filmLocation);
   }

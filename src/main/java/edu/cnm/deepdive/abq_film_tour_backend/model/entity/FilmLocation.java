@@ -45,6 +45,14 @@ public class FilmLocation {
     FilmLocation.entityLinks = entityLinks;
   }
 
+  @Transient
+  private UUID userId;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "user_id", updatable = false)
+  @OnDelete(action = OnDeleteAction.NO_ACTION)
+  private GoogleUser user;
+
   public Date getCreated() {
     return created;
   }
@@ -100,6 +108,22 @@ public class FilmLocation {
 
   public void setId(UUID id) {
     this.id = id;
+  }
+
+  public UUID getUserId() {
+    return userId;
+  }
+
+  public void setUserId(UUID userId) {
+    this.userId = userId;
+  }
+
+  public GoogleUser getUser() {
+    return user;
+  }
+
+  public void setUser(GoogleUser user) {
+    this.user = user;
   }
 
   public String getSiteName() {
