@@ -1,6 +1,8 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.gson.annotations.SerializedName;
 import java.net.URI;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -45,19 +47,25 @@ public class Production {
       nullable = false, updatable = false)
   private UUID id;
 
+  @Column(unique = true)
+  @SerializedName("imdbID")
   //corresponds to i in omdbapi
   private String imdbId;
 
+  @SerializedName("Title")
   //corresponds to t in omdbapi
   private String title;
 
+  @SerializedName("Type")
   //corresponds to type in omdbapi
   //valid options - movie, series, episode
   private String type;
 
-  //corresponds to type in omdbapi
+  @SerializedName("Year")
+  //corresponds to y in omdbapi
   private int releaseYear;
 
+  @SerializedName("Plot")
   //corresponds to plot in omdbapi
   private String plot;
 

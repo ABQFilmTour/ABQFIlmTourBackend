@@ -10,6 +10,8 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
+import edu.cnm.deepdive.abq_film_tour_backend.service.ProductionService;
+import edu.cnm.deepdive.abq_film_tour_backend.service.RetrofitClientService;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,8 +24,11 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
+import retrofit2.Call;
+import retrofit2.Retrofit;
 
 /**
  * This class exists to populate the database, parsing data from a cityfilmlocations.csv file with
@@ -49,6 +54,10 @@ public class Parser {
   private static final String RESOURCE_FILE = "cityfilmlocations.csv";
   private static final String CITY_USER_NAME = "City of Albuquerque";
 
+  @Value("${api_key}")
+  private String apikey;
+
+  private RetrofitClientService retrofitClientService;
   private FilmLocationRepository filmLocationRepository;
   private ProductionRepository productionRepository;
   private UserRepository userRepository;
@@ -66,12 +75,13 @@ public class Parser {
    */
   Parser(FilmLocationRepository filmLocationRepository, ProductionRepository productionRepository,
       UserRepository userRepository, UserCommentRepository userCommentRepository,
-      ImageRepository imageRepository) {
+      ImageRepository imageRepository, RetrofitClientService retrofitClientService) {
     this.filmLocationRepository = filmLocationRepository;
     this.productionRepository = productionRepository;
     this.userRepository = userRepository;
     this.userCommentRepository = userCommentRepository;
     this.imageRepository = imageRepository;
+    this.retrofitClientService = retrofitClientService;
   }
 
   /**
@@ -115,14 +125,21 @@ public class Parser {
     System.out.println(String.format("Added %d locations, %d failures.", successes, failures));
   }
 
+
+
   /**
    * Attempts to parse the records from the CSV file.
    */
-  private void parseRecord(CSVRecord record, FilmLocation newLocation) {
+  private void parseRecord(CSVRecord record, FilmLocation newLocation) throws IOException {
     if (!record.get(INDEX_IMDB).equals(NOT_APPLICABLE)) {
       newLocation.setImdbId(record.get(INDEX_IMDB)
           .substring(URL_SUBSTRING_BEGIN, URL_SUBSTRING_END)); //Slices the ID from the URL
     }
+    //FIXME only make new production if imdbID not in database
+    Production production = retrofitClientService.getRetrofit().create(ProductionService.class)
+        .get(newLocation.getImdbId(), apikey).execute().body();
+    productionRepository.save(production);
+    newLocation.setProduction(production);
     newLocation.setLatCoordinate(Double.valueOf(record.get(INDEX_GEO_X)));
     newLocation.setLongCoordinate(Double.valueOf(record.get(INDEX_GEO_Y)));
     newLocation.setAddress(record.get(INDEX_ADDRESS));
