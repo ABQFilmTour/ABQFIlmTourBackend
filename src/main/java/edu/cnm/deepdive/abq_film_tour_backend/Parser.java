@@ -2,15 +2,21 @@ package edu.cnm.deepdive.abq_film_tour_backend;
 
 import edu.cnm.deepdive.abq_film_tour_backend.controller.FilmLocationController;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ImageRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -45,6 +51,15 @@ public class Parser {
   @Autowired
   ProductionRepository productionRepository;
 
+  @Autowired
+  UserRepository userRepository;
+
+  @Autowired
+  UserCommentRepository userCommentRepository;
+
+  @Autowired
+  ImageRepository imageRepository;
+
   public void postSomething() throws IOException {
     FilmLocation newLocation = new FilmLocation();
     newLocation.setSiteName("churchs chicken");
@@ -52,11 +67,13 @@ public class Parser {
   }
 
   public void populateDatabase() throws IOException {
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
     //TODO Only run this if database has not already been populated
     int failures = 0;
     int successes = 0;
     GoogleUser cityUser = new GoogleUser();
     cityUser.setGoogleName(CITY_USER_NAME);
+    userRepository.save(cityUser);
     FileInputStream fileInputStream = new FileInputStream(RESOURCE_FILE);
     System.out.println("Populating database...");
     InputStreamReader reader = new InputStreamReader(fileInputStream);
@@ -73,10 +90,34 @@ public class Parser {
           newLocation.setLongCoordinate(Double.valueOf(record.get(INDEX_GEO_Y)));
           newLocation.setAddress(record.get(INDEX_ADDRESS));
           newLocation.setSiteName(record.get(INDEX_SITE));
-          if (!record.get(INDEX_SHOOTDATE).equals(NULL_STRING)) newLocation.setShootDate(Long.valueOf(record.get(INDEX_SHOOTDATE)));
-          newLocation.setOriginalDetails(record.get(INDEX_ORIGINALDETAILS)); //TODO Post to a comment
+          if (!record.get(INDEX_SHOOTDATE).equals(NULL_STRING))
+            newLocation.setShootDate(Long.valueOf(record.get(INDEX_SHOOTDATE)));
+          if (!record.get(INDEX_ORIGINALDETAILS).equals(NULL_STRING))
+            newLocation.setOriginalDetails(record.get(INDEX_ORIGINALDETAILS));
           successes++;
           filmLocationRepository.save(newLocation);
+          //TODO Require a user ID to represent the submitter of a film location (in this case the city)
+
+          StringBuilder cityPost = new StringBuilder();
+          if (newLocation.getShootDate() != 0) {
+            cityPost.append("Shot on ");
+            cityPost.append(sdf.format(new Date(newLocation.getShootDate())));
+          }
+          if (newLocation.getAddress() != null) {
+            cityPost.append(" at ");
+            cityPost.append(newLocation.getAddress());
+          }
+          if (newLocation.getOriginalDetails() != null) {
+            cityPost.append(". ");
+            cityPost.append(newLocation.getOriginalDetails());
+          }
+
+          UserComment cityUserComment = new UserComment();
+          cityUserComment.setUserId(cityUser.getId());
+          cityUserComment.setFilmLocation(newLocation);
+          cityUserComment.setText(cityPost.toString());
+          userCommentRepository.save(cityUserComment);
+
         } catch (NumberFormatException | DataIntegrityViolationException | DataException e) {
           System.out.println("Failed, skipping.");
           failures++;
