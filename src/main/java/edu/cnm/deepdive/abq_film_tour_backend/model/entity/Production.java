@@ -65,6 +65,7 @@ public class Production {
   //corresponds to y in omdbapi
   private String releaseYear;
 
+  @Column(length = 300)
   @SerializedName("Plot")
   //corresponds to plot in omdbapi
   private String plot;

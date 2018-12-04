@@ -1,6 +1,5 @@
 package edu.cnm.deepdive.abq_film_tour_backend;
 
-import edu.cnm.deepdive.abq_film_tour_backend.controller.FilmLocationController;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ImageRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
@@ -13,9 +12,7 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import edu.cnm.deepdive.abq_film_tour_backend.service.ProductionService;
 import edu.cnm.deepdive.abq_film_tour_backend.service.RetrofitClientService;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,12 +20,9 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.hibernate.exception.DataException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
-import retrofit2.Call;
-import retrofit2.Retrofit;
 
 /**
  * This class exists to populate the database, parsing data from a cityfilmlocations.csv file with
@@ -51,6 +45,7 @@ public class Parser {
 
   private static final String NULL_STRING = "null";
   private static final String NOT_APPLICABLE = "na";
+  private static final String NOT_A_NUMBER = "NaN";
   private static final String RESOURCE_FILE = "cityfilmlocations.csv";
   private static final String CITY_USER_NAME = "City of Albuquerque";
 
@@ -86,8 +81,8 @@ public class Parser {
 
   /**
    * Populates the database from a CSV file converted from the City of Albuquerque JSON data on
-   * 12/3/2018. A City of Albuquerque user is created, submits individual Film Locations and comments
-   * with some shooting information.
+   * 12/3/2018. A City of Albuquerque user is created, submits individual Film Locations and
+   * comments with some shooting information.
    *
    * @throws IOException the io exception, necessary possibility for CSV parsing.
    */
@@ -126,7 +121,6 @@ public class Parser {
   }
 
 
-
   /**
    * Attempts to parse the records from the CSV file.
    */
@@ -152,6 +146,7 @@ public class Parser {
   /**
    * This method retrieves the production information using a given imdbID. If it is not already
    * found in the database, it retrieves the information from the OMDB API.
+   *
    * @param newLocation the location to manipulate.
    * @return the production found.
    * @throws IOException an IO exception.
