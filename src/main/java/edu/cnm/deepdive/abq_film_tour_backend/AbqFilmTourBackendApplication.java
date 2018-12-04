@@ -16,7 +16,7 @@ public class AbqFilmTourBackendApplication {
       context.getBean(Parser.class).postSomething();
       context.getBean(Parser.class).populateDatabase();
     } catch (IOException e) {
-      e.printStackTrace();
+      //TODO Handle or don't
     }
   }
 }
