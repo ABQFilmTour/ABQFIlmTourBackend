@@ -7,7 +7,7 @@ import retrofit2.http.Query;
 
 public interface ProductionService {
 
-  //?i=tt0903747&apikey=12345678
+  //www.omdbapi.com/?i=tt0903747&apikey=12345678
 
   @GET("/")
   Call<Production> get(@Query("i") String imdbID, @Query("apikey") String apikey);

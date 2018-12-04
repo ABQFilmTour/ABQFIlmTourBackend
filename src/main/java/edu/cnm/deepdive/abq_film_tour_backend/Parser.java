@@ -135,11 +135,7 @@ public class Parser {
       newLocation.setImdbId(record.get(INDEX_IMDB)
           .substring(URL_SUBSTRING_BEGIN, URL_SUBSTRING_END)); //Slices the ID from the URL
     }
-    //FIXME only make new production if imdbID not in database
-    Production production = retrofitClientService.getRetrofit().create(ProductionService.class)
-        .get(newLocation.getImdbId(), apikey).execute().body();
-    productionRepository.save(production);
-    newLocation.setProduction(production);
+    newLocation.setProduction(findProduction(newLocation));
     newLocation.setLatCoordinate(Double.valueOf(record.get(INDEX_GEO_X)));
     newLocation.setLongCoordinate(Double.valueOf(record.get(INDEX_GEO_Y)));
     newLocation.setAddress(record.get(INDEX_ADDRESS));
@@ -151,6 +147,24 @@ public class Parser {
       newLocation.setOriginalDetails(record.get(INDEX_ORIGINALDETAILS));
     }
     filmLocationRepository.save(newLocation);
+  }
+
+  /**
+   * This method retrieves the production information using a given imdbID. If it is not already
+   * found in the database, it retrieves the information from the OMDB API.
+   * @param newLocation the location to manipulate.
+   * @return the production found.
+   * @throws IOException an IO exception.
+   */
+  private Production findProduction(FilmLocation newLocation) throws IOException {
+    // FIXME Still some insertion failures (about 35), unsure why.
+    Production production = productionRepository.findByImdbId(newLocation.getImdbId());
+    if (production == null) {
+      production = retrofitClientService.getRetrofit().create(ProductionService.class)
+          .get(newLocation.getImdbId(), apikey).execute().body();
+      productionRepository.save(production);
+    }
+    return production;
   }
 
   /**

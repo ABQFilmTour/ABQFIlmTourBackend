@@ -63,7 +63,7 @@ public class Production {
 
   @SerializedName("Year")
   //corresponds to y in omdbapi
-  private int releaseYear;
+  private String releaseYear;
 
   @SerializedName("Plot")
   //corresponds to plot in omdbapi
@@ -101,11 +101,11 @@ public class Production {
     this.type = type;
   }
 
-  public int getReleaseYear() {
+  public String getReleaseYear() {
     return releaseYear;
   }
 
-  public void setReleaseYear(int releaseYear) {
+  public void setReleaseYear(String releaseYear) {
     this.releaseYear = releaseYear;
   }
 
