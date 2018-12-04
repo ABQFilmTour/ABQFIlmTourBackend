@@ -12,7 +12,7 @@ import org.springframework.hateoas.config.EnableEntityLinks;
 @SpringBootApplication
 public class AbqFilmTourBackendApplication {
 
-  static private FilmLocationRepository filmLocationRepository;
+  private static FilmLocationRepository filmLocationRepository;
 
   @Autowired
   AbqFilmTourBackendApplication(FilmLocationRepository filmLocationRepository) {
