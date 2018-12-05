@@ -28,3 +28,4 @@
 derby.log
 /film_tour_db
 config/application.properties
+secret.properties
