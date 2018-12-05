@@ -21,6 +21,10 @@ import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+/**
+ * This entity represents a film or television series with an entry on IMDb. Fields are serialized
+ * to be imported directly from the OMDb API.
+ */
 @JsonIgnoreProperties (ignoreUnknown = true)
 @Component
 @Entity
@@ -70,54 +74,119 @@ public class Production {
   //corresponds to plot in omdbapi
   private String plot;
 
+  /**
+   * Gets id.
+   *
+   * @return the id
+   */
   public UUID getId() {
     return id;
   }
 
+  /**
+   * Sets id.
+   *
+   * @param id the id
+   */
   public void setId(UUID id) {
     this.id = id;
   }
 
+  /**
+   * Gets imdb id.
+   *
+   * @return the imdb id
+   */
   public String getImdbId() {
     return imdbId;
   }
 
+  /**
+   * Sets imdb id.
+   *
+   * @param imdbId the imdb id
+   */
   public void setImdbId(String imdbId) {
     this.imdbId = imdbId;
   }
 
+  /**
+   * Gets title.
+   *
+   * @return the title
+   */
   public String getTitle() {
     return title;
   }
 
+  /**
+   * Sets title.
+   *
+   * @param title the title
+   */
   public void setTitle(String title) {
     this.title = title;
   }
 
+  /**
+   * Gets type. Valid options - movie, series, episode.
+   *
+   * @return a type of movie, series, or episode.
+   */
   public String getType() {
     return type;
   }
 
+  /**
+   * Sets type. Valid options - movie, series, episode.
+   *
+   * @param type a type of movie, series, or episode.
+   */
   public void setType(String type) {
     this.type = type;
   }
 
+  /**
+   * Gets release year. May be represented as a range of years.
+   *
+   * @return the release year
+   */
   public String getReleaseYear() {
     return releaseYear;
   }
 
+  /**
+   * Sets release year. May be represented as a range of years.
+   *
+   * @param releaseYear the release year
+   */
   public void setReleaseYear(String releaseYear) {
     this.releaseYear = releaseYear;
   }
 
+  /**
+   * Gets short plot information. Maximum of 300 characters.
+   *
+   * @return plot information.
+   */
   public String getPlot() {
     return plot;
   }
 
+  /**
+   * Sets short plot information. Maximum of 300 characters.
+   *
+   * @param plot plot information.
+   */
   public void setPlot(String plot) {
     this.plot = plot;
   }
 
+  /**
+   * Gets href.
+   *
+   * @return the href
+   */
   public URI getHref() {
     return entityLinks.linkForSingleResource(FilmLocation.class, id).toUri();
   }

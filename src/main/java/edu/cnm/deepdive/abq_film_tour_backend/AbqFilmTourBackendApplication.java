@@ -8,17 +8,30 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.hateoas.config.EnableEntityLinks;
 
+/**
+ * Master application class with a Main method.
+ */
 @EnableEntityLinks
 @SpringBootApplication
 public class AbqFilmTourBackendApplication {
 
   private static FilmLocationRepository filmLocationRepository;
 
+  /**
+   * Instantiates the application class.
+   *
+   * @param filmLocationRepository the film location repository
+   */
   @Autowired
   AbqFilmTourBackendApplication(FilmLocationRepository filmLocationRepository) {
     this.filmLocationRepository = filmLocationRepository;
   }
 
+  /**
+   * Main method, will attempt to populate the database from a local CSV file if it is empty.
+   *
+   * @param args standard String arguments.
+   */
   public static void main(String[] args) {
     ConfigurableApplicationContext context = SpringApplication.run(AbqFilmTourBackendApplication.class, args);
     if (filmLocationRepository.findAllByOrderByIdAsc().size() == 0) { //Populate the database if it's empty

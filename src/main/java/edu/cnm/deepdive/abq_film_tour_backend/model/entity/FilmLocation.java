@@ -12,8 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -26,6 +24,12 @@ import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+/**
+ * The Film Location entity represents the physical map location. Site name, long and lat
+ * coordinates are the most critical attributes. Data for initial population is retrieved from the
+ * city of Albuquerque, some fields are inherited from their dataset (such as Original Details) but
+ * information from these should be referenced in comments.
+ */
 @Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
@@ -52,14 +56,6 @@ public class FilmLocation {
   @JoinColumn(name = "user_id", updatable = false)
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
-
-  public Date getCreated() {
-    return created;
-  }
-
-  public void setCreated(Date created) {
-    this.created = created;
-  }
 
   @NonNull
   @CreationTimestamp
@@ -102,102 +98,245 @@ public class FilmLocation {
   private long shootDate;
   private String originalDetails;
 
+  /**
+   * Gets id.
+   *
+   * @return the id
+   */
   public UUID getId() {
     return id;
   }
 
+  /**
+   * Sets id.
+   *
+   * @param id the id
+   */
   public void setId(UUID id) {
     this.id = id;
   }
 
+  /**
+   * Gets the transient user id of the user who submitted the entity.
+   *
+   * @return the transient user id of the user who submitted the entity.
+   */
   public UUID getUserId() {
     return userId;
   }
 
+  /**
+   * Sets the transient user id of the user who submitted the entity.
+   *
+   * @param userId the transient user id of the user who submitted the entity.
+   */
   public void setUserId(UUID userId) {
     this.userId = userId;
   }
 
+  /**
+   * Gets the user who submitted this location.
+   *
+   * @return the user who submitted this location.
+   */
   public GoogleUser getUser() {
     return user;
   }
 
+  /**
+   * Sets the user who submitted this location.
+   *
+   * @param user the user who submitted this location.
+   */
   public void setUser(GoogleUser user) {
     this.user = user;
   }
 
+  /**
+   * Gets time of creation.
+   *
+   * @return the time of creation
+   */
+  public Date getCreated() {
+    return created;
+  }
+
+  /**
+   * Sets time of creation.
+   *
+   * @param created the time of creation
+   */
+  public void setCreated(Date created) {
+    this.created = created;
+  }
+
+  /**
+   * Gets site name.
+   *
+   * @return the site name
+   */
   public String getSiteName() {
     return siteName;
   }
 
+  /**
+   * Sets site name.
+   *
+   * @param siteName the site name
+   */
   public void setSiteName(String siteName) {
     this.siteName = siteName;
   }
 
+  /**
+   * Gets imdb id.
+   *
+   * @return the imdb id
+   */
   public String getImdbId() {
     return imdbId;
   }
 
+  /**
+   * Sets imdb id.
+   *
+   * @param imdbId the imdb id
+   */
   public void setImdbId(String imdbId) {
     this.imdbId = imdbId;
   }
 
+  /**
+   * Gets address.
+   *
+   * @return the address
+   */
   public String getAddress() {
     return address;
   }
 
+  /**
+   * Sets address.
+   *
+   * @param address the address
+   */
   public void setAddress(String address) {
     this.address = address;
   }
 
+  /**
+   * Gets shoot date.
+   *
+   * @return the shoot date
+   */
   public long getShootDate() {
     return shootDate;
   }
 
+  /**
+   * Sets shoot date.
+   *
+   * @param shootDate the shoot date
+   */
   public void setShootDate(long shootDate) {
     this.shootDate = shootDate;
   }
 
+  /**
+   * Gets original details.
+   *
+   * @return the original details
+   */
   public String getOriginalDetails() {
     return originalDetails;
   }
 
+  /**
+   * Sets original details.
+   *
+   * @param originalDetails the original details
+   */
   public void setOriginalDetails(String originalDetails) {
     this.originalDetails = originalDetails;
   }
 
+  /**
+   * Gets longitude coordinate.
+   *
+   * @return the longitude coordinate
+   */
   public double getLongCoordinate() {
     return longCoordinate;
   }
 
+  /**
+   * Sets longitude coordinate.
+   *
+   * @param longCoordinate the longitude coordinate
+   */
   public void setLongCoordinate(double longCoordinate) {
     this.longCoordinate = longCoordinate;
   }
 
+  /**
+   * Gets latitude coordinate.
+   *
+   * @return the latitude coordinate
+   */
   public double getLatCoordinate() {
     return latCoordinate;
   }
 
+  /**
+   * Sets latitude coordinate.
+   *
+   * @param latCoordinate the latitude coordinate
+   */
   public void setLatCoordinate(double latCoordinate) {
     this.latCoordinate = latCoordinate;
   }
 
+  /**
+   * Gets production.
+   *
+   * @return the production
+   */
   public Production getProduction() {
     return production;
   }
 
+  /**
+   * Sets production.
+   *
+   * @param production the production
+   */
   public void setProduction(Production production) {
     this.production = production;
   }
 
+  /**
+   * Gets production id.
+   *
+   * @return the production id
+   */
   public String getProductionId() {
     return productionId;
   }
 
+  /**
+   * Sets production id.
+   *
+   * @param productionId the production id
+   */
   public void setProductionId(String productionId) {
     this.productionId = productionId;
   }
 
+  /**
+   * Gets href.
+   *
+   * @return the href
+   */
   public URI getHref() {
     return entityLinks.linkForSingleResource(FilmLocation.class, id).toUri();
   }

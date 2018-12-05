@@ -28,6 +28,10 @@ import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+/**
+ * A user comment submitted to a specific location. City comments are submitted automatically in
+ * the Parser class.
+ */
 @Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
@@ -76,47 +80,102 @@ public class UserComment {
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
 
-  public UUID getUserId() {
-    return userId;
-  }
-
-  public void setUserId(UUID userId) {
-    this.userId = userId;
-  }
-
-  public GoogleUser getUser() {
-    return user;
-  }
-
-  public void setUser(GoogleUser user) {
-    this.user = user;
-  }
-
+  /**
+   * Gets id.
+   *
+   * @return the id
+   */
   public UUID getId() {
     return id;
   }
 
+  /**
+   * Gets the transient user id of the user who submitted the entity.
+   *
+   * @return the transient user id of the user who submitted the entity.
+   */
+  public UUID getUserId() {
+    return userId;
+  }
+
+  /**
+   * Sets the transient user id of the user who submitted the entity.
+   *
+   * @param userId the transient user id of the user who submitted the entity.
+   */
+  public void setUserId(UUID userId) {
+    this.userId = userId;
+  }
+
+  /**
+   * Gets the user who submitted the comment.
+   *
+   * @return the user who submitted the comment.
+   */
+  public GoogleUser getUser() {
+    return user;
+  }
+
+  /**
+   * Sets the user who submitted the comment.
+   *
+   * @param user the user who submitted the comment.
+   */
+  public void setUser(GoogleUser user) {
+    this.user = user;
+  }
+
+  /**
+   * Gets the time of creation.
+   *
+   * @return the time of creation
+   */
   public Date getCreated() {
     return created;
   }
 
+  /**
+   * Gets the text of the comment. 4096 character maximum.
+   *
+   * @return the text of the comment.
+   */
   public String getText() {
     return text;
   }
 
+  /**
+   * Sets text of the comment.  4096 character maximum.
+   *
+   * @param text the text of the comment.
+   */
   public void setText(String text) {
     this.text = text;
   }
 
+  /**
+   * Gets film location associated with the entity.
+   *
+   * @return the film location associated with the entity.
+   */
   public FilmLocation getFilmLocation() {
     return filmLocation;
   }
 
+  /**
+   * Sets film location associated with the entity.
+   *
+   * @param filmlocation the film location associated with the entity.
+   */
   public void setFilmLocation(
       FilmLocation filmlocation) {
     this.filmLocation = filmlocation;
   }
 
+  /**
+   * Gets href.
+   *
+   * @return the href
+   */
   public URI getHref() {
     return entityLinks.linkForSingleResource(FilmLocation.class, id).toUri();
   }

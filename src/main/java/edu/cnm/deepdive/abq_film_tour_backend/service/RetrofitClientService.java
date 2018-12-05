@@ -6,12 +6,18 @@ import retrofit2.Retrofit;
 import retrofit2.Retrofit.Builder;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Retrofit client service to access the OMDb API.
+ */
 @Service
 public class RetrofitClientService {
 
   private static final String BASE_URL = "https://www.omdbapi.com/";
   private Retrofit retrofit;
 
+  /**
+   * Init.
+   */
   @PostConstruct
   public void init() {
     Retrofit.Builder builder = new Retrofit.Builder()
@@ -20,6 +26,11 @@ public class RetrofitClientService {
     retrofit = builder.build();
   }
 
+  /**
+   * Gets retrofit.
+   *
+   * @return the retrofit
+   */
   public Retrofit getRetrofit() {
     return retrofit;
   }

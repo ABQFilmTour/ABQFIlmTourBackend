@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.stereotype.Component;
 
+/**
+ * This entity represents a Google account belonging to a user.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Component
 @Entity
@@ -35,51 +38,96 @@ public class GoogleUser {
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   @Column(name = "user_id", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)
-  UUID id;
+  private UUID id;
 
   //persistent Google Analytics user ID
-  String googleId;
+  private String googleId;
 
-  //Google account name - maybe brea
-  String googleName;
+  //Google account name
+  private String googleName;
 
-  String gmailAddress;
+  private String gmailAddress;
 
-  public static EntityLinks getEntityLinks() {
+  private static EntityLinks getEntityLinks() {
     return entityLinks;
   }
 
+  /**
+   * Gets id.
+   *
+   * @return the id
+   */
   public UUID getId() {
     return id;
   }
 
+  /**
+   * Sets id.
+   *
+   * @param id the id
+   */
   public void setId(UUID id) {
     this.id = id;
   }
 
+  /**
+   * Gets google id - a unique identifier for Google accounts.
+   *
+   * @return the google id
+   */
   public String getGoogleId() {
     return googleId;
   }
 
+  /**
+   * Sets google id - a unique identifier for Google accounts.
+   *
+   * @param googleId the google id
+   */
   public void setGoogleId(String googleId) {
     this.googleId = googleId;
   }
 
+  /**
+   * Gets the full name on the Google account.
+   *
+   * @return the full name on the Google account.
+   */
   public String getGoogleName() {
     return googleName;
   }
 
+  /**
+   * Sets the name associated with the Google account.
+   *
+   * @param googleName the name associated with the Google account.
+   */
   public void setGoogleName(String googleName) {
     this.googleName = googleName;
   }
 
+  /**
+   * Gets GMail address associated with the Google account.
+   *
+   * @return the GMail address associated with the Google account.
+   */
   public String getGmailAddress() {
     return gmailAddress;
   }
 
+  /**
+   * Sets GMail address associated with the Google account..
+   *
+   * @param gmailAddress the GMail address associated with the Google account.
+   */
   public void setGmailAddress(String gmailAddress) {
     this.gmailAddress = gmailAddress;
   }
 
+  /**
+   * Get href uri.
+   *
+   * @return the uri
+   */
   public URI getHref(){return entityLinks.linkForSingleResource(GoogleUser.class, id).toUri();}
 }

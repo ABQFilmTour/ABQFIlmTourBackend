@@ -10,7 +10,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserCommentRepository extends CrudRepository<UserComment, UUID> {
 
-
   List<UserComment> findAllByOrderByIdAsc();
   
   List<UserComment> findAllByFilmLocationOrderByCreatedDesc(FilmLocation filmLocation);

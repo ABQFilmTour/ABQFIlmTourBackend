@@ -24,6 +24,9 @@ import org.springframework.hateoas.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+/**
+ * This entity represents a user submitted image associated with a Film Location.
+ */
 @Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
@@ -54,28 +57,11 @@ public class Image {
   @Column(nullable = false, updatable = false)
   private Date created;
 
-
   @NonNull
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "film_location_id", nullable = false, updatable = false)
   @OnDelete(action = OnDeleteAction.CASCADE)
   private FilmLocation filmLocation;
-
-  public UUID getUserId() {
-    return userId;
-  }
-
-  public void setUserId(UUID userId) {
-    this.userId = userId;
-  }
-
-  public GoogleUser getUser() {
-    return user;
-  }
-
-  public void setUser(GoogleUser user) {
-    this.user = user;
-  }
 
   @Transient
   private UUID userId;
@@ -85,50 +71,157 @@ public class Image {
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
 
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
   private String description;
+  private String url;
 
+  /**
+   * Instantiates a new Image.
+   */
   public Image(){
     //empty constructor
   }
 
+  /**
+   * Gets user id.
+   *
+   * @return the user id
+   */
+  public UUID getUserId() {
+    return userId;
+  }
+
+  /**
+   * Sets user id.
+   *
+   * @param userId the user id
+   */
+  public void setUserId(UUID userId) {
+    this.userId = userId;
+  }
+
+  /**
+   * Gets user.
+   *
+   * @return the user
+   */
+  public GoogleUser getUser() {
+    return user;
+  }
+
+  /**
+   * Sets user.
+   *
+   * @param user the user
+   */
+  public void setUser(GoogleUser user) {
+    this.user = user;
+  }
+
+  /**
+   * Gets entity links.
+   *
+   * @return the entity links
+   */
   public static EntityLinks getEntityLinks() {
     return entityLinks;
   }
 
+  /**
+   * Gets id.
+   *
+   * @return the id
+   */
   public UUID getId() {
     return id;
   }
 
-  public Date getCreated() {
-    return created;
-  }
-
-  public FilmLocation getFilmLocation() {
-    return filmLocation;
-  }
-
+  /**
+   * Sets id.
+   *
+   * @param id the id
+   */
   public void setId(UUID id) {
     this.id = id;
   }
 
+  /**
+   * Gets time of creation.
+   *
+   * @return the time of creation
+   */
+  public Date getCreated() {
+    return created;
+  }
+
+  /**
+   * Sets time of creation
+   *
+   * @param created the time of creation
+   */
   public void setCreated(Date created) {
     this.created = created;
   }
 
+  /**
+   * Gets the film location associated with this entity.
+   *
+   * @return the film location associated with this entity.
+   */
+  public FilmLocation getFilmLocation() {
+    return filmLocation;
+  }
+
+  /**
+   * Sets the film location associated with this entity.
+   *
+   * @param filmLocation the film location associated with this entity.
+   */
   public void setFilmLocation(
       FilmLocation filmLocation) {
     this.filmLocation = filmLocation;
   }
 
-  public URI getHref(){return entityLinks.linkForSingleResource(Image.class, id).toUri();}
+  /**
+   * Gets a description of the image's contents.
+   *
+   * @return the description of the image's contents.
+   */
+  public String getDescription() {
+    return description;
+  }
 
+  /**
+   * Sets a description of the image's contents.
+   *
+   * @param description the description of the image's contents.
+   */
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  /**
+   * Gets url.
+   *
+   * @return the url
+   */
+  public String getUrl() {
+    return url;
+  }
+
+  /**
+   * Sets url.
+   *
+   * @param url the url
+   */
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  /**
+   * Get href uri.
+   *
+   * @return the uri
+   */
+  public URI getHref(){return entityLinks.linkForSingleResource(Image.class, id).toUri();}
 
 }

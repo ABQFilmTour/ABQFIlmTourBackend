@@ -18,20 +18,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for the Image entity, child of Film Location, requires a User.
+ */
 @RestController
 @ExposesResourceFor(Image.class)
 @RequestMapping("/images")
 public class ImageController {
 private ImageRepository imageRepository;
 
+  /**
+   * Instantiates a new Image controller.
+   *
+   * @param imageRepository the image repository
+   */
   @Autowired
   public ImageController(ImageRepository imageRepository){
     this.imageRepository = imageRepository;
   }
 
+  /**
+   * GETs a list of productions ordered by their ID.
+   *
+   * @return a list of productions ordered by their ID.
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Image> list(){return imageRepository.findAllByOrderByIdAsc();}
 
+  /**
+   * Post response entity.
+   *
+   * @param image the image
+   * @return the response entity
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Image> post(@RequestBody Image image){
@@ -39,11 +58,22 @@ private ImageRepository imageRepository;
     return ResponseEntity.created(image.getHref()).body(image);
   }
 
+  /**
+   * Get image.
+   *
+   * @param imageId the image id
+   * @return the image
+   */
   @GetMapping(value = "{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Image get(@PathVariable("imageId") UUID imageId){
     return imageRepository.findById(imageId).get();
   }
 
+  /**
+   * Delete.
+   *
+   * @param imageId the image id
+   */
   @DeleteMapping(value = "{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("imageId") UUID imageId){

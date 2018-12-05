@@ -21,23 +21,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for the Production entity.
+ */
 @RestController
 @ExposesResourceFor(ProductionController.class)
 @RequestMapping("/productions")
 public class ProductionController {
 
-  ProductionRepository productionRepository;
-  FilmLocationRepository filmLocationRepository;
+  private ProductionRepository productionRepository;
+  private FilmLocationRepository filmLocationRepository;
 
+  /**
+   * Instantiates a new Production controller.
+   *
+   * @param productionRepository the production repository
+   * @param filmLocationRepository the film location repository
+   */
   @Autowired
   public ProductionController(ProductionRepository productionRepository, FilmLocationRepository filmLocationRepository) {
     this.productionRepository = productionRepository;
     this.filmLocationRepository = filmLocationRepository;
   }
 
+  /**
+   * GETs a list of productions ordered by their ID.
+   *
+   * @return a list of productions ordered by their ID.
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Production> list() { return productionRepository.findAllByOrderByIdAsc();}
 
+  /**
+   * Post response entity.
+   *
+   * @param production the production
+   * @return the response entity
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Production> post(@RequestBody Production production) {
@@ -45,17 +65,33 @@ public class ProductionController {
     return ResponseEntity.created(production.getHref()).body(production);
   }
 
+  /**
+   * Get production.
+   *
+   * @param productionId the production id
+   * @return the production
+   */
   @GetMapping(value = "{productionId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Production get(@PathVariable("productionId") UUID productionId){
     return productionRepository.findById(productionId).get();
   }
 
+  /**
+   * Delete.
+   *
+   * @param productionId the production id
+   */
   @DeleteMapping(value = "{productionId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("productionId") UUID productionId) {
     productionRepository.deleteById(productionId);
   }
 
+  /**
+   * Patch.
+   *
+   * @param production the production
+   */
   @PatchMapping
   public void patch(@RequestBody Production production) {
     // This will overwrite everything,

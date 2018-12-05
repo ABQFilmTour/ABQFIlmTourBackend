@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * The controller for the FilmLocation entity, which also includes functionality for userComments
- * and Images associated with the entity.
+ * and Images associated with the entity. Requires an associated GoogleUser.
  */
 @RestController
 @ExposesResourceFor(FilmLocation.class)
@@ -68,7 +68,7 @@ public class FilmLocationController {
   /**
    * GETs all the FilmLocations in the database.
    *
-   * @return the list
+   * @return a list of Film Locations ordered by their ID.
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<FilmLocation> list() {
