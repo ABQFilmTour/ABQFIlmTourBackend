@@ -111,7 +111,7 @@ public class FilmLocationController {
    * PATCHes a FilmLocation. All data will be overwritten - current fields to stay the same must be
    * included as well.
    *
-   * @param filmLocation the film location
+   * @param filmLocation the updated film location
    */
   @PatchMapping
   public void patch(@RequestBody FilmLocation filmLocation) {
@@ -203,7 +203,7 @@ public class FilmLocationController {
    * PATCHES an image. All data to stay the same must be included.
    *
    * @param filmLocationId the film location id
-   * @param image the image
+   * @param image the updated image
    */
   @PatchMapping(value="{filmLocationId}/images/")
   public void patch(@PathVariable UUID filmLocationId, @RequestBody Image image) {
@@ -273,7 +273,7 @@ public class FilmLocationController {
    * PATCHes a user comment. All data to stay the same must be included.
    *
    * @param filmLocationId the film location id
-   * @param userComment the user comment
+   * @param userComment the updated user comment
    */
   @PatchMapping(value="{filmLocationId}/user_comments")
   public void patch(@PathVariable UUID filmLocationId, @RequestBody UserComment userComment) {

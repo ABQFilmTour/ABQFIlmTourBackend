@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +36,7 @@ public class UserCommentController {
    * @param userCommentRepository the user comment repository
    */
   @Autowired
-  public UserCommentController(UserCommentRepository userCommentRepository){
+  public UserCommentController(UserCommentRepository userCommentRepository) {
     this.userCommentRepository = userCommentRepository;
   }
 
@@ -45,8 +46,9 @@ public class UserCommentController {
    * @return a list of comments ordered by their ID.
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<UserComment> list(){
-    return userCommentRepository.findAllByOrderByIdAsc();}
+  public List<UserComment> list() {
+    return userCommentRepository.findAllByOrderByIdAsc();
+  }
 
   /**
    * Post response entity.
@@ -56,7 +58,7 @@ public class UserCommentController {
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<UserComment> post(@RequestBody UserComment userComment){
+  public ResponseEntity<UserComment> post(@RequestBody UserComment userComment) {
     userCommentRepository.save(userComment);
     return ResponseEntity.created(userComment.getHref()).body(userComment);
   }
@@ -68,7 +70,7 @@ public class UserCommentController {
    * @return the user comment
    */
   @GetMapping(value = "{user_comments}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public UserComment get(@PathVariable("user_comments") UUID userCommentId){
+  public UserComment get(@PathVariable("user_comments") UUID userCommentId) {
     UserComment userComment = userCommentRepository.findById(userCommentId).get();
     return userComment;
   }
@@ -80,7 +82,7 @@ public class UserCommentController {
    */
   @DeleteMapping(value = "{userCommentId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable("userCommentId") UUID userCommentId){
+  public void delete(@PathVariable("userCommentId") UUID userCommentId) {
     userCommentRepository.deleteById(userCommentId);
   }
 

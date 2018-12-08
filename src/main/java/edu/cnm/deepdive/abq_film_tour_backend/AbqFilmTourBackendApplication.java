@@ -17,6 +17,8 @@ public class AbqFilmTourBackendApplication {
 
   private static FilmLocationRepository filmLocationRepository;
 
+  //TODO require oauth
+
   /**
    * Instantiates the application class.
    *

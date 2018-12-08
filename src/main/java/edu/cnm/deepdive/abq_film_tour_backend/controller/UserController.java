@@ -43,8 +43,8 @@ public class UserController {
    */
   @Autowired
   public UserController(UserRepository userRepository,
-      UserCommentRepository userCommentRepository){
-    this.userRepository=userRepository;
+      UserCommentRepository userCommentRepository) {
+    this.userRepository = userRepository;
     this.userCommentRepository = userCommentRepository;
   }
 
@@ -54,7 +54,9 @@ public class UserController {
    * @return a list of users ordered by their ID.
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<GoogleUser> list(){return userRepository.findAllByOrderByIdAsc();}
+  public List<GoogleUser> list() {
+    return userRepository.findAllByOrderByIdAsc();
+  }
 
   /**
    * Post response entity.
@@ -64,7 +66,7 @@ public class UserController {
    */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<GoogleUser> post(@RequestBody GoogleUser googleUser){
+  public ResponseEntity<GoogleUser> post(@RequestBody GoogleUser googleUser) {
     userRepository.save(googleUser);
     return ResponseEntity.created(googleUser.getHref()).body(googleUser);
   }
@@ -76,7 +78,7 @@ public class UserController {
    * @return the google user
    */
   @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public GoogleUser get(@PathVariable("userId") UUID userId){
+  public GoogleUser get(@PathVariable("userId") UUID userId) {
     return userRepository.findById(userId).get();
   }
 
@@ -88,7 +90,7 @@ public class UserController {
   @Transactional
   @DeleteMapping(value = "{userId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable("userId") UUID userId){
+  public void delete(@PathVariable("userId") UUID userId) {
     GoogleUser user = userRepository.findById(userId).get();
     List<UserComment> userComments = userCommentRepository.findAllByUser(user);
     for (UserComment comment : userComments) {
@@ -98,15 +100,14 @@ public class UserController {
   }
 
   /**
-   * Patch.
+   * Patches a user. This will overwrite everything. if just changing one field all other current
+   * fields must be included.
    *
-   * @param user the user
+   * @param user an updated user.
    */
   @PatchMapping
   public void patch(@RequestBody GoogleUser user) {
-    // This will overwrite everything,
-    // if just changing one field all other current fields must be included
     userRepository.save(user);
   }
 
-  }
+}

@@ -88,9 +88,10 @@ public class ProductionController {
   }
 
   /**
-   * Patch.
+   * Patches a production. This will overwrite everything. if just changing one field all other
+   * current fields must be included.
    *
-   * @param production the production
+   * @param production an updated production.
    */
   @PatchMapping
   public void patch(@RequestBody Production production) {

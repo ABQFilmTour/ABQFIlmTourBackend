@@ -63,6 +63,9 @@ public class Image {
   @OnDelete(action = OnDeleteAction.CASCADE)
   private FilmLocation filmLocation;
 
+  private String description;
+  private String url;
+
   @Transient
   private UUID userId;
 
@@ -71,8 +74,7 @@ public class Image {
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
 
-  private String description;
-  private String url;
+
 
   /**
    * Instantiates a new Image.

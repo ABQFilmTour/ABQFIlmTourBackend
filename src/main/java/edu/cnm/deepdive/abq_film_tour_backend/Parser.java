@@ -20,6 +20,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.hibernate.exception.DataException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
@@ -43,13 +45,12 @@ public class Parser {
   private static final int URL_SUBSTRING_BEGIN = 26;
   private static final int URL_SUBSTRING_END = 35;
 
-  private static final String NULL_STRING = "null";
-  private static final String NOT_APPLICABLE = "na";
-  private static final String NOT_A_NUMBER = "NaN";
+  private static final String NULL_STRING = "null"; //Shows up in original details, etc
+  private static final String NOT_APPLICABLE = "na"; //Shows up in some imdb entries
+  private static final String NOT_A_NUMBER = "NaN"; //Shows up in some coordinate entries
   private static final String RESOURCE_FILE = "cityfilmlocations.csv";
   private static final String CITY_USER_NAME = "City of Albuquerque";
 
-  @Value("${api_key}")
   private String apikey;
 
   private RetrofitClientService retrofitClientService;
@@ -79,6 +80,12 @@ public class Parser {
     this.retrofitClientService = retrofitClientService;
   }
 
+  @Autowired
+  @Qualifier("apiKey")
+  public void setApikey(String apikey) {
+    this.apikey = apikey;
+  }
+
   /**
    * Populates the database from a CSV file converted from the City of Albuquerque JSON data on
    * 12/3/2018. A City of Albuquerque user is created, submits individual Film Locations and
@@ -106,7 +113,7 @@ public class Parser {
           parseRecord(record, newLocation);
           String cityPost = createPost(sdf, newLocation);
           UserComment cityUserComment = new UserComment();
-          cityUserComment.setUserId(cityUser.getId());
+          cityUserComment.setUser(cityUser);
           cityUserComment.setFilmLocation(newLocation);
           cityUserComment.setText(cityPost);
           userCommentRepository.save(cityUserComment);
@@ -130,8 +137,8 @@ public class Parser {
           .substring(URL_SUBSTRING_BEGIN, URL_SUBSTRING_END)); //Slices the ID from the URL
     }
     newLocation.setProduction(findProduction(newLocation));
-    newLocation.setLatCoordinate(Double.valueOf(record.get(INDEX_GEO_X)));
-    newLocation.setLongCoordinate(Double.valueOf(record.get(INDEX_GEO_Y)));
+    newLocation.setLongCoordinate(Double.valueOf(record.get(INDEX_GEO_X)));
+    newLocation.setLatCoordinate(Double.valueOf(record.get(INDEX_GEO_Y)));
     newLocation.setAddress(record.get(INDEX_ADDRESS));
     newLocation.setSiteName(record.get(INDEX_SITE));
     if (!record.get(INDEX_SHOOTDATE).equals(NULL_STRING)) {

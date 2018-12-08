@@ -17,7 +17,7 @@ public interface ProductionService {
    * Gets the Production entity with serialized data.
    *
    * @param imdbID the 8 digit imdb id starting with tt
-   * @param apikey the apikey (in config/application.properties)
+   * @param apikey the apikey (in config/secret.properties)
    * @return a call to a Production entity.
    */
   @GET("/")

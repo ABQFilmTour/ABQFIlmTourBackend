@@ -57,10 +57,6 @@ public class UserComment {
   private UUID id;
 
   @NonNull
-  @Column(length = 4096, nullable = false)
-  private String text;
-
-  @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
@@ -71,6 +67,10 @@ public class UserComment {
   @JoinColumn(name = "film_location_id", nullable = false, updatable = false)
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private FilmLocation filmLocation;
+
+  @NonNull
+  @Column(length = 4096, nullable = false)
+  private String text;
 
   @Transient
   private UUID userId;

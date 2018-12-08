@@ -10,6 +10,8 @@ public interface ProductionRepository extends CrudRepository<Production, UUID> {
 
   List<Production> findAllByOrderByIdAsc();
 
+  List<Production> findAllByTypeOrderByTitle(String type);
+
   Production findByImdbId(String imdbID);
 
 }
