@@ -375,6 +375,8 @@
     },
     "/images" : {
       "get" : {
+        "summary" : "Orders Images",
+        "description" : "Orders by Id ascending.",
         "operationId" : "list",
         "produces" : [ "application/json" ],
         "responses" : {
@@ -390,6 +392,8 @@
         }
       },
       "post" : {
+        "summary" : "Post Image",
+        "description" : "Saves image to image repository",
         "operationId" : "post",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
@@ -413,6 +417,8 @@
     },
     "/images/{imageId}" : {
       "get" : {
+        "summary" : "Gets an image",
+        "description" : "Finds image by the image UUID",
         "operationId" : "get",
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -432,6 +438,8 @@
         }
       },
       "delete" : {
+        "summary" : "Deletes an image",
+        "description" : "Enables you to delete an image from database",
         "operationId" : "delete",
         "parameters" : [ {
           "name" : "imageId",

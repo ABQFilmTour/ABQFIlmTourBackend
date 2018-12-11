@@ -129,9 +129,9 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/images</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list">Orders Images</a></td></tr>
         
-        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Post Image</a></td></tr>
         
         
         
@@ -142,10 +142,10 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/images/{imageId}</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Gets an image</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Deletes an image</a></td></tr>
         
         
         
@@ -1440,9 +1440,9 @@ Deletes a UserComment from a location.
 
 ### <a name="list"></a>GET
 
+Orders Images
 
-
-
+Orders by Id ascending.
 
 
 
@@ -1476,9 +1476,9 @@ Deletes a UserComment from a location.
 
 ### <a name="post"></a>POST
 
+Post Image
 
-
-
+Saves image to image repository
 
 
 
@@ -1558,9 +1558,9 @@ Deletes a UserComment from a location.
 
 ### <a name="get"></a>GET
 
+Gets an image
 
-
-
+Finds image by the image UUID
 
 
 
@@ -1629,9 +1629,9 @@ Deletes a UserComment from a location.
 
 ### <a name="delete"></a>DELETE
 
+Deletes an image
 
-
-
+Enables you to delete an image from database
 
 
 

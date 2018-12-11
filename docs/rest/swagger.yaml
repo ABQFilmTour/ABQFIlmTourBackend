@@ -298,6 +298,8 @@ paths:
           description: ""
   /images:
     get:
+      summary: "Orders Images"
+      description: "Orders by Id ascending."
       operationId: "list"
       produces:
       - "application/json"
@@ -310,6 +312,8 @@ paths:
             items:
               $ref: "#/definitions/Image"
     post:
+      summary: "Post Image"
+      description: "Saves image to image repository"
       operationId: "post"
       consumes:
       - "application/json"
@@ -328,6 +332,8 @@ paths:
             $ref: "#/definitions/Image"
   /images/{imageId}:
     get:
+      summary: "Gets an image"
+      description: "Finds image by the image UUID"
       operationId: "get"
       produces:
       - "application/json"
@@ -343,6 +349,8 @@ paths:
           schema:
             $ref: "#/definitions/Image"
     delete:
+      summary: "Deletes an image"
+      description: "Enables you to delete an image from database"
       operationId: "delete"
       parameters:
       - name: "imageId"
