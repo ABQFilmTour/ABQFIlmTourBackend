@@ -1,0 +1,685 @@
+---
+swagger: "2.0"
+info:
+  description: "Documentation for the Project Odeon backend"
+  version: "v2"
+  title: "Swagger documentation for the Project Odeon backend"
+host: "jscpeterson.com"
+basePath: "/rest/"
+schemes:
+- "https"
+paths:
+  /film_locations:
+    get:
+      summary: "Gets a list of film locations"
+      description: "Gets a list of film locations."
+      operationId: "list"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/FilmLocation"
+    post:
+      summary: "Posts a film location."
+      description: ""
+      operationId: "post"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/FilmLocation"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/FilmLocation"
+    patch:
+      summary: "Patches a single film location"
+      description: "Patches a film location. All data will be overwritten - current\
+        \ fields to stay the same must be included as well."
+      operationId: "patch"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/FilmLocation"
+      responses:
+        default:
+          description: "successful operation"
+  /film_locations/{filmLocationId}:
+    get:
+      summary: "Gets a single film location"
+      description: "Gets a single film location."
+      operationId: "get"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/FilmLocation"
+    delete:
+      summary: "Deletes a film location"
+      description: "Deletes a film location"
+      operationId: "delete"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        204:
+          description: ""
+  /film_locations/{filmLocationId}/images:
+    get:
+      summary: "Gets all images on a FilmLocation."
+      description: ""
+      operationId: "getImages"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Image"
+    post:
+      summary: "Posts an image to a film location."
+      description: ""
+      operationId: "post"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/Image"
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Image"
+  /film_locations/{filmLocationId}/images/:
+    patch:
+      summary: "Patches an image. All data will be overwritten."
+      description: ""
+      operationId: "patch"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/Image"
+      responses:
+        default:
+          description: "successful operation"
+  /film_locations/{filmLocationId}/images/{imageId}:
+    get:
+      summary: "Gets all images on a FilmLocation."
+      description: ""
+      operationId: "getImage"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      - name: "imageId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Image"
+    delete:
+      summary: "Deletes an image on a film location."
+      description: ""
+      operationId: "deleteImage"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      - name: "imageId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        204:
+          description: ""
+  /film_locations/{filmLocationId}/user_comments:
+    get:
+      summary: "Gets all user comments on a location."
+      description: ""
+      operationId: "getUserComments"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserComment"
+    post:
+      summary: "Posts a user comment to a location."
+      description: ""
+      operationId: "post"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/UserComment"
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/UserComment"
+    patch:
+      summary: "Patches a UserComment on a location. All data to stay the same must\
+        \ be included."
+      description: ""
+      operationId: "patch"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/UserComment"
+      responses:
+        default:
+          description: "successful operation"
+  /film_locations/{filmLocationId}/user_comments/{userCommentId}:
+    get:
+      summary: "Gets a single UserComment from a location."
+      description: ""
+      operationId: "getUserComment"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      - name: "userCommentId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/UserComment"
+    delete:
+      summary: "Deletes a UserComment from a location."
+      description: ""
+      operationId: "deleteUserComment"
+      parameters:
+      - name: "filmLocationId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      - name: "userCommentId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        204:
+          description: ""
+  /images:
+    get:
+      operationId: "list"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Image"
+    post:
+      operationId: "post"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/Image"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Image"
+  /images/{imageId}:
+    get:
+      operationId: "get"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "imageId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Image"
+    delete:
+      operationId: "delete"
+      parameters:
+      - name: "imageId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        204:
+          description: ""
+  /productions:
+    get:
+      operationId: "list"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Production"
+    post:
+      operationId: "post"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/Production"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Production"
+    patch:
+      operationId: "patch"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/Production"
+      responses:
+        default:
+          description: "successful operation"
+  /productions/{productionId}:
+    get:
+      operationId: "get"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productionId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Production"
+    delete:
+      operationId: "delete"
+      parameters:
+      - name: "productionId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        204:
+          description: ""
+  /user_comments:
+    get:
+      summary: "Gets all user comments."
+      description: ""
+      operationId: "list"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserComment"
+    post:
+      summary: "Posts a user comment."
+      description: ""
+      operationId: "post"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/UserComment"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/UserComment"
+  /user_comments/{userCommentId}:
+    delete:
+      summary: "Deletes a user comment."
+      description: ""
+      operationId: "delete"
+      parameters:
+      - name: "userCommentId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        204:
+          description: ""
+  /user_comments/{user_comments}:
+    get:
+      summary: "Gets a single comment."
+      description: ""
+      operationId: "get"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user_comments"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/UserComment"
+  /users:
+    get:
+      summary: "Gets all users"
+      description: "Retrieves all users with their ID in an list."
+      operationId: "list"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GoogleUser"
+    post:
+      summary: "Posts a google user."
+      description: "Posts a googel user."
+      operationId: "post"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GoogleUser"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GoogleUser"
+    patch:
+      summary: "Patches a google user"
+      description: "Patches a user. This will overwrite everything. if just changing\
+        \ one field all other current fields must be included."
+      operationId: "patch"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/GoogleUser"
+      responses:
+        default:
+          description: "successful operation"
+  /users/{userId}:
+    get:
+      summary: "Gets google user"
+      description: "Gets google user id and returns google user."
+      operationId: "get"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/GoogleUser"
+    delete:
+      summary: "Deletes google user"
+      description: "Takes user id as a parameter and deletes google user."
+      operationId: "delete"
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        204:
+          description: ""
+definitions:
+  FilmLocation:
+    type: "object"
+    properties:
+      userId:
+        type: "string"
+        format: "uuid"
+      user:
+        $ref: "#/definitions/GoogleUser"
+      created:
+        type: "string"
+        format: "date-time"
+      id:
+        type: "string"
+        format: "uuid"
+      longCoordinate:
+        type: "number"
+        format: "double"
+      latCoordinate:
+        type: "number"
+        format: "double"
+      siteName:
+        type: "string"
+      imdbId:
+        type: "string"
+      productionId:
+        type: "string"
+      production:
+        $ref: "#/definitions/Production"
+      address:
+        type: "string"
+      shootDate:
+        type: "integer"
+        format: "int64"
+      originalDetails:
+        type: "string"
+      href:
+        type: "string"
+        format: "uri"
+  GoogleUser:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+      googleId:
+        type: "string"
+      googleName:
+        type: "string"
+      gmailAddress:
+        type: "string"
+      href:
+        type: "string"
+        format: "uri"
+  Image:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+      created:
+        type: "string"
+        format: "date-time"
+      filmLocation:
+        $ref: "#/definitions/FilmLocation"
+      description:
+        type: "string"
+      url:
+        type: "string"
+      userId:
+        type: "string"
+        format: "uuid"
+      user:
+        $ref: "#/definitions/GoogleUser"
+      href:
+        type: "string"
+        format: "uri"
+  Production:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+      imdbId:
+        type: "string"
+      title:
+        type: "string"
+      type:
+        type: "string"
+      releaseYear:
+        type: "string"
+      plot:
+        type: "string"
+      href:
+        type: "string"
+        format: "uri"
+  UserComment:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+      created:
+        type: "string"
+        format: "date-time"
+      filmLocation:
+        $ref: "#/definitions/FilmLocation"
+      text:
+        type: "string"
+      userId:
+        type: "string"
+        format: "uuid"
+      user:
+        $ref: "#/definitions/GoogleUser"
+      href:
+        type: "string"
+        format: "uri"

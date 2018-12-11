@@ -46,7 +46,7 @@ public class UserCommentController {
    *
    * @return a list of comments ordered by their ID.
    */
-  @ApiOperation(value = "")
+  @ApiOperation(value = "Gets all user comments.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<UserComment> list() {
     return userCommentRepository.findAllByOrderByIdAsc();
@@ -58,6 +58,7 @@ public class UserCommentController {
    * @param userComment the user comment
    * @return the response entity
    */
+  @ApiOperation(value = "Posts a user comment.")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserComment> post(@RequestBody UserComment userComment) {
@@ -71,6 +72,7 @@ public class UserCommentController {
    * @param userCommentId the user comment id
    * @return the user comment
    */
+  @ApiOperation(value = "Gets a single comment.")
   @GetMapping(value = "{user_comments}", produces = MediaType.APPLICATION_JSON_VALUE)
   public UserComment get(@PathVariable("user_comments") UUID userCommentId) {
     UserComment userComment = userCommentRepository.findById(userCommentId).get();
@@ -82,6 +84,7 @@ public class UserCommentController {
    *
    * @param userCommentId the user comment id
    */
+  @ApiOperation(value = "Deletes a user comment.")
   @DeleteMapping(value = "{userCommentId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("userCommentId") UUID userCommentId) {

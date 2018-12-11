@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiOperation;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
