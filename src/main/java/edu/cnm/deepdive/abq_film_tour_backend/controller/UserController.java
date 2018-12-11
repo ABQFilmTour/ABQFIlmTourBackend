@@ -5,6 +5,8 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.UUID;
 import javax.transaction.Transactional;
@@ -53,6 +55,7 @@ public class UserController {
    *
    * @return a list of users ordered by their ID.
    */
+  @ApiOperation(value = "Gets all users", notes = "Retrieves all users with their ID in an list.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<GoogleUser> list() {
     return userRepository.findAllByOrderByIdAsc();
@@ -64,6 +67,7 @@ public class UserController {
    * @param googleUser the google user
    * @return the response entity
    */
+  @ApiOperation(value = "Posts a google user.", notes = "Posts a googel user.")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<GoogleUser> post(@RequestBody GoogleUser googleUser) {
@@ -77,6 +81,7 @@ public class UserController {
    * @param userId the user id
    * @return the google user
    */
+  @ApiOperation(value = "Gets google user", notes = "Gets google user id and returns google user.")
   @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public GoogleUser get(@PathVariable("userId") UUID userId) {
     return userRepository.findById(userId).get();
@@ -87,6 +92,7 @@ public class UserController {
    *
    * @param userId the user id
    */
+  @ApiOperation(value = "Deletes google user", notes = "Takes user id as a parameter and deletes google user.")
   @Transactional
   @DeleteMapping(value = "{userId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -105,6 +111,7 @@ public class UserController {
    *
    * @param user an updated user.
    */
+  @ApiOperation(value = "Patches a google user", notes = "Patches a user. This will overwrite everything. if just changing one field all other current fields must be included.")
   @PatchMapping
   public void patch(@RequestBody GoogleUser user) {
     userRepository.save(user);

@@ -3,6 +3,7 @@ package edu.cnm.deepdive.abq_film_tour_backend.controller;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class UserCommentController {
    *
    * @return a list of comments ordered by their ID.
    */
+  @ApiOperation(value = "")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<UserComment> list() {
     return userCommentRepository.findAllByOrderByIdAsc();
