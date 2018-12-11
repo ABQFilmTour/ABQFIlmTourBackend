@@ -6,7 +6,7 @@
 
   <groupId>edu.cnm.deepdive</groupId>
   <artifactId>abq_film_tour_backend</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>abq_film_tour_backend</name>
@@ -66,6 +66,30 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework.security.oauth</groupId>
+      <artifactId>spring-security-oauth2</artifactId>
+      <version>2.3.4.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client</artifactId>
+      <version>1.23.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>1.5.18</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -74,6 +98,45 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+        <plugin>
+          <groupId>com.github.kongchen</groupId>
+          <artifactId>swagger-maven-plugin</artifactId>
+          <version>3.1.7</version>
+          <configuration>
+            <apiSources>
+              <apiSource>
+                <springmvc>true</springmvc>
+                <locations>
+                  <location>edu.cnm.deepdive.abq_film_tour_backend</location>
+                </locations>
+                <schemes>
+                  <scheme>https</scheme>
+                </schemes>
+                <host>jscpeterson.com</host>
+                <basePath>/rest/</basePath>
+                <info>
+                  <title>Swagger documentation for the Project Odeon backend</title>
+                  <version>v2</version>
+                  <description>Documentation for the Project Odeon backend</description>
+                </info>
+                <templatePath>classpath:/templates/markdown.hbs</templatePath>
+                <!--<templatePath>classpath:/templates/strapdown.html.hbs</templatePath>-->
+                <outputPath>${basedir}/docs/rest/api.md</outputPath>
+                <!--<outputPath>${basedir}/docs/rest/api.html</outputPath>-->
+                <swaggerDirectory>${basedir}/docs/rest</swaggerDirectory>
+                <outputFormats>json,yaml</outputFormats>
+              </apiSource>
+            </apiSources>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>compile</phase>
+              <goals>
+                <goal>generate</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
     </plugins>
   </build>
 

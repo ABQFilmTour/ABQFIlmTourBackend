@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+/**
+ * This is the configuration class, primarily for interpreting the API key held in a secret
+ * properties file.
+ */
 @Configuration
 @PropertySource(value = "classpath:secret.properties")
 public class Config {

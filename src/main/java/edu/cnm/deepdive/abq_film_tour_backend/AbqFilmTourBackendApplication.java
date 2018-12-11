@@ -3,27 +3,30 @@ package edu.cnm.deepdive.abq_film_tour_backend;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.hateoas.config.EnableEntityLinks;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 /**
  * Master application class with a Main method.
  */
+@EnableWebSecurity
 @EnableEntityLinks
 @SpringBootApplication
-public class AbqFilmTourBackendApplication {
+public class AbqFilmTourBackendApplication extends ResourceServerConfigurerAdapter {
+
+  @Value("${oauth.clientId}")
+  private String clientId;
 
   private static FilmLocationRepository filmLocationRepository;
 
-  //TODO require oauth
-
-  /**
-   * Instantiates the application class.
-   *
-   * @param filmLocationRepository the film location repository
-   */
   @Autowired
   AbqFilmTourBackendApplication(FilmLocationRepository filmLocationRepository) {
     this.filmLocationRepository = filmLocationRepository;
@@ -43,5 +46,16 @@ public class AbqFilmTourBackendApplication {
         System.out.println("Failed to populate database, check your CSV file.");
       }
     }
+  }
+
+  @Override
+  public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+    resources.resourceId(clientId);
+  }
+
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    http.authorizeRequests().anyRequest().hasRole("USER");
   }
 }
