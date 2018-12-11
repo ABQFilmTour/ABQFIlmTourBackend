@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.dicewareservice;
+package edu.cnm.deepdive.abq_film_tour_backend.service;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
