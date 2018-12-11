@@ -3,6 +3,8 @@ package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.gson.annotations.SerializedName;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.net.URI;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -79,6 +81,7 @@ public class Production {
    *
    * @return the id
    */
+  @ApiOperation(value = "Gets production Id", notes = "returns Id")
   public UUID getId() {
     return id;
   }
@@ -88,6 +91,7 @@ public class Production {
    *
    * @param id the id
    */
+  @ApiOperation(value = "Sets production Id", notes = "returns this Id")
   public void setId(UUID id) {
     this.id = id;
   }
@@ -97,6 +101,7 @@ public class Production {
    *
    * @return the imdb id
    */
+  @ApiOperation(value = "Gets imdb Id", notes = "returns imdbId")
   public String getImdbId() {
     return imdbId;
   }
@@ -106,6 +111,7 @@ public class Production {
    *
    * @param imdbId the imdb id
    */
+  @ApiOperation(value = "Sets imdbId to a string", notes = "returns this imdbId and sets it to imdbId")
   public void setImdbId(String imdbId) {
     this.imdbId = imdbId;
   }
@@ -115,6 +121,7 @@ public class Production {
    *
    * @return the title
    */
+  @ApiOperation(value = "Gets production title", notes = "returns title")
   public String getTitle() {
     return title;
   }
@@ -124,6 +131,7 @@ public class Production {
    *
    * @param title the title
    */
+  @ApiOperation(value = "Sets title to string.", notes = "returns this title and sets it to title")
   public void setTitle(String title) {
     this.title = title;
   }
@@ -133,6 +141,7 @@ public class Production {
    *
    * @return a type of movie, series, or episode.
    */
+  @ApiOperation(value = "Gets valid string type", notes = "returns this type")
   public String getType() {
     return type;
   }
@@ -142,6 +151,7 @@ public class Production {
    *
    * @param type a type of movie, series, or episode.
    */
+  @ApiOperation(value = "Set valid options", notes = "a type of movie, series or episode")
   public void setType(String type) {
     this.type = type;
   }
@@ -151,6 +161,7 @@ public class Production {
    *
    * @return the release year
    */
+  @ApiOperation(value = "Gets release year", notes = "returns release year")
   public String getReleaseYear() {
     return releaseYear;
   }
@@ -160,6 +171,7 @@ public class Production {
    *
    * @param releaseYear the release year
    */
+  @ApiOperation(value = "Sets release year", notes = "sets this release year")
   public void setReleaseYear(String releaseYear) {
     this.releaseYear = releaseYear;
   }
@@ -169,6 +181,7 @@ public class Production {
    *
    * @return plot information.
    */
+  @ApiOperation(value = "Sets plot information", notes = "returns plot information")
   public String getPlot() {
     return plot;
   }
@@ -178,6 +191,7 @@ public class Production {
    *
    * @param plot plot information.
    */
+  @ApiOperation(value = "Sets plot information", notes = "sets this plot")
   public void setPlot(String plot) {
     this.plot = plot;
   }
@@ -187,6 +201,7 @@ public class Production {
    *
    * @return the href
    */
+  @ApiOperation(value = "Gets Href", notes = "returns href link")
   public URI getHref() {
     return entityLinks.linkForSingleResource(FilmLocation.class, id).toUri();
   }

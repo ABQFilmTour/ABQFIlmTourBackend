@@ -2,6 +2,7 @@ package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ImageRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @ExposesResourceFor(Image.class)
 @RequestMapping("/images")
+
 public class ImageController {
 private ImageRepository imageRepository;
 
@@ -42,6 +44,7 @@ private ImageRepository imageRepository;
    *
    * @return a list of productions ordered by their ID.
    */
+  @ApiOperation(value = "Orders Images", notes = "Orders by Id ascending.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Image> list(){return imageRepository.findAllByOrderByIdAsc();}
 
@@ -51,6 +54,7 @@ private ImageRepository imageRepository;
    * @param image the image
    * @return the response entity
    */
+  @ApiOperation(value = "Post Image", notes = "Saves image to image repository")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Image> post(@RequestBody Image image){
@@ -64,6 +68,7 @@ private ImageRepository imageRepository;
    * @param imageId the image id
    * @return the image
    */
+  @ApiOperation(value = "Gets an image", notes = "Finds image by the image UUID")
   @GetMapping(value = "{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Image get(@PathVariable("imageId") UUID imageId){
     return imageRepository.findById(imageId).get();
@@ -74,6 +79,8 @@ private ImageRepository imageRepository;
    *
    * @param imageId the image id
    */
+
+  @ApiOperation(value = "Deletes an image", notes = "Enables you to delete an image from database")
   @DeleteMapping(value = "{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("imageId") UUID imageId){
