@@ -51,7 +51,7 @@ public class Parser {
   private static final String RESOURCE_FILE = "cityfilmlocations.csv";
   private static final String CITY_USER_NAME = "City of Albuquerque";
   private static final String OMDB_POSTER_URL_FORMAT = "https://img.omdbapi.com/?i=%s&h=%s&apikey=2f9b95cb";
-  private static final int OMDB_POSTER_HEIGHT = 600;
+  private static final int OMDB_POSTER_HEIGHT = 600; //BB poster currently on the front end is 400px high
 
   private String apikey;
 
