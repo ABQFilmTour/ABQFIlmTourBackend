@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.ApiOperation;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
@@ -103,7 +102,7 @@ public class FilmLocation {
    * Flag to verify that a location has been approved by an admin and can be displayed if security
    * is tightened.
    */
-  private boolean isApproved;
+  private boolean approved;
 
   /**
    * Gets id.
@@ -349,10 +348,10 @@ public class FilmLocation {
   }
 
   public boolean isApproved() {
-    return isApproved;
+    return approved;
   }
 
   public void setApproved(boolean approved) {
-    isApproved = approved;
+    this.approved = approved;
   }
 }

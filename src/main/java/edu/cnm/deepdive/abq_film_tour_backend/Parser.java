@@ -101,6 +101,7 @@ public class Parser {
     int successes = 0;
     GoogleUser cityUser = new GoogleUser();
     cityUser.setGoogleName(CITY_USER_NAME);
+    cityUser.setBanned(false);
     userRepository.save(cityUser);
     FileInputStream fileInputStream = new FileInputStream(RESOURCE_FILE);
     System.out.println("Populating database...");
@@ -118,6 +119,7 @@ public class Parser {
           cityUserComment.setUser(cityUser);
           cityUserComment.setFilmLocation(newLocation);
           cityUserComment.setText(cityPost);
+          cityUserComment.setApproved(true);
           userCommentRepository.save(cityUserComment);
           successes++;
         } catch (NumberFormatException | DataIntegrityViolationException | DataException e) {
@@ -149,6 +151,7 @@ public class Parser {
     if (!record.get(INDEX_ORIGINALDETAILS).equals(NULL_STRING)) {
       newLocation.setOriginalDetails(record.get(INDEX_ORIGINALDETAILS));
     }
+    newLocation.setApproved(true);
     filmLocationRepository.save(newLocation);
   }
 

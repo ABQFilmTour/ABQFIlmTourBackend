@@ -1,9 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
@@ -19,7 +17,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -84,7 +81,7 @@ public class UserComment {
    * Flag to verify that a comment has been approved by an admin and can be displayed if security
    * is tightened. Probably unnecessary for now, but better to have if we implement later.
    */
-  private boolean isApproved;
+  private boolean approved;
 
   /**
    * Gets id.
@@ -187,10 +184,10 @@ public class UserComment {
   }
 
   public boolean isApproved() {
-    return isApproved;
+    return approved;
   }
 
   public void setApproved(boolean approved) {
-    isApproved = approved;
+    this.approved = approved;
   }
 }
