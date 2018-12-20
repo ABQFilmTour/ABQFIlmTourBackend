@@ -55,7 +55,10 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       } else {
         throw new BadCredentialsException(idTokenString);
       }
-    } catch (GeneralSecurityException | IOException e) {
+    } catch (BadCredentialsException e) {
+      throw new InvalidTokenException(e.getMessage());
+    }
+    catch (GeneralSecurityException | IOException e) {
       throw new RuntimeException(e);
     }
   }

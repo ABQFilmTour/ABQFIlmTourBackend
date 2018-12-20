@@ -667,6 +667,8 @@ definitions:
         type: "string"
       plot:
         type: "string"
+      posterUrl:
+        type: "string"
       href:
         type: "string"
         format: "uri"

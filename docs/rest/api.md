@@ -3222,6 +3222,21 @@ Takes user id as a parameter and deletes google user.
         </tr>
     
         <tr>
+            <td><strong>posterUrl</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
             <td><strong>href</strong></td>
             <td>
                 
