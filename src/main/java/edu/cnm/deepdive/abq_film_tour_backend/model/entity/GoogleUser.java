@@ -48,6 +48,13 @@ public class GoogleUser {
 
   private String gmailAddress;
 
+  //Flag to check if a user is banned from using the app
+  private boolean isBanned;
+
+  //Reason for any ban, maybe this could have a value without a ban to display a warning message to
+  // a user.
+  private String banReason;
+
   private static EntityLinks getEntityLinks() {
     return entityLinks;
   }
@@ -130,4 +137,20 @@ public class GoogleUser {
    * @return the uri
    */
   public URI getHref(){return entityLinks.linkForSingleResource(GoogleUser.class, id).toUri();}
+
+  public boolean isBanned() {
+    return isBanned;
+  }
+
+  public void setBanned(boolean banned) {
+    isBanned = banned;
+  }
+
+  public String getBanReason() {
+    return banReason;
+  }
+
+  public void setBanReason(String banReason) {
+    this.banReason = banReason;
+  }
 }

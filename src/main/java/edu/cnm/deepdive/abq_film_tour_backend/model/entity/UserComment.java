@@ -81,6 +81,12 @@ public class UserComment {
   private GoogleUser user;
 
   /**
+   * Flag to verify that a comment has been approved by an admin and can be displayed if security
+   * is tightened. Probably unnecessary for now, but better to have if we implement later.
+   */
+  private boolean isApproved;
+
+  /**
    * Gets id.
    *
    * @return the id
@@ -178,5 +184,13 @@ public class UserComment {
    */
   public URI getHref() {
     return entityLinks.linkForSingleResource(FilmLocation.class, id).toUri();
+  }
+
+  public boolean isApproved() {
+    return isApproved;
+  }
+
+  public void setApproved(boolean approved) {
+    isApproved = approved;
   }
 }

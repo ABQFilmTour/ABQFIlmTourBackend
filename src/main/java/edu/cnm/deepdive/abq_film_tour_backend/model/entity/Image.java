@@ -74,7 +74,11 @@ public class Image {
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
 
-
+  /**
+   * Flag to verify that an image has been approved by an admin and can be displayed if security
+   * is tightened. Probably unnecessary for now, but better to have if we implement later.
+   */
+  private boolean isApproved;
 
   /**
    * Instantiates a new Image.
@@ -226,4 +230,11 @@ public class Image {
    */
   public URI getHref(){return entityLinks.linkForSingleResource(Image.class, id).toUri();}
 
+  public boolean isApproved() {
+    return isApproved;
+  }
+
+  public void setApproved(boolean approved) {
+    isApproved = approved;
+  }
 }

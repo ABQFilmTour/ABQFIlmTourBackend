@@ -100,6 +100,12 @@ public class FilmLocation {
   private String originalDetails;
 
   /**
+   * Flag to verify that a location has been approved by an admin and can be displayed if security
+   * is tightened.
+   */
+  private boolean isApproved;
+
+  /**
    * Gets id.
    *
    * @return the id
@@ -342,4 +348,11 @@ public class FilmLocation {
     return entityLinks.linkForSingleResource(FilmLocation.class, id).toUri();
   }
 
+  public boolean isApproved() {
+    return isApproved;
+  }
+
+  public void setApproved(boolean approved) {
+    isApproved = approved;
+  }
 }
