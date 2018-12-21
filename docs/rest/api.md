@@ -2868,6 +2868,21 @@ Takes user id as a parameter and deletes google user.
         </tr>
     
         <tr>
+            <td><strong>approved</strong></td>
+            <td>
+                
+                    
+                    boolean
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
             <td><strong>href</strong></td>
             <td>
                 
@@ -2947,6 +2962,36 @@ Takes user id as a parameter and deletes google user.
     
         <tr>
             <td><strong>gmailAddress</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>banned</strong></td>
+            <td>
+                
+                    
+                    boolean
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>banReason</strong></td>
             <td>
                 
                     
@@ -3089,6 +3134,21 @@ Takes user id as a parameter and deletes google user.
                 
                     <a href="#/definitions/GoogleUser">GoogleUser</a>
                     
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>approved</strong></td>
+            <td>
+                
+                    
+                    boolean
                 
             </td>
             <td>
@@ -3350,6 +3410,21 @@ Takes user id as a parameter and deletes google user.
                 
                     <a href="#/definitions/GoogleUser">GoogleUser</a>
                     
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>approved</strong></td>
+            <td>
+                
+                    
+                    boolean
                 
             </td>
             <td>

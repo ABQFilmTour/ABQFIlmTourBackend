@@ -779,6 +779,9 @@
         "originalDetails" : {
           "type" : "string"
         },
+        "approved" : {
+          "type" : "boolean"
+        },
         "href" : {
           "type" : "string",
           "format" : "uri"
@@ -799,6 +802,12 @@
           "type" : "string"
         },
         "gmailAddress" : {
+          "type" : "string"
+        },
+        "banned" : {
+          "type" : "boolean"
+        },
+        "banReason" : {
           "type" : "string"
         },
         "href" : {
@@ -833,6 +842,9 @@
         },
         "user" : {
           "$ref" : "#/definitions/GoogleUser"
+        },
+        "approved" : {
+          "type" : "boolean"
         },
         "href" : {
           "type" : "string",
@@ -894,6 +906,9 @@
         },
         "user" : {
           "$ref" : "#/definitions/GoogleUser"
+        },
+        "approved" : {
+          "type" : "boolean"
         },
         "href" : {
           "type" : "string",

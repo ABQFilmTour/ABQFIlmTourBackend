@@ -610,6 +610,8 @@ definitions:
         format: "int64"
       originalDetails:
         type: "string"
+      approved:
+        type: "boolean"
       href:
         type: "string"
         format: "uri"
@@ -624,6 +626,10 @@ definitions:
       googleName:
         type: "string"
       gmailAddress:
+        type: "string"
+      banned:
+        type: "boolean"
+      banReason:
         type: "string"
       href:
         type: "string"
@@ -648,6 +654,8 @@ definitions:
         format: "uuid"
       user:
         $ref: "#/definitions/GoogleUser"
+      approved:
+        type: "boolean"
       href:
         type: "string"
         format: "uri"
@@ -690,6 +698,8 @@ definitions:
         format: "uuid"
       user:
         $ref: "#/definitions/GoogleUser"
+      approved:
+        type: "boolean"
       href:
         type: "string"
         format: "uri"
