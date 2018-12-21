@@ -6,6 +6,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
@@ -32,6 +34,12 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
   @Value("${oauth.clientId}")
   private String clientId;
 
+  private UserRepository userRepository;
+
+  private GoogleTokenServices(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
   private final AccessTokenConverter converter = new DefaultAccessTokenConverter();
 
   @Override
@@ -46,8 +54,10 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       GoogleIdToken idToken = verifier.verify(idTokenString);
       if (idToken != null) {
         Payload payload = idToken.getPayload();
+        handlePayload(payload);
         Collection<GrantedAuthority> grants =
             Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        //(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
         Authentication base =
             new UsernamePasswordAuthenticationToken(payload.getSubject(), idTokenString, grants);
         OAuth2Request request = converter.extractAuthentication(payload).getOAuth2Request();
@@ -63,7 +73,20 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
     }
   }
 
-  //TODO MEthod to check user, check if user is banned, create user in database if not
+  public void handlePayload(Payload payload) {
+    String userId = payload.getUserId();
+    String name = payload.get("name").toString();
+    String email = payload.getEmail();
+    GoogleUser user = userRepository.findByGoogleId(userId);
+    if (user == null) { //User has not been put into the database yet
+      GoogleUser newUser = new GoogleUser();
+      newUser.setGoogleId(userId);
+      newUser.setGoogleName(name);
+      newUser.setGmailAddress(email);
+      newUser.setBanned(false);
+      userRepository.save(newUser);
+    }
+  }
 
   @Override
   public OAuth2AccessToken readAccessToken(String s) {

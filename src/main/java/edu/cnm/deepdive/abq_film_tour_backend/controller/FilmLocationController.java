@@ -20,6 +20,7 @@ import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -88,6 +89,7 @@ public class FilmLocationController {
   @ApiOperation(value = "Posts a film location.")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
+//  @Secured()
   public ResponseEntity<FilmLocation> post(@RequestBody FilmLocation filmLocation) {
     if (filmLocation.getProductionId() != null) {
       filmLocation.setProduction(
