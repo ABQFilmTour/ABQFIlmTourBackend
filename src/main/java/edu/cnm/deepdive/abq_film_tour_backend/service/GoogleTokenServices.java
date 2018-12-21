@@ -56,12 +56,14 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
         throw new BadCredentialsException(idTokenString);
       }
     } catch (BadCredentialsException e) {
-      throw new InvalidTokenException(e.getMessage());
+      throw new InvalidTokenException("Bad token");
     }
     catch (GeneralSecurityException | IOException e) {
       throw new RuntimeException(e);
     }
   }
+
+  //TODO MEthod to check user, check if user is banned, create user in database if not
 
   @Override
   public OAuth2AccessToken readAccessToken(String s) {
