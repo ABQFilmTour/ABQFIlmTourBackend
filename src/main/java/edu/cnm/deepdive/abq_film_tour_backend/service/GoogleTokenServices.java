@@ -16,6 +16,7 @@ import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,9 +31,14 @@ import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Component
 public class GoogleTokenServices implements ResourceServerTokenServices {
+
+  private static final int HTTP_FORBIDDEN = 403;
+  private static final String BAD_TOKEN_MESSAGE = "Bad token";
+  private static final String BANNED_USER_MESSAGE_FORMAT = "User is banned for the following reason: %s";
 
   private String adminId;
 
@@ -69,13 +75,12 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
         OAuth2Request request = converter.extractAuthentication(payload).getOAuth2Request();
         return new OAuth2Authentication(request, base);
       } else {
-        throw new BadCredentialsException("Bad token");
+        throw new BadCredentialsException(BAD_TOKEN_MESSAGE);
       }
-    } catch (AccessDeniedException e) {
-      throw new InvalidTokenException("User is banned"); //TODO Figure out how to throw a 403
-    }
-      catch (BadCredentialsException e) {
-      throw new InvalidTokenException("Bad token");
+    } catch (UserBannedException e) {
+      throw new UserBannedException(e.getMessage());
+    } catch (BadCredentialsException e) {
+      throw new InvalidTokenException(BAD_TOKEN_MESSAGE);
     } catch (GeneralSecurityException | IOException e) {
       throw new RuntimeException(e);
     }
@@ -99,7 +104,7 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       System.out.println("Admin request");
       grants.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
     } else if (user.isBanned()) {
-      throw new AccessDeniedException("User is banned.");
+      throw new UserBannedException(String.format(BANNED_USER_MESSAGE_FORMAT, user.getBanReason()));
     } //TODO Add superuser roles
     grants.add(new SimpleGrantedAuthority("ROLE_USER"));
     return new UsernamePasswordAuthenticationToken(payload.getSubject(), idTokenString, grants);
@@ -108,6 +113,20 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
   @Override
   public OAuth2AccessToken readAccessToken(String s) {
     return null;
+  }
+
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  public class UserBannedException extends InvalidTokenException {
+
+    public UserBannedException(String msg) {
+      super(msg);
+    }
+
+    @Override
+    public int getHttpErrorCode() {
+      return HTTP_FORBIDDEN;
+    }
+
   }
 
 }
