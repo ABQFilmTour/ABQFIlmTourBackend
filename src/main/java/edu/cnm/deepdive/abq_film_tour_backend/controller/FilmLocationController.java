@@ -120,6 +120,7 @@ public class FilmLocationController {
    *
    * @param filmLocation the updated film location
    */
+  @Secured("ROLE_ADMIN")
   @ApiOperation(value = "Patches a single film location", notes = "Patches a film location. All data will be overwritten - current fields to stay the same must be included as well.")
   @PatchMapping
   public void patch(@RequestBody FilmLocation filmLocation) {
@@ -133,6 +134,7 @@ public class FilmLocationController {
    *
    * @param filmLocationId the film location id
    */
+  @Secured("ROLE_ADMIN")
   @ApiOperation(value = "Deletes a film location", notes = "Deletes a film location")
   @Transactional
   @DeleteMapping(value = "{filmLocationId}")
@@ -205,6 +207,7 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @param imageId the image id
    */
+  @Secured("ROLE_ADMIN")
   @ApiOperation(value = "Deletes an image on a film location.")
   @DeleteMapping(value = "{filmLocationId}/images/{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -218,6 +221,7 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @param image the updated image
    */
+  @Secured("ROLE_ADMIN")
   @ApiOperation(value = "Patches an image. All data will be overwritten.")
   @PatchMapping(value="{filmLocationId}/images/")
   public void patch(@PathVariable UUID filmLocationId, @RequestBody Image image) {
@@ -280,6 +284,7 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @param userCommentId the user comment id
    */
+  @Secured("ROLE_ADMIN")
   @ApiOperation(value = "Deletes a UserComment from a location.")
   @DeleteMapping(value = "{filmLocationId}/user_comments/{userCommentId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -293,6 +298,7 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @param userComment the updated user comment
    */
+  @Secured("ROLE_ADMIN")
   @ApiOperation(value="Patches a UserComment on a location. All data to stay the same must be included.")
   @PatchMapping(value="{filmLocationId}/user_comments")
   public void patch(@PathVariable UUID filmLocationId, @RequestBody UserComment userComment) {

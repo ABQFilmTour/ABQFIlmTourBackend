@@ -102,6 +102,7 @@ public class Parser {
     GoogleUser cityUser = new GoogleUser();
     cityUser.setGoogleName(CITY_USER_NAME);
     cityUser.setBanned(false);
+    //TODO Grant superuser privileges
     userRepository.save(cityUser);
     FileInputStream fileInputStream = new FileInputStream(RESOURCE_FILE);
     System.out.println("Populating database...");
@@ -170,7 +171,6 @@ public class Parser {
       production = retrofitClientService.getRetrofit().create(ProductionService.class)
           .get(newLocation.getImdbId(), apikey).execute().body();
       production.setPosterUrl(createProductionPosterUrl(production));
-      System.out.println(production.getPosterUrl());
       productionRepository.save(production);
     }
     return production;

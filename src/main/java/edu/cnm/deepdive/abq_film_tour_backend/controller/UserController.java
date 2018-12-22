@@ -60,7 +60,6 @@ public class UserController {
    */
   @ApiOperation(value = "Gets all users", notes = "Retrieves all users with their ID in an list.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  @Secured("ROLE_ADMIN")
   public List<GoogleUser> list() {
     return userRepository.findAllByOrderByIdAsc();
   }
@@ -74,7 +73,6 @@ public class UserController {
   @ApiOperation(value = "Posts a google user.", notes = "Posts a googel user.")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  @Secured("ROLE_ADMIN")
   public ResponseEntity<GoogleUser> post(@RequestBody GoogleUser googleUser) {
     userRepository.save(googleUser);
     return ResponseEntity.created(googleUser.getHref()).body(googleUser);
@@ -88,7 +86,6 @@ public class UserController {
    */
   @ApiOperation(value = "Gets google user", notes = "Gets google user id and returns google user.")
   @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  @Secured("ROLE_ADMIN")
   public GoogleUser get(@PathVariable("userId") UUID userId) {
     return userRepository.findById(userId).get();
   }
@@ -102,7 +99,6 @@ public class UserController {
   @Transactional
   @DeleteMapping(value = "{userId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  @Secured("ROLE_ADMIN")
   public void delete(@PathVariable("userId") UUID userId) {
     GoogleUser user = userRepository.findById(userId).get();
     List<UserComment> userComments = userCommentRepository.findAllByUser(user);
@@ -120,7 +116,6 @@ public class UserController {
    */
   @ApiOperation(value = "Patches a google user", notes = "Patches a user. This will overwrite everything. if just changing one field all other current fields must be included.")
   @PatchMapping
-  @Secured("ROLE_ADMIN")
   public void patch(@RequestBody GoogleUser user) {
     userRepository.save(user);
   }

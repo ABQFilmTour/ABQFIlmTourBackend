@@ -72,8 +72,7 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       }
     } catch (BadCredentialsException e) {
       throw new InvalidTokenException("Bad token");
-    }
-    catch (GeneralSecurityException | IOException e) {
+    } catch (GeneralSecurityException | IOException e) {
       throw new RuntimeException(e);
     }
   }
@@ -91,15 +90,13 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       newUser.setGmailAddress(email);
       newUser.setBanned(false);
       userRepository.save(newUser);
-    }
-    else if (userId.equals(adminId)) {
+    } else if (userId.equals(adminId)) {
       System.out.println("YOU ARE THE ADMIN!!!!!!!!");
       grants.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-    }
-    else if (user.isBanned()) {
+    } else if (user.isBanned()) {
       //TODO Force a 403 exception
       throw new BadCredentialsException("Banned");
-    }
+    } //TODO Add superuser roles
     grants.add(new SimpleGrantedAuthority("ROLE_USER"));
     return new UsernamePasswordAuthenticationToken(payload.getSubject(), idTokenString, grants);
   }

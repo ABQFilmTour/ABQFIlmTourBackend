@@ -77,6 +77,7 @@ public class Production {
   private String plot;
 
   //URL for the poster associated with this image
+  //FIXME Poster URL is exposed
   private String posterUrl;
 
   /**

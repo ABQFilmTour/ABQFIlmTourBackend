@@ -10,6 +10,7 @@ import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @ExposesResourceFor(Image.class)
 @RequestMapping("/images")
-
 public class ImageController {
-private ImageRepository imageRepository;
+
+  private ImageRepository imageRepository;
 
   /**
    * Instantiates a new Image controller.
@@ -35,7 +36,7 @@ private ImageRepository imageRepository;
    * @param imageRepository the image repository
    */
   @Autowired
-  public ImageController(ImageRepository imageRepository){
+  public ImageController(ImageRepository imageRepository) {
     this.imageRepository = imageRepository;
   }
 
@@ -46,7 +47,9 @@ private ImageRepository imageRepository;
    */
   @ApiOperation(value = "Orders Images", notes = "Orders by Id ascending.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Image> list(){return imageRepository.findAllByOrderByIdAsc();}
+  public List<Image> list() {
+    return imageRepository.findAllByOrderByIdAsc();
+  }
 
   /**
    * Post response entity.
@@ -57,7 +60,7 @@ private ImageRepository imageRepository;
   @ApiOperation(value = "Post Image", notes = "Saves image to image repository")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Image> post(@RequestBody Image image){
+  public ResponseEntity<Image> post(@RequestBody Image image) {
     imageRepository.save(image);
     return ResponseEntity.created(image.getHref()).body(image);
   }
@@ -70,7 +73,7 @@ private ImageRepository imageRepository;
    */
   @ApiOperation(value = "Gets an image", notes = "Finds image by the image UUID")
   @GetMapping(value = "{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Image get(@PathVariable("imageId") UUID imageId){
+  public Image get(@PathVariable("imageId") UUID imageId) {
     return imageRepository.findById(imageId).get();
   }
 
@@ -79,11 +82,11 @@ private ImageRepository imageRepository;
    *
    * @param imageId the image id
    */
-
+  @Secured("ROLE_ADMIN")
   @ApiOperation(value = "Deletes an image", notes = "Enables you to delete an image from database")
   @DeleteMapping(value = "{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable("imageId") UUID imageId){
+  public void delete(@PathVariable("imageId") UUID imageId) {
     imageRepository.deleteById(imageId);
   }
 
