@@ -9,6 +9,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -70,14 +71,18 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       } else {
         throw new BadCredentialsException("Bad token");
       }
-    } catch (BadCredentialsException e) {
+    } catch (AccessDeniedException e) {
+      throw new InvalidTokenException("User is banned"); //TODO Figure out how to throw a 403
+    }
+      catch (BadCredentialsException e) {
       throw new InvalidTokenException("Bad token");
     } catch (GeneralSecurityException | IOException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public Authentication handlePayload(Payload payload, String idTokenString) {
+  public Authentication handlePayload(Payload payload, String idTokenString)
+      throws AccessDeniedException {
     HashSet<GrantedAuthority> grants = new HashSet<>();
     String userId = payload.getUserId();
     String name = payload.get("name").toString();
@@ -91,11 +96,10 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       newUser.setBanned(false);
       userRepository.save(newUser);
     } else if (userId.equals(adminId)) {
-      System.out.println("YOU ARE THE ADMIN!!!!!!!!");
+      System.out.println("Admin request");
       grants.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
     } else if (user.isBanned()) {
-      //TODO Force a 403 exception
-      throw new BadCredentialsException("Banned");
+      throw new AccessDeniedException("User is banned.");
     } //TODO Add superuser roles
     grants.add(new SimpleGrantedAuthority("ROLE_USER"));
     return new UsernamePasswordAuthenticationToken(payload.getSubject(), idTokenString, grants);
