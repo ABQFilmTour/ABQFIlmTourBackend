@@ -10,8 +10,8 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,12 +64,7 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       GoogleIdToken idToken = verifier.verify(idTokenString);
       if (idToken != null) {
         Payload payload = idToken.getPayload();
-        handlePayload(payload);
-        Collection<GrantedAuthority> grants =
-            Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
-        //(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
-        Authentication base =
-            new UsernamePasswordAuthenticationToken(payload.getSubject(), idTokenString, grants);
+        Authentication base = handlePayload(payload, idTokenString);
         OAuth2Request request = converter.extractAuthentication(payload).getOAuth2Request();
         return new OAuth2Authentication(request, base);
       } else {
@@ -83,7 +78,8 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
     }
   }
 
-  public void handlePayload(Payload payload) {
+  public Authentication handlePayload(Payload payload, String idTokenString) {
+    HashSet<GrantedAuthority> grants = new HashSet<>();
     String userId = payload.getUserId();
     String name = payload.get("name").toString();
     String email = payload.getEmail();
@@ -98,10 +94,14 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
     }
     else if (userId.equals(adminId)) {
       System.out.println("YOU ARE THE ADMIN!!!!!!!!");
+      grants.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
     else if (user.isBanned()) {
       //TODO Force a 403 exception
+      throw new BadCredentialsException("Banned");
     }
+    grants.add(new SimpleGrantedAuthority("ROLE_USER"));
+    return new UsernamePasswordAuthenticationToken(payload.getSubject(), idTokenString, grants);
   }
 
   @Override

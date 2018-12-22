@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
 /**
  * This is the configuration class, primarily for interpreting the API key held in a secret
@@ -26,5 +28,14 @@ public class Config {
 
   @Bean
   public String adminId() {return this.adminId;}
+
+  @Configuration
+  @EnableGlobalMethodSecurity(
+      prePostEnabled = true,
+      securedEnabled = true,
+      jsr250Enabled = true)
+  public class MethodSecurityConfig
+      extends GlobalMethodSecurityConfiguration {
+  }
 
 }
