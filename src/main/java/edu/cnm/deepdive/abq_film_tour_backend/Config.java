@@ -16,9 +16,15 @@ public class Config {
   @Value("${api_key}")
   private String apikey;
 
+  @Value("${admin_id}")
+  private String adminId;
+
   @Bean
   public String apiKey() {
     return this.apikey;
   }
+
+  @Bean
+  public String adminId() {return this.adminId;}
 
 }

@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
 import java.util.Collections;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,8 +33,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class GoogleTokenServices implements ResourceServerTokenServices {
 
+  private String adminId;
+
   @Value("${oauth.clientId}")
   private String clientId;
+
+  @Autowired
+  @Qualifier("adminId")
+  public void setAdminId(String adminId) {
+    this.adminId = adminId;
+  }
 
   private UserRepository userRepository;
 
@@ -63,7 +73,7 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
         OAuth2Request request = converter.extractAuthentication(payload).getOAuth2Request();
         return new OAuth2Authentication(request, base);
       } else {
-        throw new BadCredentialsException(idTokenString);
+        throw new BadCredentialsException("Bad token");
       }
     } catch (BadCredentialsException e) {
       throw new InvalidTokenException("Bad token");
@@ -85,6 +95,12 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       newUser.setGmailAddress(email);
       newUser.setBanned(false);
       userRepository.save(newUser);
+    }
+    else if (userId.equals(adminId)) {
+      System.out.println("YOU ARE THE ADMIN!!!!!!!!");
+    }
+    else if (user.isBanned()) {
+      //TODO Force a 403 exception
     }
   }
 
