@@ -21,6 +21,9 @@ public class Config {
   @Value("${admin_id}")
   private String adminId;
 
+  @Value("${super_ids}")
+  private String[] superIds;
+
   @Bean
   public String apiKey() {
     return this.apikey;
@@ -28,6 +31,9 @@ public class Config {
 
   @Bean
   public String adminId() {return this.adminId;}
+
+  @Bean
+  public String[] superIds() {return this.superIds;}
 
   @Configuration
   @EnableGlobalMethodSecurity(

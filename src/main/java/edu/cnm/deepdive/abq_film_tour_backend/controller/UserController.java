@@ -2,10 +2,8 @@ package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +13,6 @@ import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for the "GoogleUser" entity. Not required to contain any connections to other
- * entities.
+ * entities. This is the most restricted endpoint, only the admin has access.
  */
 @RestController
 @ExposesResourceFor(GoogleUser.class)

@@ -3,7 +3,6 @@ package edu.cnm.deepdive.abq_film_tour_backend.service;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import retrofit2.Retrofit;
-import retrofit2.Retrofit.Builder;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**

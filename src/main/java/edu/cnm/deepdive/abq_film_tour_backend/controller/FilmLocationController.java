@@ -8,9 +8,7 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.UUID;
@@ -89,7 +87,6 @@ public class FilmLocationController {
   @ApiOperation(value = "Posts a film location.")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-//  @Secured()
   public ResponseEntity<FilmLocation> post(@RequestBody FilmLocation filmLocation) {
     if (filmLocation.getProductionId() != null) {
       filmLocation.setProduction(
@@ -120,7 +117,7 @@ public class FilmLocationController {
    *
    * @param filmLocation the updated film location
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @ApiOperation(value = "Patches a single film location", notes = "Patches a film location. All data will be overwritten - current fields to stay the same must be included as well.")
   @PatchMapping
   public void patch(@RequestBody FilmLocation filmLocation) {
@@ -134,7 +131,7 @@ public class FilmLocationController {
    *
    * @param filmLocationId the film location id
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @ApiOperation(value = "Deletes a film location", notes = "Deletes a film location")
   @Transactional
   @DeleteMapping(value = "{filmLocationId}")
@@ -197,8 +194,7 @@ public class FilmLocationController {
   @ApiOperation(value = "Gets all images on a FilmLocation.")
   @GetMapping(value = "{filmLocationId}/images/{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Image getImage(@PathVariable UUID filmLocationId, @PathVariable UUID imageId){
-    Image image = imageRepository.findById(imageId).get();
-    return image;
+    return imageRepository.findById(imageId).get();
   }
 
   /**
@@ -207,7 +203,7 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @param imageId the image id
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @ApiOperation(value = "Deletes an image on a film location.")
   @DeleteMapping(value = "{filmLocationId}/images/{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -221,7 +217,7 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @param image the updated image
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @ApiOperation(value = "Patches an image. All data will be overwritten.")
   @PatchMapping(value="{filmLocationId}/images/")
   public void patch(@PathVariable UUID filmLocationId, @RequestBody Image image) {
@@ -274,8 +270,7 @@ public class FilmLocationController {
   @ApiOperation(value = "Gets a single UserComment from a location.")
   @GetMapping(value = "{filmLocationId}/user_comments/{userCommentId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public UserComment getUserComment(@PathVariable UUID filmLocationId, @PathVariable UUID userCommentId){
-    UserComment userComment = userCommentRepository.findById(userCommentId).get();
-    return userComment;
+    return userCommentRepository.findById(userCommentId).get();
   }
 
   /**
@@ -284,7 +279,7 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @param userCommentId the user comment id
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @ApiOperation(value = "Deletes a UserComment from a location.")
   @DeleteMapping(value = "{filmLocationId}/user_comments/{userCommentId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -298,7 +293,7 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @param userComment the updated user comment
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @ApiOperation(value="Patches a UserComment on a location. All data to stay the same must be included.")
   @PatchMapping(value="{filmLocationId}/user_comments")
   public void patch(@PathVariable UUID filmLocationId, @RequestBody UserComment userComment) {

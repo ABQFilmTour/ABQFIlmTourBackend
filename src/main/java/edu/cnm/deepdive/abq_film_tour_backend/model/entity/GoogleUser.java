@@ -55,6 +55,9 @@ public class GoogleUser {
   // a user.
   private String banReason;
 
+  //Indicates a user's privileges. Mostly only for records.
+  private String userRole = "user";
+
   private static EntityLinks getEntityLinks() {
     return entityLinks;
   }
@@ -152,5 +155,13 @@ public class GoogleUser {
 
   public void setBanReason(String banReason) {
     this.banReason = banReason;
+  }
+
+  public String getUserRole() {
+    return userRole;
+  }
+
+  public void setUserRole(String userRole) {
+    this.userRole = userRole;
   }
 }

@@ -9,8 +9,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
 import java.security.GeneralSecurityException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +40,8 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
   private static final String BAD_TOKEN_MESSAGE = "Bad token";
   private static final String BANNED_USER_MESSAGE_FORMAT = "User is banned for the following reason: %s";
 
+  private String[] superIds;
+
   private String adminId;
 
   @Value("${oauth.clientId}")
@@ -49,6 +51,12 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
   @Qualifier("adminId")
   public void setAdminId(String adminId) {
     this.adminId = adminId;
+  }
+
+  @Autowired
+  @Qualifier("superIds")
+  public void setSuperIds(String[] superIds) {
+    this.superIds = superIds;
   }
 
   private UserRepository userRepository;
@@ -86,8 +94,7 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
     }
   }
 
-  public Authentication handlePayload(Payload payload, String idTokenString)
-      throws AccessDeniedException {
+  private Authentication handlePayload(Payload payload, String idTokenString) {
     HashSet<GrantedAuthority> grants = new HashSet<>();
     String userId = payload.getUserId();
     String name = payload.get("name").toString();
@@ -100,12 +107,22 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       newUser.setGmailAddress(email);
       newUser.setBanned(false);
       userRepository.save(newUser);
-    } else if (userId.equals(adminId)) {
-      System.out.println("Admin request");
-      grants.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+      user = userRepository.findByGoogleId(userId);
     } else if (user.isBanned()) {
       throw new UserBannedException(String.format(BANNED_USER_MESSAGE_FORMAT, user.getBanReason()));
-    } //TODO Add superuser roles
+    } if (userId.equals(adminId)) {
+      grants.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+      if (user.getUserRole() == null) {
+        user.setUserRole("admin");
+        userRepository.save(user);
+      }
+    } if (userId.equals(adminId) || Arrays.asList(superIds).contains(userId)) {
+      grants.add(new SimpleGrantedAuthority("ROLE_SUPER"));
+      if (user.getUserRole() == null) {
+        user.setUserRole("superuser");
+        userRepository.save(user);
+      }
+    }
     grants.add(new SimpleGrantedAuthority("ROLE_USER"));
     return new UsernamePasswordAuthenticationToken(payload.getSubject(), idTokenString, grants);
   }
@@ -118,7 +135,7 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
   @ResponseStatus(HttpStatus.FORBIDDEN)
   public class UserBannedException extends InvalidTokenException {
 
-    public UserBannedException(String msg) {
+    UserBannedException(String msg) {
       super(msg);
     }
 

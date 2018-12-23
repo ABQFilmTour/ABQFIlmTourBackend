@@ -1,8 +1,6 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
-import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
 import java.util.List;
 import java.util.UUID;
@@ -31,18 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductionController {
 
   private ProductionRepository productionRepository;
-  private FilmLocationRepository filmLocationRepository;
 
   /**
    * Instantiates a new Production controller.
    *
    * @param productionRepository the production repository
-   * @param filmLocationRepository the film location repository
    */
   @Autowired
-  public ProductionController(ProductionRepository productionRepository, FilmLocationRepository filmLocationRepository) {
+  public ProductionController(ProductionRepository productionRepository) {
     this.productionRepository = productionRepository;
-    this.filmLocationRepository = filmLocationRepository;
   }
 
   /**
@@ -59,11 +54,10 @@ public class ProductionController {
    * @param production the production
    * @return the response entity
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Production> post(@RequestBody Production production) {
-    //TODO Secure but allow access from Parser script
     productionRepository.save(production);
     return ResponseEntity.created(production.getHref()).body(production);
   }
@@ -84,7 +78,7 @@ public class ProductionController {
    *
    * @param productionId the production id
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @DeleteMapping(value = "{productionId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("productionId") UUID productionId) {
@@ -97,7 +91,7 @@ public class ProductionController {
    *
    * @param production an updated production.
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @PatchMapping
   public void patch(@RequestBody Production production) {
     // This will overwrite everything,

@@ -82,13 +82,12 @@ public class ImageController {
    *
    * @param imageId the image id
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @ApiOperation(value = "Deletes an image", notes = "Enables you to delete an image from database")
   @DeleteMapping(value = "{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("imageId") UUID imageId) {
     imageRepository.deleteById(imageId);
   }
-
 
 }

@@ -31,7 +31,7 @@ public class AbqFilmTourBackendApplication extends ResourceServerConfigurerAdapt
 
   @Autowired
   AbqFilmTourBackendApplication(FilmLocationRepository filmLocationRepository) {
-    this.filmLocationRepository = filmLocationRepository;
+    AbqFilmTourBackendApplication.filmLocationRepository = filmLocationRepository;
   }
 
   /**

@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
-import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -76,8 +74,7 @@ public class UserCommentController {
   @ApiOperation(value = "Gets a single comment.")
   @GetMapping(value = "{user_comments}", produces = MediaType.APPLICATION_JSON_VALUE)
   public UserComment get(@PathVariable("user_comments") UUID userCommentId) {
-    UserComment userComment = userCommentRepository.findById(userCommentId).get();
-    return userComment;
+    return userCommentRepository.findById(userCommentId).get();
   }
 
   /**
@@ -85,7 +82,7 @@ public class UserCommentController {
    *
    * @param userCommentId the user comment id
    */
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_SUPER")
   @ApiOperation(value = "Deletes a user comment.")
   @DeleteMapping(value = "{userCommentId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
