@@ -77,6 +77,9 @@ public class UserComment {
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
 
+  @Transient
+  private String googleId;
+
   /**
    * Flag to verify that a comment has been approved by an admin and can be displayed if security
    * is tightened. Probably unnecessary for now, but better to have if we implement later.
@@ -189,5 +192,13 @@ public class UserComment {
 
   public void setApproved(boolean approved) {
     this.approved = approved;
+  }
+
+  public String getGoogleId() {
+    return googleId;
+  }
+
+  public void setGoogleId(String googleId) {
+    this.googleId = googleId;
   }
 }

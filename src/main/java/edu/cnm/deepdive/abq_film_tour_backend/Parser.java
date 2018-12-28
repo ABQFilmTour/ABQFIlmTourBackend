@@ -61,7 +61,7 @@ public class Parser {
   private UserRepository userRepository;
   private UserCommentRepository userCommentRepository;
   private ImageRepository imageRepository;
-
+  
   /**
    * Instantiates a new Parser.
    *
@@ -102,7 +102,6 @@ public class Parser {
     GoogleUser cityUser = new GoogleUser();
     cityUser.setGoogleName(CITY_USER_NAME);
     cityUser.setBanned(false);
-    //TODO Grant superuser privileges
     userRepository.save(cityUser);
     FileInputStream fileInputStream = new FileInputStream(RESOURCE_FILE);
     System.out.println("Populating database...");

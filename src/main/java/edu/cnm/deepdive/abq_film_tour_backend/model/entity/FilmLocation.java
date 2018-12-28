@@ -104,6 +104,9 @@ public class FilmLocation {
    */
   private boolean approved;
 
+  @Transient
+  private String googleId;
+
   /**
    * Gets id.
    *
@@ -353,5 +356,13 @@ public class FilmLocation {
 
   public void setApproved(boolean approved) {
     this.approved = approved;
+  }
+
+  public String getGoogleId() {
+    return googleId;
+  }
+
+  public void setGoogleId(String googleId) {
+    this.googleId = googleId;
   }
 }

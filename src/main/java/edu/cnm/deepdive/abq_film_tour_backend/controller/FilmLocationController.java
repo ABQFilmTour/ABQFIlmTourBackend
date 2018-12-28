@@ -92,8 +92,8 @@ public class FilmLocationController {
       filmLocation.setProduction(
           productionRepository.findById(UUID.fromString(filmLocation.getProductionId())).get());
     }
-    GoogleUser user = userRepository.findById(filmLocation.getUserId()).get();
-    filmLocation.setUserId(filmLocation.getUserId());
+    GoogleUser user = userRepository.findByGoogleId(filmLocation.getGoogleId());
+    filmLocation.setGoogleId(filmLocation.getGoogleId());
     filmLocation.setUser(user);
     filmLocationRepository.save(filmLocation);
     return ResponseEntity.created(filmLocation.getHref()).body(filmLocation);
@@ -163,8 +163,8 @@ public class FilmLocationController {
   public ResponseEntity<Image> post(@RequestBody Image image,
       @PathVariable UUID filmLocationId) {
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
-    GoogleUser user = userRepository.findById(image.getUserId()).get();
-    image.setUserId(image.getUserId());
+    GoogleUser user = userRepository.findByGoogleId(image.getGoogleId());
+    image.setGoogleId(image.getGoogleId());
     image.setUser(user);
     image.setFilmLocation(filmLocation);
     imageRepository.save(image);
@@ -239,8 +239,8 @@ public class FilmLocationController {
   public ResponseEntity<UserComment> post(@RequestBody UserComment userComment,
       @PathVariable UUID filmLocationId) {
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
-    GoogleUser user = userRepository.findById(userComment.getUserId()).get();
-    userComment.setUserId(userComment.getUserId());
+    GoogleUser user = userRepository.findByGoogleId(userComment.getGoogleId());
+    userComment.setGoogleId(userComment.getGoogleId());
     userComment.setUser(user);
     userComment.setFilmLocation(filmLocation);
     userCommentRepository.save(userComment);
