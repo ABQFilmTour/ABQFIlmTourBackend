@@ -2,9 +2,16 @@ package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+import retrofit2.http.Path;
 
 /**
  * Controller for the Production entity.
@@ -28,7 +37,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/productions")
 public class ProductionController {
 
+  private static final String OMDB_POSTER_URL_FORMAT = "https://img.omdbapi.com/?i=%s&h=%s&apikey=%s";
+  private static final int OMDB_POSTER_HEIGHT = 600;
   private ProductionRepository productionRepository;
+  private String apikey;
 
   /**
    * Instantiates a new Production controller.
@@ -38,6 +50,12 @@ public class ProductionController {
   @Autowired
   public ProductionController(ProductionRepository productionRepository) {
     this.productionRepository = productionRepository;
+  }
+
+  @Autowired
+  @Qualifier("apiKey")
+  public void setApikey(String apikey) {
+    this.apikey = apikey;
   }
 
   /**
@@ -97,6 +115,36 @@ public class ProductionController {
     // This will overwrite everything,
     // if just changing one field all other current fields must be included
     productionRepository.save(production);
+  }
+
+  /**
+   * Creates an OMDB url to retrieve the poster image using the supplied api key.
+   */
+  private String createProductionPosterUrl(Production production) {
+    String imdbId = production.getImdbId();
+    String height = String.valueOf(OMDB_POSTER_HEIGHT);
+    String apikey = this.apikey;
+    return String.format(OMDB_POSTER_URL_FORMAT, imdbId, height, apikey);
+  }
+
+  @GetMapping(value = "{productionId}/poster", produces = MediaType.IMAGE_JPEG_VALUE)
+  public StreamingResponseBody getPoster(@PathVariable("productionId") UUID productionId)
+      throws IOException {
+
+    String url = createProductionPosterUrl(productionRepository.findById(productionId).get());
+
+    OkHttpClient client = new OkHttpClient();
+    Request request = new Request.Builder().url(url)
+        .build();
+    Response response = client.newCall(request).execute();
+    InputStream inputStream = response.body().byteStream();
+    return outputStream -> {
+      while (inputStream.read() >= 0) {
+        outputStream.write(inputStream.read());
+      }
+      outputStream.flush();
+    };
+
   }
 
 }
