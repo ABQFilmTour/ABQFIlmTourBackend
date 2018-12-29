@@ -24,7 +24,4 @@ public interface ProductionService {
   @GET("/")
   Call<Production> get(@Query("i") String imdbID, @Query("apikey") String apikey);
 
-  @GET("/")
-  Call<ResponseBody> getPoster(@Query("i") String imdbID, @Query("h") String height, @Query("apikey") String apikey);
-
 }

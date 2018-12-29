@@ -30,10 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Path;
 
 /**
  * Controller for the Production entity.
@@ -133,6 +129,14 @@ public class ProductionController {
     return String.format(OMDB_POSTER_URL_FORMAT, imdbId, height, apikey);
   }
 
+  /**
+   * This method retrieves a poster image from the OMDB Poster API and relays it to the client
+   * without exposing an API key.
+   * @param productionId the ID of the associated production
+   * @param relayResponse an HttpServletResponse to explicitly set the content-type to return
+   * @return a raw output stream to be serialized into an image
+   * @throws IOException failed to reach OMDB server
+   */
   @GetMapping(value = "{productionId}/poster",
       produces = {
           MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE,
@@ -147,19 +151,10 @@ public class ProductionController {
         .url(url)
         .build();
     Response response = client.newCall(request).execute();
-
-//    Retrofit.Builder builder = new Retrofit.Builder()
-//        .baseUrl("https://img.omdbapi.com")
-//        .addConverterFactory(GsonConverterFactory.create());
-//    Retrofit retrofit = builder.build();
-//    Call<ResponseBody> call = retrofit.create(ProductionService.class).getPoster(productionRepository.findById(productionId).get().getImdbId(), "600", this.apikey);
-//    Response<ResponseBody> response = call.execute();
-
     ResponseBody body = response.body();
     InputStream inputStream = body.byteStream();
     relayResponse.setContentType(body.contentType().toString());
     relayResponse.setContentLengthLong(body.contentLength());
-
     return outputStream -> {
       int transfer;
       while ((transfer = inputStream.read()) >= 0) {
@@ -167,7 +162,5 @@ public class ProductionController {
       }
       outputStream.flush();
     };
-
   }
-
 }
