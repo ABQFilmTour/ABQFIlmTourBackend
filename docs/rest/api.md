@@ -178,6 +178,19 @@ Documentation for the Project Odeon backend
       
     
       <tr>
+        <th colspan="3" style="text-align: left;"><strong>/productions/{productionId}/poster</strong></th>
+      </tr>
+      
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getPoster"></a></td></tr>
+        
+        
+        
+        
+        
+        
+      
+    
+      <tr>
         <th colspan="3" style="text-align: left;"><strong>/user_comments</strong></th>
       </tr>
       
@@ -2034,6 +2047,90 @@ Enables you to delete an image from database
 
 
 
+## /productions/{productionId}/poster
+
+
+
+### <a name="getPoster"></a>GET
+
+
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+
+
+##### Parameters
+
+<table border="1">
+    <colgroup>
+      <col span="3" width="15%">
+      <col width="25%">
+      <col span="2" width="15%">
+    </colgroup>
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <td><strong>productionId</strong></td>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td></td>
+
+    
+            <td>string (uuid)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type:** image/jpeg
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | successful operation | <a href="#/definitions/StreamingResponseBody">StreamingResponseBody</a>|
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name=""></a>
+
+
+
 ## /user_comments
 
 
@@ -2883,6 +2980,21 @@ Takes user id as a parameter and deletes google user.
         </tr>
     
         <tr>
+            <td><strong>googleId</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
             <td><strong>href</strong></td>
             <td>
                 
@@ -2992,6 +3104,21 @@ Takes user id as a parameter and deletes google user.
     
         <tr>
             <td><strong>banReason</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>userRole</strong></td>
             <td>
                 
                     
@@ -3134,6 +3261,21 @@ Takes user id as a parameter and deletes google user.
                 
                     <a href="#/definitions/GoogleUser">GoogleUser</a>
                     
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>googleId</strong></td>
+            <td>
+                
+                    
+                    string
                 
             </td>
             <td>
@@ -3313,6 +3455,24 @@ Takes user id as a parameter and deletes google user.
     
 </table>
 
+## <a name="/definitions/StreamingResponseBody">StreamingResponseBody</a>
+
+<table border="1" style="width: 100%">
+    <colgroup>
+      <col span="2" width="20%">
+      <col width="25%">
+      <col width="35%">
+    </colgroup>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Mode</th>
+        <th>Description</th>
+        <!--<th>Example</th>-->
+    </tr>
+    
+</table>
+
 ## <a name="/definitions/UserComment">UserComment</a>
 
 <table border="1" style="width: 100%">
@@ -3410,6 +3570,21 @@ Takes user id as a parameter and deletes google user.
                 
                     <a href="#/definitions/GoogleUser">GoogleUser</a>
                     
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>-</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>googleId</strong></td>
+            <td>
+                
+                    
+                    string
                 
             </td>
             <td>

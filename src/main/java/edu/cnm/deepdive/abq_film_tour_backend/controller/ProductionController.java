@@ -2,6 +2,7 @@ package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
+import edu.cnm.deepdive.abq_film_tour_backend.service.ProductionService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -27,6 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Path;
 
 /**
@@ -130,17 +135,23 @@ public class ProductionController {
   @GetMapping(value = "{productionId}/poster", produces = MediaType.IMAGE_JPEG_VALUE)
   public StreamingResponseBody getPoster(@PathVariable("productionId") UUID productionId)
       throws IOException {
+//    String url = createProductionPosterUrl(productionRepository.findById(productionId).get());
+//    OkHttpClient client = new OkHttpClient();
+//    Request request = new Request.Builder().url(url)
+//        .build();
+//    Response response = client.newCall(request).execute();
 
-    String url = createProductionPosterUrl(productionRepository.findById(productionId).get());
-
-    OkHttpClient client = new OkHttpClient();
-    Request request = new Request.Builder().url(url)
-        .build();
-    Response response = client.newCall(request).execute();
+    Retrofit.Builder builder = new Retrofit.Builder()
+        .baseUrl("https://img.omdbapi.com")
+        .addConverterFactory(GsonConverterFactory.create());
+    Retrofit retrofit = builder.build();
+    Call<ResponseBody> call = retrofit.create(ProductionService.class).getPoster(productionRepository.findById(productionId).get().getImdbId(), "600", this.apikey);
+    Response<ResponseBody> response = call.execute();
     InputStream inputStream = response.body().byteStream();
     return outputStream -> {
-      while (inputStream.read() >= 0) {
-        outputStream.write(inputStream.read());
+      int transfer;
+      while ((transfer = inputStream.read()) >= 0) {
+        outputStream.write(transfer);
       }
       outputStream.flush();
     };
