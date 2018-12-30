@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.net.URI;
 import java.util.Date;
@@ -54,6 +55,7 @@ public class UserComment {
   private UUID id;
 
   @NonNull
+  @JsonIgnore
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
@@ -136,6 +138,7 @@ public class UserComment {
    *
    * @return the time of creation
    */
+  @JsonIgnore
   public Date getCreated() {
     return created;
   }
