@@ -2,6 +2,7 @@ package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class ProductionController {
    *
    * @return a list of productions ordered by their ID.
    */
+  @ApiOperation(value = "Orders Productions", notes = "Orders by Id ascending.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Production> list() { return productionRepository.findAllByOrderByIdAsc();}
 
@@ -54,6 +56,7 @@ public class ProductionController {
    * @param production the production
    * @return the response entity
    */
+  @ApiOperation(value = "Post Production", notes = "Saves production to production repository")
   @Secured("ROLE_SUPER")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,6 +71,7 @@ public class ProductionController {
    * @param productionId the production id
    * @return the production
    */
+  @ApiOperation(value = "Gets a production", notes = "Finds production by the production UUID")
   @GetMapping(value = "{productionId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Production get(@PathVariable("productionId") UUID productionId){
     return productionRepository.findById(productionId).get();
@@ -79,6 +83,7 @@ public class ProductionController {
    * @param productionId the production id
    */
   @Secured("ROLE_SUPER")
+  @ApiOperation(value = "Deletes a production", notes = "Enables you to delete a production from database")
   @DeleteMapping(value = "{productionId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("productionId") UUID productionId) {
@@ -86,12 +91,13 @@ public class ProductionController {
   }
 
   /**
-   * Patches a production. This will overwrite everything. if just changing one field all other
+   * Patches a production. This will overwrite everything. If just changing one field all other
    * current fields must be included.
    *
    * @param production an updated production.
    */
   @Secured("ROLE_SUPER")
+  @ApiOperation(value = "Patches a production", notes = "Enables you to edit a production from database")
   @PatchMapping
   public void patch(@RequestBody Production production) {
     // This will overwrite everything,
