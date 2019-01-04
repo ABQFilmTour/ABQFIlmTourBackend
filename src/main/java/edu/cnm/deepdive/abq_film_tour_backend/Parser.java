@@ -50,10 +50,6 @@ public class Parser {
   private static final String NOT_A_NUMBER = "NaN"; //Shows up in some coordinate entries
   private static final String RESOURCE_FILE = "cityfilmlocations.csv";
   private static final String CITY_USER_NAME = "City of Albuquerque";
-  private static final String OMDB_POSTER_URL_FORMAT = "https://img.omdbapi.com/?i=%s&h=%s&apikey=2f9b95cb";
-  private static final int OMDB_POSTER_HEIGHT = 600; //BB poster currently on the front end is 400px high
-
-  private String apikey;
 
   private RetrofitClientService retrofitClientService;
   private FilmLocationRepository filmLocationRepository;
@@ -61,6 +57,8 @@ public class Parser {
   private UserRepository userRepository;
   private UserCommentRepository userCommentRepository;
   private ImageRepository imageRepository;
+  private String apikey;
+
 
   /**
    * Instantiates a new Parser.
@@ -102,7 +100,6 @@ public class Parser {
     GoogleUser cityUser = new GoogleUser();
     cityUser.setGoogleName(CITY_USER_NAME);
     cityUser.setBanned(false);
-    //TODO Grant superuser privileges
     userRepository.save(cityUser);
     FileInputStream fileInputStream = new FileInputStream(RESOURCE_FILE);
     System.out.println("Populating database...");
@@ -170,7 +167,6 @@ public class Parser {
     if (production == null) {
       production = retrofitClientService.getRetrofit().create(ProductionService.class)
           .get(newLocation.getImdbId(), apikey).execute().body();
-      production.setPosterUrl(createProductionPosterUrl(production));
       productionRepository.save(production);
     }
     return production;
@@ -198,14 +194,6 @@ public class Parser {
     return cityPost.toString();
   }
 
-  /**
-   * Creates an OMDB url to retrieve the poster image using the supplied api key.
-   */
-  private String createProductionPosterUrl(Production production) {
-    String imdbId = production.getImdbId();
-    String height = String.valueOf(OMDB_POSTER_HEIGHT);
-    String apikey = this.apikey;
-    return String.format(OMDB_POSTER_URL_FORMAT, imdbId, height, apikey);
-  }
+
 
 }

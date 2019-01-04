@@ -545,6 +545,27 @@
         }
       }
     },
+    "/productions/{productionId}/poster" : {
+      "get" : {
+        "operationId" : "getPoster",
+        "produces" : [ "image/jpeg" ],
+        "parameters" : [ {
+          "name" : "productionId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/StreamingResponseBody"
+            }
+          }
+        }
+      }
+    },
     "/user_comments" : {
       "get" : {
         "summary" : "Gets all user comments.",
@@ -782,6 +803,9 @@
         "approved" : {
           "type" : "boolean"
         },
+        "googleId" : {
+          "type" : "string"
+        },
         "href" : {
           "type" : "string",
           "format" : "uri"
@@ -808,6 +832,9 @@
           "type" : "boolean"
         },
         "banReason" : {
+          "type" : "string"
+        },
+        "userRole" : {
           "type" : "string"
         },
         "href" : {
@@ -842,6 +869,9 @@
         },
         "user" : {
           "$ref" : "#/definitions/GoogleUser"
+        },
+        "googleId" : {
+          "type" : "string"
         },
         "approved" : {
           "type" : "boolean"
@@ -883,6 +913,9 @@
         }
       }
     },
+    "StreamingResponseBody" : {
+      "type" : "object"
+    },
     "UserComment" : {
       "type" : "object",
       "properties" : {
@@ -906,6 +939,9 @@
         },
         "user" : {
           "$ref" : "#/definitions/GoogleUser"
+        },
+        "googleId" : {
+          "type" : "string"
         },
         "approved" : {
           "type" : "boolean"

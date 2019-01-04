@@ -56,7 +56,7 @@ public class GoogleUser {
   private String banReason;
 
   //Indicates a user's privileges. Mostly only for records.
-  private String userRole = "user";
+  private String userRole;
 
   private static EntityLinks getEntityLinks() {
     return entityLinks;

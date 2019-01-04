@@ -68,10 +68,6 @@ public class Production {
   //corresponds to plot in omdbapi
   private String plot;
 
-  //URL for the poster associated with this image
-  //FIXME Poster URL is exposed
-  private String posterUrl;
-
   /**
    * Gets id.
    *
@@ -190,14 +186,6 @@ public class Production {
   @ApiOperation(value = "Sets plot information", notes = "sets this plot")
   public void setPlot(String plot) {
     this.plot = plot;
-  }
-
-  public String getPosterUrl() {
-    return posterUrl;
-  }
-
-  public void setPosterUrl(String posterUrl) {
-    this.posterUrl = posterUrl;
   }
 
   /**

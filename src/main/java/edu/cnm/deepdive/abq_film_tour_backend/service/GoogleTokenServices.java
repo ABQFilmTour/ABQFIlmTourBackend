@@ -123,6 +123,10 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
         userRepository.save(user);
       }
     }
+    if (user.getUserRole() == null) {
+      user.setUserRole("user");
+      userRepository.save(user);
+    }
     grants.add(new SimpleGrantedAuthority("ROLE_USER"));
     return new UsernamePasswordAuthenticationToken(payload.getSubject(), idTokenString, grants);
   }

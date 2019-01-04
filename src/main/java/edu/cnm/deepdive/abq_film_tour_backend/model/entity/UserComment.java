@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.net.URI;
 import java.util.Date;
@@ -54,6 +55,7 @@ public class UserComment {
   private UUID id;
 
   @NonNull
+  @JsonIgnore
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
@@ -76,6 +78,9 @@ public class UserComment {
   @JoinColumn(name = "user_id", updatable = false)
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
+
+  @Transient
+  private String googleId;
 
   /**
    * Flag to verify that a comment has been approved by an admin and can be displayed if security
@@ -133,6 +138,7 @@ public class UserComment {
    *
    * @return the time of creation
    */
+  @JsonIgnore
   public Date getCreated() {
     return created;
   }
@@ -189,5 +195,13 @@ public class UserComment {
 
   public void setApproved(boolean approved) {
     this.approved = approved;
+  }
+
+  public String getGoogleId() {
+    return googleId;
+  }
+
+  public void setGoogleId(String googleId) {
+    this.googleId = googleId;
   }
 }
