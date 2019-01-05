@@ -1,5 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
+import static edu.cnm.deepdive.abq_film_tour_backend.controller.Constants.*;
+
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ImageRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
 import io.swagger.annotations.ApiOperation;
@@ -41,9 +43,9 @@ public class ImageController {
   }
 
   /**
-   * GETs a list of productions ordered by their ID.
+   * GETs a list of productions ordered by their time of creation.
    *
-   * @return a list of productions ordered by their ID.
+   * @return a list of productions ordered by their time of creation.
    */
   @ApiOperation(value = "Orders Images", notes = "Orders by Id ascending.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,5 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
+import static edu.cnm.deepdive.abq_film_tour_backend.controller.Constants.*;
+
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import io.swagger.annotations.ApiOperation;
@@ -41,14 +43,14 @@ public class UserCommentController {
   }
 
   /**
-   * GETs a list of comments ordered by their ID.
+   * GETs a list of comments ordered by their time of creation.
    *
-   * @return a list of comments ordered by their ID.
+   * @return a list of comments ordered by their time of creation.
    */
   @ApiOperation(value = "Gets all user comments.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<UserComment> list() {
-    return userCommentRepository.findAllByOrderByIdAsc();
+    return userCommentRepository.findAllByOrderByCreatedDesc();
   }
 
   /**

@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<GoogleUser, UUID> {
 
-  List<GoogleUser> findAllByOrderByCreatedDesc();
+  List<GoogleUser> findAllByOrderByGoogleNameAsc();
 
   GoogleUser findByGoogleId(String googleId);
 

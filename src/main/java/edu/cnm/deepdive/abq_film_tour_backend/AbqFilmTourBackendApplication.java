@@ -41,7 +41,7 @@ public class AbqFilmTourBackendApplication extends ResourceServerConfigurerAdapt
    */
   public static void main(String[] args) {
     ConfigurableApplicationContext context = SpringApplication.run(AbqFilmTourBackendApplication.class, args);
-    if (filmLocationRepository.findAllByOrderByIdAsc().size() == 0) { //Populate the database if it's empty
+    if (filmLocationRepository.findAllByOrderByCreatedDesc().size() == 0) { //Populate the database if it's empty
       //TODO check more efficiently
       try {
         context.getBean(Parser.class).populateDatabase();

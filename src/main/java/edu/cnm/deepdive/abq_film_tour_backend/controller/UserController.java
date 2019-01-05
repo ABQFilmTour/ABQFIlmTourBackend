@@ -51,14 +51,14 @@ public class UserController {
   }
 
   /**
-   * GETs a list of users ordered by their ID.
+   * GETs a list of users ordered by the name on their Google account.
    *
-   * @return a list of users ordered by their ID.
+   * @return a list of users ordered by their name.
    */
   @ApiOperation(value = "Gets all users", notes = "Retrieves all users with their ID in an list.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<GoogleUser> list() {
-    return userRepository.findAllByOrderByCreatedDesc();
+    return userRepository.findAllByOrderByGoogleNameAsc();
   }
 
   /**

@@ -62,13 +62,13 @@ public class ProductionController {
   }
 
   /**
-   * GETs a list of productions ordered by their ID.
+   * GETs a list of productions ordered by their title.
    *
-   * @return a list of productions ordered by their ID.
+   * @return a list of productions ordered by their title.
    */
   @ApiOperation(value = PRODUCTION_LIST_SUMMARY, notes = PRODUCTION_LIST_DESC)
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Production> list() { return productionRepository.findAllByOrderByCreatedDesc();}
+  public List<Production> list() { return productionRepository.findAllByOrderByTitleAsc();}
 
   /**
    * Post response entity.

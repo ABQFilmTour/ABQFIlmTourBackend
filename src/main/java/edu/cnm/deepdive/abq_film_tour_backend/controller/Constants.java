@@ -36,7 +36,7 @@ final class Constants {
   static final String USER_COMMENT_PATCH_DESC = "Restricted to superuser privileges or above. Patches a user comment from the user comments endpoint on a film location. All data will be overwritten - current fields to stay the same must be included as well. The ID of the user comment should be included in the body. Can be used to approve a comment submission. ";
 
   static final String USER_LIST_SUMMARY = "";
-  static final String USER_LIST_DESC = "Admin access only. Gets all users, ordered by the time of their entry into the database.";
+  static final String USER_LIST_DESC = "Admin access only. Gets all users, ordered alphabetically by the name on their account.";
   static final String USER_GET_SUMMARY = "";
   static final String USER_GET_DESC = "Admin access only. Gets a user from the users endpoint, referenced by their internal ID.";
   static final String USER_POST_SUMMARY = "";
@@ -47,16 +47,16 @@ final class Constants {
   static final String USER_PATCH_DESC = "Admin access only. Patches a user from the users endpoint. All data will be overwritten - current fields to stay the same must be included as well. Can be used to ban or unban a user.";
 
   static final String PRODUCTION_LIST_SUMMARY = "";
-  static final String PRODUCTION_LIST_DESC = "";
+  static final String PRODUCTION_LIST_DESC = "Gets all of the productions on the productions endpoint, ordered alphabetically by their title.";
   static final String PRODUCTION_GET_SUMMARY = "";
-  static final String PRODUCTION_GET_DESC = "";
+  static final String PRODUCTION_GET_DESC = "Gets a single production from the productions endpoint, referenced by its internal ID.";
   static final String PRODUCTION_POST_SUMMARY = "";
   static final String PRODUCTION_POST_DESC = "Restricted to superuser privileges or above. ";
   static final String PRODUCTION_DELETE_SUMMARY = "";
   static final String PRODUCTION_DELETE_DESC = "Restricted to superuser privileges or above. ";
   static final String PRODUCTION_PATCH_SUMMARY = "";
   static final String PRODUCTION_PATCH_DESC = "Restricted to superuser privileges or above. ";
-  static final String PRODUCTION_POSTER_SUMMARY = "Retrieves a poster image";
+  static final String PRODUCTION_POSTER_SUMMARY = "Retrieves a poster image for the production.";
   static final String PRODUCTION_POSTER_DESC = "Retrieves a poster image relayed its source on the OMDb API. Image is returned as a raw StreamingBodyResponse to be deserialized.";
 
   static final String RESPONSE_SUCCESSFUL = "Operation successful.";
