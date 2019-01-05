@@ -62,7 +62,7 @@ public class ProductionController {
   }
 
   /**
-   * GETs a list of productions ordered by their title.
+   * Gets a list of productions ordered by their title.
    *
    * @return a list of productions ordered by their title.
    */
@@ -71,7 +71,7 @@ public class ProductionController {
   public List<Production> list() { return productionRepository.findAllByOrderByTitleAsc();}
 
   /**
-   * Post response entity.
+   * Posts a new production. Should include a title, IMDb ID, and 300 character plot summary at least.
    *
    * @param production the production
    * @return the response entity
@@ -86,7 +86,7 @@ public class ProductionController {
   }
 
   /**
-   * Get production.
+   * Gets a production.
    *
    * @param productionId the production id
    * @return the production
@@ -98,7 +98,7 @@ public class ProductionController {
   }
 
   /**
-   * Delete.
+   * Deletes a production.
    *
    * @param productionId the production id
    */
@@ -136,8 +136,7 @@ public class ProductionController {
   }
 
   /**
-   * This method retrieves a poster image from the OMDB Poster API and relays it to the client
-   * without exposing an API key.
+   * Retrieves a poster image from the OMDB Poster API and relays it to the client without exposing an API key.
    * @param productionId the ID of the associated production
    * @param relayResponse an HttpServletResponse to explicitly set the content-type to return
    * @return a raw output stream to be serialized into an image

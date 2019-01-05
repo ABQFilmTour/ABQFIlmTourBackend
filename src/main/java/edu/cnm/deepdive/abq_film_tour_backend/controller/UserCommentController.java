@@ -43,23 +43,35 @@ public class UserCommentController {
   }
 
   /**
-   * GETs a list of comments ordered by their time of creation.
+   * Gets a list of comments ordered by their time of creation.
    *
    * @return a list of comments ordered by their time of creation.
    */
-  @ApiOperation(value = "Gets all user comments.")
+  @ApiOperation(value = USER_COMMENT_LIST_SUMMARY, notes = USER_COMMENT_LIST_DESC)
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<UserComment> list() {
     return userCommentRepository.findAllByOrderByCreatedDesc();
   }
 
   /**
-   * Post response entity.
+   * Gets a single user comment.
+   *
+   * @param userCommentId the user comment id
+   * @return the user comment
+   */
+  @ApiOperation(value = USER_COMMENT_DELETE_SUMMARY, notes = USER_COMMENT_DELETE_DESC)
+  @GetMapping(value = "{user_comments}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public UserComment get(@PathVariable("user_comments") UUID userCommentId) {
+    return userCommentRepository.findById(userCommentId).get();
+  }
+
+  /**
+   * Posts a new user comment. Should include a Google ID and text content in the body.
    *
    * @param userComment the user comment
    * @return the response entity
    */
-  @ApiOperation(value = "Posts a user comment.")
+  @ApiOperation(value = USER_COMMENT_POST_SUMMARY, notes = USER_COMMENT_POST_DESC)
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserComment> post(@RequestBody UserComment userComment) {
@@ -68,24 +80,12 @@ public class UserCommentController {
   }
 
   /**
-   * Get user comment.
-   *
-   * @param userCommentId the user comment id
-   * @return the user comment
-   */
-  @ApiOperation(value = "Gets a single comment.")
-  @GetMapping(value = "{user_comments}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public UserComment get(@PathVariable("user_comments") UUID userCommentId) {
-    return userCommentRepository.findById(userCommentId).get();
-  }
-
-  /**
-   * Delete.
+   * Deletes a user comment.
    *
    * @param userCommentId the user comment id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = "Deletes a user comment.")
+  @ApiOperation(value = USER_COMMENT_PATCH_SUMMARY, notes = USER_COMMENT_PATCH_DESC)
   @DeleteMapping(value = "{userCommentId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("userCommentId") UUID userCommentId) {

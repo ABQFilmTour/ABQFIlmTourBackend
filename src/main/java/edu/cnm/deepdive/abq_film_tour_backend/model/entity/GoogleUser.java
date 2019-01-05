@@ -40,22 +40,34 @@ public class GoogleUser {
       nullable = false, updatable = false)
   private UUID id;
 
-  //persistent Google Analytics user ID
+  /**
+   * Persistent Google Analytics user ID to reference the user's Google account information.
+   */
   private String googleId;
 
-  //Google account name
+  /**
+   * The full name on a Google account.
+   */
   private String googleName;
 
+  /**
+   * The email address belonging to a Google user.
+   */
   private String gmailAddress;
 
-  //Flag to check if a user is banned from using the app
+  /**
+   * Flag to indicate whether or not a user is banned.
+   */
   private boolean banned;
 
-  //Reason for any ban, maybe this could have a value without a ban to display a warning message to
-  // a user.
+  /**
+   * Reason for a ban, this will display in the error description when a 403 is thrown.
+   */
   private String banReason;
 
-  //Indicates a user's privileges. Mostly only for records.
+  /**
+   * Indicates a user's privileges. Can be "user", "admin" or "superuser". Mostly only for records.
+   */
   private String userRole;
 
   private static EntityLinks getEntityLinks() {
@@ -141,26 +153,56 @@ public class GoogleUser {
    */
   public URI getHref(){return entityLinks.linkForSingleResource(GoogleUser.class, id).toUri();}
 
+  /**
+   * Requests the user's banned status.
+   *
+   * @return the banned status of the user.
+   */
   public boolean isBanned() {
     return banned;
   }
 
+  /**
+   * Sets the banned flag to a given value.
+   *
+   * @param banned a boolean.
+   */
   public void setBanned(boolean banned) {
     this.banned = banned;
   }
 
+  /**
+   * Gets ban reason.
+   *
+   * @return the ban reason
+   */
   public String getBanReason() {
     return banReason;
   }
 
+  /**
+   * Sets ban reason.
+   *
+   * @param banReason the ban reason
+   */
   public void setBanReason(String banReason) {
     this.banReason = banReason;
   }
 
+  /**
+   * Gets user role.
+   *
+   * @return the user role
+   */
   public String getUserRole() {
     return userRole;
   }
 
+  /**
+   * Sets user role.
+   *
+   * @param userRole the user role
+   */
   public void setUserRole(String userRole) {
     this.userRole = userRole;
   }

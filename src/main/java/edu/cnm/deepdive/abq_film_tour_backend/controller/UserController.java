@@ -1,5 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
+import static edu.cnm.deepdive.abq_film_tour_backend.controller.Constants.*;
+
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
@@ -51,23 +53,35 @@ public class UserController {
   }
 
   /**
-   * GETs a list of users ordered by the name on their Google account.
+   * Gets a list of users ordered by the name on their Google account.
    *
    * @return a list of users ordered by their name.
    */
-  @ApiOperation(value = "Gets all users", notes = "Retrieves all users with their ID in an list.")
+  @ApiOperation(value = USER_LIST_SUMMARY, notes = USER_LIST_DESC)
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<GoogleUser> list() {
     return userRepository.findAllByOrderByGoogleNameAsc();
   }
 
   /**
-   * Post response entity.
+   * Get google user by their internal ID.
+   *
+   * @param userId the internal user ID
+   * @return the google user
+   */
+  @ApiOperation(value = USER_GET_SUMMARY, notes = USER_GET_DESC)
+  @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public GoogleUser get(@PathVariable("userId") UUID userId) {
+    return userRepository.findById(userId).get();
+  }
+
+  /**
+   * Posts a new Google user. Should include a Google ID, a name, and an email address.
    *
    * @param googleUser the google user
    * @return the response entity
    */
-  @ApiOperation(value = "Posts a google user.", notes = "Posts a googel user.")
+  @ApiOperation(value = USER_POST_SUMMARY, notes = USER_POST_DESC)
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<GoogleUser> post(@RequestBody GoogleUser googleUser) {
@@ -76,23 +90,11 @@ public class UserController {
   }
 
   /**
-   * Get google user.
-   *
-   * @param userId the user id
-   * @return the google user
-   */
-  @ApiOperation(value = "Gets google user", notes = "Gets google user id and returns google user.")
-  @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public GoogleUser get(@PathVariable("userId") UUID userId) {
-    return userRepository.findById(userId).get();
-  }
-
-  /**
-   * Delete.
+   * Deletes a Google user.
    *
    * @param userId the user id
    */
-  @ApiOperation(value = "Deletes google user", notes = "Takes user id as a parameter and deletes google user.")
+  @ApiOperation(value = USER_DELETE_SUMMARY, notes = USER_DELETE_DESC)
   @Transactional
   @DeleteMapping(value = "{userId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -111,7 +113,7 @@ public class UserController {
    *
    * @param user an updated user.
    */
-  @ApiOperation(value = "Patches a google user", notes = "Patches a user. This will overwrite everything. if just changing one field all other current fields must be included.")
+  @ApiOperation(value = USER_PATCH_SUMMARY, notes = USER_PATCH_DESC)
   @PatchMapping
   public void patch(@RequestBody GoogleUser user) {
     userRepository.save(user);

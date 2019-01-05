@@ -43,23 +43,35 @@ public class ImageController {
   }
 
   /**
-   * GETs a list of productions ordered by their time of creation.
+   * Gets a list of images ordered by their time of creation.
    *
-   * @return a list of productions ordered by their time of creation.
+   * @return a list of images ordered by their time of creation.
    */
-  @ApiOperation(value = "Orders Images", notes = "Orders by Id ascending.")
+  @ApiOperation(value = IMAGE_LIST_SUMMARY, notes = IMAGE_LIST_DESC)
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Image> list() {
     return imageRepository.findAllByOrderByCreatedDesc();
   }
 
   /**
-   * Post response entity.
+   * Gets an image.
+   *
+   * @param imageId the image id
+   * @return the image
+   */
+  @ApiOperation(value = IMAGE_GET_SUMMARY, notes = IMAGE_GET_DESC)
+  @GetMapping(value = "{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Image get(@PathVariable("imageId") UUID imageId) {
+    return imageRepository.findById(imageId).get();
+  }
+
+  /**
+   * Posts an image.
    *
    * @param image the image
    * @return the response entity
    */
-  @ApiOperation(value = "Post Image", notes = "Saves image to image repository")
+  @ApiOperation(value = IMAGE_POST_SUMMARY, notes = IMAGE_POST_DESC)
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Image> post(@RequestBody Image image) {
@@ -68,24 +80,12 @@ public class ImageController {
   }
 
   /**
-   * Get image.
-   *
-   * @param imageId the image id
-   * @return the image
-   */
-  @ApiOperation(value = "Gets an image", notes = "Finds image by the image UUID")
-  @GetMapping(value = "{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Image get(@PathVariable("imageId") UUID imageId) {
-    return imageRepository.findById(imageId).get();
-  }
-
-  /**
-   * Delete.
+   * Deletes an image.
    *
    * @param imageId the image id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = "Deletes an image", notes = "Enables you to delete an image from database")
+  @ApiOperation(value = IMAGE_DELETE_SUMMARY, notes = IMAGE_DELETE_DESC)
   @DeleteMapping(value = "{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("imageId") UUID imageId) {

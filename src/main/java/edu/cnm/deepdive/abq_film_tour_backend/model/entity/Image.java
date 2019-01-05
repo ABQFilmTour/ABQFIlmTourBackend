@@ -238,18 +238,34 @@ public class Image {
    */
   public URI getHref(){return entityLinks.linkForSingleResource(Image.class, id).toUri();}
 
+  /**
+   * Checks if this content is approved.
+   *
+   * @return the approval status
+   */
   public boolean isApproved() {
     return approved;
   }
 
+  /**
+   * Changes this content's approval status.
+   *
+   * @param approved a boolean.
+   */
   public void setApproved(boolean approved) {
     this.approved = approved;
   }
 
+  /**
+   * Used transiently to assign Google information to user submitted content.
+   */
   public String getGoogleId() {
     return googleId;
   }
 
+  /**
+   * Used transiently to assign Google information to user submitted content.
+   */
   public void setGoogleId(String googleId) {
     this.googleId = googleId;
   }

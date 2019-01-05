@@ -69,7 +69,7 @@ public class FilmLocationController {
   }
 
   /**
-   * GETs all the FilmLocations in the database.
+   * Gets all the FilmLocations in the database.
    *
    * @return a list of Film Locations ordered by their time of creation.
    */
@@ -80,7 +80,7 @@ public class FilmLocationController {
   }
 
   /**
-   * GETs a FilmLocation.
+   * Gets a FilmLocation.
    *
    * @param filmLocationId the film location id
    * @return the film location
@@ -92,8 +92,8 @@ public class FilmLocationController {
   }
 
   /**
-   * POSTs a FilmLocation. Requires a user ID to connect a user to (the submitter), will connect a
-   * production to the FilmLocation if a production ID is provided.
+   * Posts a new FilmLocation. Requires a Google ID to connect a user to (the submitter), will connect a
+   * production to the FilmLocation if a production ID is provided. Should include a site name and long and lat coordinates.
    *
    * @param filmLocation the film location
    * @return the response entity
@@ -114,7 +114,7 @@ public class FilmLocationController {
   }
 
   /**
-   * DELETEs a FilmLocation. Also deletes all userComments and images associated with the image.
+   * Deletes a FilmLocation. Also deletes all userComments and images associated with the image.
    *
    * @param filmLocationId the film location id
    */
@@ -138,7 +138,7 @@ public class FilmLocationController {
   }
 
   /**
-   * PATCHes a FilmLocation. All data will be overwritten - current fields to stay the same must be
+   * Patches a FilmLocation. All data will be overwritten - current fields to stay the same must be
    * included as well.
    *
    * @param filmLocation the updated film location
@@ -153,7 +153,7 @@ public class FilmLocationController {
   }
 
   /**
-   * GETs all images on a FilmLocation.
+   * Gets all images on a FilmLocation.
    *
    * @param filmLocationId the film location id
    * @return the images
@@ -166,7 +166,7 @@ public class FilmLocationController {
   }
 
   /**
-   * GETs an image.
+   * Gets an image.
    *
    * @param filmLocationId the film location id
    * @param imageId the image id
@@ -179,7 +179,7 @@ public class FilmLocationController {
   }
 
   /**
-   * POSTs an image to a FilmLocation, referenced by the URL. A user ID is required.
+   * Posts an image to a FilmLocation, referenced by the URL. A user ID is required.
    *
    * @param image the image
    * @param filmLocationId the film location id
@@ -200,7 +200,7 @@ public class FilmLocationController {
   }
 
   /**
-   * DELETES an image.
+   * Deletes an image.
    *
    * @param filmLocationId the film location id
    * @param imageId the image id
@@ -214,7 +214,7 @@ public class FilmLocationController {
   }
 
   /**
-   * PATCHES an image. All data to stay the same must be included.
+   * Patches an image. All data to stay the same must be included.
    *
    * @param filmLocationId the film location id
    * @param image the updated image
@@ -229,7 +229,7 @@ public class FilmLocationController {
   }
 
   /**
-   * GETs all user comments on a FilmLocation.
+   * Gets all user comments on a FilmLocation.
    *
    * @param filmLocationId the film location id
    * @return the user comments
@@ -242,7 +242,7 @@ public class FilmLocationController {
   }
 
   /**
-   * GETs a user comment.
+   * Gets a user comment.
    *
    * @param filmLocationId the film location id
    * @param userCommentId the user comment id
@@ -255,7 +255,7 @@ public class FilmLocationController {
   }
 
   /**
-   * POSTs a comment to a FilmLocation, referenced by the URL. A user ID is required.
+   * Posts a comment to a FilmLocation, referenced by the URL. A user ID is required.
    *
    * @param userComment the user comment
    * @param filmLocationId the film location id
@@ -276,7 +276,7 @@ public class FilmLocationController {
   }
 
   /**
-   * DELETES a user comment.
+   * Deletes a user comment.
    *
    * @param filmLocationId the film location id
    * @param userCommentId the user comment id
@@ -290,7 +290,7 @@ public class FilmLocationController {
   }
 
   /**
-   * PATCHes a user comment. All data to stay the same must be included.
+   * Patches a user comment. All data to stay the same must be included.
    *
    * @param filmLocationId the film location id
    * @param userComment the updated user comment
