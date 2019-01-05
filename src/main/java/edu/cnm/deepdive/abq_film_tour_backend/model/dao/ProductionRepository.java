@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProductionRepository extends CrudRepository<Production, UUID> {
 
-  List<Production> findAllByOrderByIdAsc();
+  List<Production> findAllByOrderByCreatedDesc();
 
   List<Production> findAllByTypeOrderByTitle(String type);
 

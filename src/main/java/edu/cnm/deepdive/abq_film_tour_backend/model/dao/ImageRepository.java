@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ImageRepository extends CrudRepository<Image, UUID> {
 
-  List<Image> findAllByOrderByIdAsc();
+  List<Image> findAllByOrderByCreatedDesc();
 
   List<Image> findAllByFilmLocationOrderByCreatedDesc(FilmLocation filmLocation);
 
