@@ -1,5 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
+import static edu.cnm.deepdive.abq_film_tour_backend.controller.Constants.*;
+
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ImageRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
@@ -69,12 +71,24 @@ public class FilmLocationController {
   /**
    * GETs all the FilmLocations in the database.
    *
-   * @return a list of Film Locations ordered by their ID.
+   * @return a list of Film Locations ordered by their time of creation.
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  @ApiOperation(value = "Gets a list of film locations", notes = "Gets a list of film locations.")
+  @ApiOperation(value = FILM_LOCATION_LIST_SUMMARY, notes = FILM_LOCATION_LIST_DESC)
   public List<FilmLocation> list() {
-    return filmLocationRepository.findAllByOrderByIdAsc();
+    return filmLocationRepository.findAllByOrderByCreatedDesc();
+  }
+
+  /**
+   * GETs a FilmLocation.
+   *
+   * @param filmLocationId the film location id
+   * @return the film location
+   */
+  @GetMapping(value = "{filmLocationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = FILM_LOCATION_GET_SUMMARY, notes = FILM_LOCATION_GET_DESC)
+  public FilmLocation get(@PathVariable("filmLocationId") UUID filmLocationId) {
+    return filmLocationRepository.findById(filmLocationId).get();
   }
 
   /**
@@ -84,7 +98,7 @@ public class FilmLocationController {
    * @param filmLocation the film location
    * @return the response entity
    */
-  @ApiOperation(value = "Posts a film location.")
+  @ApiOperation(value = FILM_LOCATION_POST_SUMMARY, notes = FILM_LOCATION_POST_DESC)
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<FilmLocation> post(@RequestBody FilmLocation filmLocation) {
@@ -100,39 +114,12 @@ public class FilmLocationController {
   }
 
   /**
-   * GETs a FilmLocation.
-   *
-   * @param filmLocationId the film location id
-   * @return the film location
-   */
-  @GetMapping(value = "{filmLocationId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  @ApiOperation(value = "Gets a single film location", notes = "Gets a single film location.")
-  public FilmLocation get(@PathVariable("filmLocationId") UUID filmLocationId) {
-    return filmLocationRepository.findById(filmLocationId).get();
-  }
-
-  /**
-   * PATCHes a FilmLocation. All data will be overwritten - current fields to stay the same must be
-   * included as well.
-   *
-   * @param filmLocation the updated film location
-   */
-  @Secured("ROLE_SUPER")
-  @ApiOperation(value = "Patches a single film location", notes = "Patches a film location. All data will be overwritten - current fields to stay the same must be included as well.")
-  @PatchMapping
-  public void patch(@RequestBody FilmLocation filmLocation) {
-    // This will overwrite everything,
-    // if just changing one field all other current fields must be included
-    filmLocationRepository.save(filmLocation);
-  }
-
-  /**
    * DELETEs a FilmLocation. Also deletes all userComments and images associated with the image.
    *
    * @param filmLocationId the film location id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = "Deletes a film location", notes = "Deletes a film location")
+  @ApiOperation(value = FILM_LOCATION_DELETE_SUMMARY, notes = FILM_LOCATION_DELETE_DESC)
   @Transactional
   @DeleteMapping(value = "{filmLocationId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -151,13 +138,54 @@ public class FilmLocationController {
   }
 
   /**
+   * PATCHes a FilmLocation. All data will be overwritten - current fields to stay the same must be
+   * included as well.
+   *
+   * @param filmLocation the updated film location
+   */
+  @Secured("ROLE_SUPER")
+  @ApiOperation(value = FILM_LOCATION_PATCH_SUMMARY, notes = FILM_LOCATION_PATCH_DESC)
+  @PatchMapping
+  public void patch(@RequestBody FilmLocation filmLocation) {
+    // This will overwrite everything,
+    // if just changing one field all other current fields must be included
+    filmLocationRepository.save(filmLocation);
+  }
+
+  /**
+   * GETs all images on a FilmLocation.
+   *
+   * @param filmLocationId the film location id
+   * @return the images
+   */
+  @ApiOperation(value = IMAGE_LIST_SUMMARY, notes = IMAGE_LIST_DESC)
+  @GetMapping(value = "{filmLocationId}/images", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Image> getImages(@PathVariable UUID filmLocationId) {
+    return imageRepository.findAllByFilmLocationOrderByCreatedDesc
+        (filmLocationRepository.findById(filmLocationId).get());
+  }
+
+  /**
+   * GETs an image.
+   *
+   * @param filmLocationId the film location id
+   * @param imageId the image id
+   * @return the image
+   */
+  @ApiOperation(value = IMAGE_GET_SUMMARY, notes = IMAGE_GET_DESC)
+  @GetMapping(value = "{filmLocationId}/images/{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Image getImage(@PathVariable UUID filmLocationId, @PathVariable UUID imageId){
+    return imageRepository.findById(imageId).get();
+  }
+
+  /**
    * POSTs an image to a FilmLocation, referenced by the URL. A user ID is required.
    *
    * @param image the image
    * @param filmLocationId the film location id
    * @return the response entity
    */
-  @ApiOperation(value = "Posts an image to a film location.")
+  @ApiOperation(value = IMAGE_POST_SUMMARY, notes = IMAGE_POST_DESC)
   @PostMapping(value = "{filmLocationId}/images", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Image> post(@RequestBody Image image,
@@ -172,39 +200,13 @@ public class FilmLocationController {
   }
 
   /**
-   * GETs all images on a FilmLocation.
-   *
-   * @param filmLocationId the film location id
-   * @return the images
-   */
-  @ApiOperation(value = "Gets all images on a FilmLocation.")
-  @GetMapping(value = "{filmLocationId}/images", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Image> getImages(@PathVariable UUID filmLocationId) {
-    return imageRepository.findAllByFilmLocationOrderByCreatedDesc
-        (filmLocationRepository.findById(filmLocationId).get());
-  }
-
-  /**
-   * GETs an image.
-   *
-   * @param filmLocationId the film location id
-   * @param imageId the image id
-   * @return the image
-   */
-  @ApiOperation(value = "Gets all images on a FilmLocation.")
-  @GetMapping(value = "{filmLocationId}/images/{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Image getImage(@PathVariable UUID filmLocationId, @PathVariable UUID imageId){
-    return imageRepository.findById(imageId).get();
-  }
-
-  /**
    * DELETES an image.
    *
    * @param filmLocationId the film location id
    * @param imageId the image id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = "Deletes an image on a film location.")
+  @ApiOperation(value = IMAGE_DELETE_SUMMARY, notes = IMAGE_DELETE_DESC)
   @DeleteMapping(value = "{filmLocationId}/images/{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteImage(@PathVariable UUID filmLocationId, @PathVariable("imageId") UUID imageId){
@@ -218,12 +220,38 @@ public class FilmLocationController {
    * @param image the updated image
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = "Patches an image. All data will be overwritten.")
-  @PatchMapping(value="{filmLocationId}/images/")
+  @ApiOperation(value = IMAGE_PATCH_SUMMARY, notes = IMAGE_PATCH_DESC)
+  @PatchMapping(value = "{filmLocationId}/images/")
   public void patch(@PathVariable UUID filmLocationId, @RequestBody Image image) {
     // This will overwrite everything,
     // if just changing one field all other current fields must be included
     imageRepository.save(image);
+  }
+
+  /**
+   * GETs all user comments on a FilmLocation.
+   *
+   * @param filmLocationId the film location id
+   * @return the user comments
+   */
+  @ApiOperation(value = USER_COMMENT_LIST_SUMMARY, notes = USER_COMMENT_LIST_DESC)
+  @GetMapping(value = "{filmLocationId}/user_comments", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<UserComment> getUserComments(@PathVariable UUID filmLocationId) {
+    return userCommentRepository.findAllByFilmLocationOrderByCreatedDesc
+        (filmLocationRepository.findById(filmLocationId).get());
+  }
+
+  /**
+   * GETs a user comment.
+   *
+   * @param filmLocationId the film location id
+   * @param userCommentId the user comment id
+   * @return the user comment
+   */
+  @ApiOperation(value = USER_COMMENT_GET_SUMMARY, notes = USER_COMMENT_GET_DESC)
+  @GetMapping(value = "{filmLocationId}/user_comments/{userCommentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public UserComment getUserComment(@PathVariable UUID filmLocationId, @PathVariable UUID userCommentId){
+    return userCommentRepository.findById(userCommentId).get();
   }
 
   /**
@@ -233,7 +261,7 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @return the response entity
    */
-  @ApiOperation(value = "Posts a user comment to a location.")
+  @ApiOperation(value = USER_COMMENT_POST_SUMMARY, notes = USER_COMMENT_POST_DESC)
   @PostMapping(value = "{filmLocationId}/user_comments", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserComment> post(@RequestBody UserComment userComment,
@@ -248,39 +276,13 @@ public class FilmLocationController {
   }
 
   /**
-   * GETs all user comments on a FilmLocation.
-   *
-   * @param filmLocationId the film location id
-   * @return the user comments
-   */
-  @ApiOperation(value = "Gets all user comments on a location.")
-  @GetMapping(value = "{filmLocationId}/user_comments", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<UserComment> getUserComments(@PathVariable UUID filmLocationId) {
-    return userCommentRepository.findAllByFilmLocationOrderByCreatedDesc
-        (filmLocationRepository.findById(filmLocationId).get());
-  }
-
-  /**
-   * GETs a user comment.
-   *
-   * @param filmLocationId the film location id
-   * @param userCommentId the user comment id
-   * @return the user comment
-   */
-  @ApiOperation(value = "Gets a single UserComment from a location.")
-  @GetMapping(value = "{filmLocationId}/user_comments/{userCommentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public UserComment getUserComment(@PathVariable UUID filmLocationId, @PathVariable UUID userCommentId){
-    return userCommentRepository.findById(userCommentId).get();
-  }
-
-  /**
    * DELETES a user comment.
    *
    * @param filmLocationId the film location id
    * @param userCommentId the user comment id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = "Deletes a UserComment from a location.")
+  @ApiOperation(value = USER_COMMENT_DELETE_SUMMARY, notes = USER_COMMENT_DELETE_DESC)
   @DeleteMapping(value = "{filmLocationId}/user_comments/{userCommentId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteUserComment(@PathVariable UUID filmLocationId, @PathVariable("userCommentId") UUID userCommentId){
@@ -294,8 +296,8 @@ public class FilmLocationController {
    * @param userComment the updated user comment
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value="Patches a UserComment on a location. All data to stay the same must be included.")
-  @PatchMapping(value="{filmLocationId}/user_comments")
+  @ApiOperation(value = USER_COMMENT_PATCH_SUMMARY, notes = USER_COMMENT_PATCH_DESC)
+  @PatchMapping(value = "{filmLocationId}/user_comments")
   public void patch(@PathVariable UUID filmLocationId, @RequestBody UserComment userComment) {
     // This will overwrite everything,
     // if just changing one field all other current fields must be included

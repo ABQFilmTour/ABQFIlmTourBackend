@@ -548,7 +548,7 @@
     "/productions/{productionId}/poster" : {
       "get" : {
         "operationId" : "getPoster",
-        "produces" : [ "image/jpeg" ],
+        "produces" : [ "image/gif", "image/jpeg", "image/png", "video/webm", "video/mp4", "application/octet-stream" ],
         "parameters" : [ {
           "name" : "productionId",
           "in" : "path",
@@ -762,10 +762,6 @@
         "user" : {
           "$ref" : "#/definitions/GoogleUser"
         },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
         "id" : {
           "type" : "string",
           "format" : "uuid"
@@ -850,10 +846,6 @@
           "type" : "string",
           "format" : "uuid"
         },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
         "filmLocation" : {
           "$ref" : "#/definitions/FilmLocation"
         },
@@ -904,9 +896,6 @@
         "plot" : {
           "type" : "string"
         },
-        "posterUrl" : {
-          "type" : "string"
-        },
         "href" : {
           "type" : "string",
           "format" : "uri"
@@ -922,10 +911,6 @@
         "id" : {
           "type" : "string",
           "format" : "uuid"
-        },
-        "created" : {
-          "type" : "string",
-          "format" : "date-time"
         },
         "filmLocation" : {
           "$ref" : "#/definitions/FilmLocation"

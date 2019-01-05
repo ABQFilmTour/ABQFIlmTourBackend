@@ -33,6 +33,13 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * This class handles a Google oauth2 authentication token. It checks if the token is valid, checks
+ * if the Google account information associated with the token is in a list of privileged users,
+ * checks if the Google account information exists in the database and if the user is banned from
+ * the service. It should throw an appropriate exception and HTTP error code. Unexpected
+ * exceptions may throw a 500 error code.
+ */
 @Component
 public class GoogleTokenServices implements ResourceServerTokenServices {
 
@@ -40,8 +47,14 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
   private static final String BAD_TOKEN_MESSAGE = "Bad token";
   private static final String BANNED_USER_MESSAGE_FORMAT = "User is banned for the following reason: %s";
 
+  /**
+   * A collection of Google IDs assigned to privileged users.
+   */
   private String[] superIds;
 
+  /**
+   * The Google ID belonging to the administrator.
+   */
   private String adminId;
 
   @Value("${oauth.clientId}")
@@ -91,9 +104,18 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
       throw new InvalidTokenException(BAD_TOKEN_MESSAGE);
     } catch (GeneralSecurityException | IOException e) {
       throw new RuntimeException(e);
+    } catch (Throwable e) { // This additional catch is for debugging.
+      throw new RuntimeException(e);
     }
   }
 
+  /**
+   * Extracts Google account information from a given payload and checks for additional information
+   * on the user.
+   * @param payload an authentication paylod.
+   * @param idTokenString the oauth2 ID Token String.
+   * @return authentication for the service.
+   */
   private Authentication handlePayload(Payload payload, String idTokenString) {
     HashSet<GrantedAuthority> grants = new HashSet<>();
     String userId = payload.getUserId();
@@ -136,6 +158,9 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
     return null;
   }
 
+  /**
+   * This exception is thrown if the user is banned from using the service and throws a 403.
+   */
   @ResponseStatus(HttpStatus.FORBIDDEN)
   public class UserBannedException extends InvalidTokenException {
 
@@ -147,7 +172,5 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
     public int getHttpErrorCode() {
       return HTTP_FORBIDDEN;
     }
-
   }
-
 }

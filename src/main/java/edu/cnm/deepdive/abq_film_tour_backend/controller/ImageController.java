@@ -48,7 +48,7 @@ public class ImageController {
   @ApiOperation(value = "Orders Images", notes = "Orders by Id ascending.")
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Image> list() {
-    return imageRepository.findAllByOrderByIdAsc();
+    return imageRepository.findAllByOrderByCreatedDesc();
   }
 
   /**

@@ -433,7 +433,12 @@ paths:
     get:
       operationId: "getPoster"
       produces:
+      - "image/gif"
       - "image/jpeg"
+      - "image/png"
+      - "video/webm"
+      - "video/mp4"
+      - "application/octet-stream"
       parameters:
       - name: "productionId"
         in: "path"
@@ -599,9 +604,6 @@ definitions:
         format: "uuid"
       user:
         $ref: "#/definitions/GoogleUser"
-      created:
-        type: "string"
-        format: "date-time"
       id:
         type: "string"
         format: "uuid"
@@ -660,9 +662,6 @@ definitions:
       id:
         type: "string"
         format: "uuid"
-      created:
-        type: "string"
-        format: "date-time"
       filmLocation:
         $ref: "#/definitions/FilmLocation"
       description:
@@ -697,8 +696,6 @@ definitions:
         type: "string"
       plot:
         type: "string"
-      posterUrl:
-        type: "string"
       href:
         type: "string"
         format: "uri"
@@ -710,9 +707,6 @@ definitions:
       id:
         type: "string"
         format: "uuid"
-      created:
-        type: "string"
-        format: "date-time"
       filmLocation:
         $ref: "#/definitions/FilmLocation"
       text:

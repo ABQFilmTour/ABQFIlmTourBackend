@@ -1,12 +1,12 @@
 package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
+import static edu.cnm.deepdive.abq_film_tour_backend.controller.Constants.*;
+
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ProductionRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Production;
 import io.swagger.annotations.ApiOperation;
-import edu.cnm.deepdive.abq_film_tour_backend.service.ProductionService;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
@@ -66,9 +66,9 @@ public class ProductionController {
    *
    * @return a list of productions ordered by their ID.
    */
-  @ApiOperation(value = "Orders Productions", notes = "Orders by Id ascending.")
+  @ApiOperation(value = PRODUCTION_LIST_SUMMARY, notes = PRODUCTION_LIST_DESC)
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Production> list() { return productionRepository.findAllByOrderByIdAsc();}
+  public List<Production> list() { return productionRepository.findAllByOrderByCreatedDesc();}
 
   /**
    * Post response entity.
@@ -76,7 +76,7 @@ public class ProductionController {
    * @param production the production
    * @return the response entity
    */
-  @ApiOperation(value = "Post Production", notes = "Saves production to production repository")
+  @ApiOperation(value = PRODUCTION_POST_SUMMARY, notes = PRODUCTION_POST_DESC)
   @Secured("ROLE_SUPER")
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,7 +91,7 @@ public class ProductionController {
    * @param productionId the production id
    * @return the production
    */
-  @ApiOperation(value = "Gets a production", notes = "Finds production by the production UUID")
+  @ApiOperation(value = PRODUCTION_GET_SUMMARY, notes = PRODUCTION_GET_DESC)
   @GetMapping(value = "{productionId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Production get(@PathVariable("productionId") UUID productionId){
     return productionRepository.findById(productionId).get();
@@ -103,7 +103,7 @@ public class ProductionController {
    * @param productionId the production id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = "Deletes a production", notes = "Enables you to delete a production from database")
+  @ApiOperation(value = PRODUCTION_DELETE_SUMMARY, notes = PRODUCTION_DELETE_DESC)
   @DeleteMapping(value = "{productionId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("productionId") UUID productionId) {
@@ -117,7 +117,7 @@ public class ProductionController {
    * @param production an updated production.
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = "Patches a production", notes = "Enables you to edit a production from database")
+  @ApiOperation(value = PRODUCTION_PATCH_SUMMARY, notes = PRODUCTION_PATCH_DESC)
   @PatchMapping
   public void patch(@RequestBody Production production) {
     // This will overwrite everything,
@@ -143,6 +143,7 @@ public class ProductionController {
    * @return a raw output stream to be serialized into an image
    * @throws IOException failed to reach OMDB server
    */
+  @ApiOperation(value = PRODUCTION_POSTER_SUMMARY, notes = PRODUCTION_POSTER_DESC)
   @GetMapping(value = "{productionId}/poster",
       produces = {
           MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE,

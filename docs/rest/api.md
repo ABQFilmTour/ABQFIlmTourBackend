@@ -2108,7 +2108,7 @@ Enables you to delete an image from database
 
 #### Response
 
-**Content-Type:** image/jpeg
+**Content-Type:** image/gif, image/jpeg, image/png, video/webm, video/mp4, application/octet-stream
 
 
 | Status Code | Reason      | Response Model |
@@ -2800,21 +2800,6 @@ Takes user id as a parameter and deletes google user.
         </tr>
     
         <tr>
-            <td><strong>created</strong></td>
-            <td>
-                
-                    
-                    string (date-time)
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
             <td><strong>id</strong></td>
             <td>
                 
@@ -3181,21 +3166,6 @@ Takes user id as a parameter and deletes google user.
         </tr>
     
         <tr>
-            <td><strong>created</strong></td>
-            <td>
-                
-                    
-                    string (date-time)
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
             <td><strong>filmLocation</strong></td>
             <td>
                 
@@ -3424,21 +3394,6 @@ Takes user id as a parameter and deletes google user.
         </tr>
     
         <tr>
-            <td><strong>posterUrl</strong></td>
-            <td>
-                
-                    
-                    string
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
             <td><strong>href</strong></td>
             <td>
                 
@@ -3495,21 +3450,6 @@ Takes user id as a parameter and deletes google user.
                 
                     
                     string (uuid)
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
-            <td><strong>created</strong></td>
-            <td>
-                
-                    
-                    string (date-time)
                 
             </td>
             <td>

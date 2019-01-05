@@ -3,6 +3,7 @@ package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
@@ -141,6 +142,11 @@ public class UserComment {
   @JsonIgnore
   public Date getCreated() {
     return created;
+  }
+
+  @JsonProperty
+  public void setCreated(@NonNull Date created) {
+    this.created = created;
   }
 
   /**

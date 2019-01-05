@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 
 /**
- * This is the configuration class, primarily for interpreting the API key held in a secret
- * properties file.
+ * This is the configuration class. It's primary function is to interpret data that should not be
+ * exposed from a given secret.properties file.
  */
 @Configuration
 @PropertySource(value = "classpath:secret.properties")

@@ -2,6 +2,7 @@ package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
@@ -59,7 +60,6 @@ public class FilmLocation {
   private GoogleUser user;
 
   @NonNull
-  @JsonIgnore
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
@@ -178,6 +178,7 @@ public class FilmLocation {
    *
    * @param created the time of creation
    */
+  @JsonProperty
   public void setCreated(Date created) {
     this.created = created;
   }

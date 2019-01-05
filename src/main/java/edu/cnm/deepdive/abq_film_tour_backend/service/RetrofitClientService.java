@@ -15,7 +15,7 @@ public class RetrofitClientService {
   private Retrofit retrofit;
 
   /**
-   * Init.
+   * Initializes the service.
    */
   @PostConstruct
   public void init() {
@@ -26,9 +26,9 @@ public class RetrofitClientService {
   }
 
   /**
-   * Gets retrofit.
+   * Gets the Retrofit object.
    *
-   * @return the retrofit
+   * @return the retrofit object.
    */
   public Retrofit getRetrofit() {
     return retrofit;
