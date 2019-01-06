@@ -71,6 +71,11 @@ public class GoogleUser {
    */
   private String userRole;
 
+  /**
+   * Url to the user's Google profile image.
+   */
+  private String pictureUrl;
+
   private static EntityLinks getEntityLinks() {
     return entityLinks;
   }
@@ -213,6 +218,23 @@ public class GoogleUser {
    */
   public void setUserRole(String userRole) {
     this.userRole = userRole;
+  }
+
+  /**
+   * Gets the URL of the user's profile picture.
+   * @return the URL of the user's profile picture.
+   */
+  @ApiModelProperty(value = "The URL to the user's profile image.")
+  public String getPictureUrl() {
+    return pictureUrl;
+  }
+
+  /**
+   * Sets the URL of the user's profile picture.
+   * @param pictureUrl the URL of the user's profile picture.
+   */
+  public void setPictureUrl(String pictureUrl) {
+    this.pictureUrl = pictureUrl;
   }
 }
 
