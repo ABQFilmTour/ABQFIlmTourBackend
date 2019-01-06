@@ -50,6 +50,8 @@ public class Parser {
   private static final String NOT_A_NUMBER = "NaN"; //Shows up in some coordinate entries
   private static final String RESOURCE_FILE = "cityfilmlocations.csv";
   private static final String CITY_USER_NAME = "City of Albuquerque";
+  private static final String CITY_USER_ID = "505";
+  private static final String CITY_USER_IMAGE_URL = "https://jscpeterson.com/city_icon.jpeg";
 
   private RetrofitClientService retrofitClientService;
   private FilmLocationRepository filmLocationRepository;
@@ -99,6 +101,8 @@ public class Parser {
     int successes = 0;
     GoogleUser cityUser = new GoogleUser();
     cityUser.setGoogleName(CITY_USER_NAME);
+    cityUser.setGoogleId(CITY_USER_ID);
+    cityUser.setPictureUrl(CITY_USER_IMAGE_URL);
     cityUser.setBanned(false);
     userRepository.save(cityUser);
     FileInputStream fileInputStream = new FileInputStream(RESOURCE_FILE);
@@ -110,11 +114,13 @@ public class Parser {
       if (record.getRecordNumber() > 1) { //Skips header
         try {
           FilmLocation newLocation = new FilmLocation();
-          newLocation.setUser(cityUser);
+          newLocation.setUserName(cityUser.getGoogleName());
           parseRecord(record, newLocation);
           String cityPost = createPost(sdf, newLocation);
           UserComment cityUserComment = new UserComment();
-          cityUserComment.setUser(cityUser);
+          cityUserComment.setGoogleId(cityUser.getGoogleId());
+          cityUserComment.setUserName(cityUser.getGoogleName());
+          cityUserComment.setUserPictureUrl(cityUser.getPictureUrl());
           cityUserComment.setFilmLocation(newLocation);
           cityUserComment.setText(cityPost);
           cityUserComment.setApproved(true);

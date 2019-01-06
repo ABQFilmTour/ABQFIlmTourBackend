@@ -121,12 +121,14 @@ public class GoogleTokenServices implements ResourceServerTokenServices {
     String userId = payload.getUserId();
     String name = payload.get("name").toString();
     String email = payload.getEmail();
+    String pictureUrl = payload.get("picture").toString();
     GoogleUser user = userRepository.findByGoogleId(userId);
     if (user == null) { //User has not been put into the database yet
       GoogleUser newUser = new GoogleUser();
       newUser.setGoogleId(userId);
       newUser.setGoogleName(name);
       newUser.setGmailAddress(email);
+      newUser.setPictureUrl(pictureUrl);
       newUser.setBanned(false);
       userRepository.save(newUser);
       user = userRepository.findByGoogleId(userId);

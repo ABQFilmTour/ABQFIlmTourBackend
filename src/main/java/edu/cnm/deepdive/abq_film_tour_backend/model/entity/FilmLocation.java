@@ -53,21 +53,6 @@ public class FilmLocation {
   }
 
   /**
-   * The transient internal ID for the user who submitted this location, should be generally
-   * disfavored for GoogleID.
-   */
-  @Transient
-  private UUID userId;
-
-  /**
-   * The user who submitted this location.
-   */
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "user_id", updatable = false)
-  @OnDelete(action = OnDeleteAction.NO_ACTION)
-  private GoogleUser user;
-
-  /**
    * The time of creation for this location.
    */
   @NonNull
@@ -140,8 +125,20 @@ public class FilmLocation {
    */
   private boolean approved;
 
-  @Transient
+  /**
+   * The Google ID of the user who submitted this location.
+   */
   private String googleId;
+
+  /**
+   * The full name of the Google user who submitted this content.
+   */
+  private String userName;
+
+  /**
+   * The URL to the profile picture of the Google user who submitted this content.
+   */
+  private String userPictureUrl;
 
   /**
    * Gets id.
@@ -160,44 +157,6 @@ public class FilmLocation {
    */
   public void setId(UUID id) {
     this.id = id;
-  }
-
-  /**
-   * Gets the transient user id of the user who submitted the entity.
-   *
-   * @return the transient user id of the user who submitted the entity.
-   */
-  @ApiModelProperty(value = "Transient ID to reference the user in a post.")
-  public UUID getUserId() {
-    return userId;
-  }
-
-  /**
-   * Sets the transient user id of the user who submitted the entity.
-   *
-   * @param userId the transient user id of the user who submitted the entity.
-   */
-  public void setUserId(UUID userId) {
-    this.userId = userId;
-  }
-
-  /**
-   * Gets the user who submitted this location.
-   *
-   * @return the user who submitted this location.
-   */
-  @ApiModelProperty(value = "The user who submitted this location.", readOnly = true)
-  public GoogleUser getUser() {
-    return user;
-  }
-
-  /**
-   * Sets the user who submitted this location.
-   *
-   * @param user the user who submitted this location.
-   */
-  public void setUser(GoogleUser user) {
-    this.user = user;
   }
 
   /**
@@ -421,17 +380,51 @@ public class FilmLocation {
   }
 
   /**
-   * Used transiently to assign Google information to user submitted content.
+   * Used to assign Google information to user submitted content.
    */
-  @ApiModelProperty(value = "Transient Google ID of the user, used to reference the user during a post.")
+  @ApiModelProperty(value = "Google ID of the user")
   public String getGoogleId() {
     return googleId;
   }
 
   /**
-   * Used transiently to assign Google information to user submitted content.
+   * Used to assign Google information to user submitted content.
    */
   public void setGoogleId(String googleId) {
     this.googleId = googleId;
+  }
+
+  /**
+   * Gets the full name of the Google user who submitted this content.
+   * @return the full name of the Google user who submitted this content.
+   */
+  @ApiModelProperty(value = "The full name of the Google user who submitted this content")
+  public String getUserName() {
+    return userName;
+  }
+
+  /**
+   * Sets the name of the user who submitted this content.
+   * @param userName the full name of the Google user
+   */
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  /**
+   * Gets the URL of the Google user's profile image.
+   * @return the URL of the Google user's profile image.
+   */
+  @ApiModelProperty(value = "The URL of the Google user's profile image.")
+  public String getUserPictureUrl() {
+    return userPictureUrl;
+  }
+
+  /**
+   * Sets the URL of the Google user's profile image.
+   * @param userPictureUrl the URL of the Google user's profile image.
+   */
+  public void setUserPictureUrl(String userPictureUrl) {
+    this.userPictureUrl = userPictureUrl;
   }
 }

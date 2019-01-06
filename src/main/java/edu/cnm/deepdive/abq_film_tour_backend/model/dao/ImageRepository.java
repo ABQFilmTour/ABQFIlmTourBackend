@@ -13,8 +13,8 @@ public interface ImageRepository extends CrudRepository<Image, UUID> {
 
   List<Image> findAllByFilmLocationOrderByCreatedDesc(FilmLocation filmLocation);
 
-  List<Image> findAllByUser(GoogleUser user);
+  List<Image> findAllByGoogleId(String googleId);
 
-  List<Image> findAllByUserOrderByCreatedDesc(GoogleUser user);
+  List<Image> findAllByGoogleIdOrderByCreatedDesc(String googleId);
 
 }
