@@ -3,6 +3,7 @@ package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
@@ -98,6 +99,7 @@ public class Image {
    *
    * @return the user id
    */
+  @ApiModelProperty(value = "Transient ID to reference the user in a post.")
   public UUID getUserId() {
     return userId;
   }
@@ -116,6 +118,7 @@ public class Image {
    *
    * @return the user
    */
+  @ApiModelProperty(value = "The user who submitted this location.", readOnly = true)
   public GoogleUser getUser() {
     return user;
   }
@@ -143,6 +146,7 @@ public class Image {
    *
    * @return the id
    */
+  @ApiModelProperty(value = "Internal ID for this location.", readOnly = true)
   public UUID getId() {
     return id;
   }
@@ -162,6 +166,7 @@ public class Image {
    * @return the time of creation
    */
   @JsonIgnore
+  @ApiModelProperty(value = "The time this entity was created.", readOnly = true)
   public Date getCreated() {
     return created;
   }
@@ -200,6 +205,7 @@ public class Image {
    *
    * @return the description of the image's contents.
    */
+  @ApiModelProperty(value = "An optional description of the image's contents.")
   public String getDescription() {
     return description;
   }
@@ -218,6 +224,7 @@ public class Image {
    *
    * @return the url
    */
+  @ApiModelProperty(value = "The URL the image is located at.")
   public String getUrl() {
     return url;
   }
@@ -243,6 +250,7 @@ public class Image {
    *
    * @return the approval status
    */
+  @ApiModelProperty(value = "The approval status of the location.", required = true)
   public boolean isApproved() {
     return approved;
   }
@@ -259,6 +267,7 @@ public class Image {
   /**
    * Used transiently to assign Google information to user submitted content.
    */
+  @ApiModelProperty(value = "Transient Google ID of the user, used to reference the user during a post.")
   public String getGoogleId() {
     return googleId;
   }

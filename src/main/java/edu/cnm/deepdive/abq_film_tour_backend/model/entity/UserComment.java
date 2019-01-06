@@ -4,6 +4,7 @@ package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
@@ -94,6 +95,7 @@ public class UserComment {
    *
    * @return the id
    */
+  @ApiModelProperty(value = "Internal ID for this location.", readOnly = true)
   public UUID getId() {
     return id;
   }
@@ -103,6 +105,7 @@ public class UserComment {
    *
    * @return the transient user id of the user who submitted the entity.
    */
+  @ApiModelProperty(value = "Transient ID to reference the user in a post.")
   public UUID getUserId() {
     return userId;
   }
@@ -121,6 +124,7 @@ public class UserComment {
    *
    * @return the user who submitted the comment.
    */
+  @ApiModelProperty(value = "The user who submitted this location.", readOnly = true)
   public GoogleUser getUser() {
     return user;
   }
@@ -140,6 +144,7 @@ public class UserComment {
    * @return the time of creation
    */
   @JsonIgnore
+  @ApiModelProperty(value = "The time this entity was created.", readOnly = true)
   public Date getCreated() {
     return created;
   }
@@ -154,6 +159,7 @@ public class UserComment {
    *
    * @return the text of the comment.
    */
+  @ApiModelProperty(value = "The text content of this comment. 4096 character max")
   public String getText() {
     return text;
   }
@@ -172,6 +178,7 @@ public class UserComment {
    *
    * @return the film location associated with the entity.
    */
+  @ApiModelProperty(value = "The Film Location associated with this entity.", readOnly = true)
   public FilmLocation getFilmLocation() {
     return filmLocation;
   }
@@ -200,6 +207,7 @@ public class UserComment {
    *
    * @return the approval status
    */
+  @ApiModelProperty(value = "The approval status of the location.", required = true)
   public boolean isApproved() {
     return approved;
   }
@@ -216,6 +224,7 @@ public class UserComment {
   /**
    * Used transiently to assign Google information to user submitted content.
    */
+  @ApiModelProperty(value = "Transient Google ID of the user, used to reference the user during a post.")
   public String getGoogleId() {
     return googleId;
   }

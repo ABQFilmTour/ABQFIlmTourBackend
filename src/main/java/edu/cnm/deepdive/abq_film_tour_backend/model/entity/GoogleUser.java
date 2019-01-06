@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModelProperty;
 import java.net.URI;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -79,6 +80,7 @@ public class GoogleUser {
    *
    * @return the id
    */
+  @ApiModelProperty(value = "Internal ID for this location.", readOnly = true)
   public UUID getId() {
     return id;
   }
@@ -97,6 +99,7 @@ public class GoogleUser {
    *
    * @return the google id
    */
+  @ApiModelProperty(value = "Transient Google ID of the user, used to reference the user during a post.")
   public String getGoogleId() {
     return googleId;
   }
@@ -115,6 +118,7 @@ public class GoogleUser {
    *
    * @return the full name on the Google account.
    */
+  @ApiModelProperty(value = "The full name on the user's Google Account", readOnly = true)
   public String getGoogleName() {
     return googleName;
   }
@@ -133,6 +137,7 @@ public class GoogleUser {
    *
    * @return the GMail address associated with the Google account.
    */
+  @ApiModelProperty(value = "The email address on the Google account.", readOnly = true)
   public String getGmailAddress() {
     return gmailAddress;
   }
@@ -158,6 +163,7 @@ public class GoogleUser {
    *
    * @return the banned status of the user.
    */
+  @ApiModelProperty(value = "The banned status of the user")
   public boolean isBanned() {
     return banned;
   }
@@ -176,6 +182,7 @@ public class GoogleUser {
    *
    * @return the ban reason
    */
+  @ApiModelProperty(value = "The reason for a ban.")
   public String getBanReason() {
     return banReason;
   }
@@ -194,6 +201,7 @@ public class GoogleUser {
    *
    * @return the user role
    */
+  @ApiModelProperty(value = "The user's privilege role in the database, primarily for internal records.")
   public String getUserRole() {
     return userRole;
   }
@@ -207,3 +215,4 @@ public class GoogleUser {
     this.userRole = userRole;
   }
 }
+

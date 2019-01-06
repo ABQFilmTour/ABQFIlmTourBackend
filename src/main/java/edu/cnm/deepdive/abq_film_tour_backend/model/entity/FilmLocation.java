@@ -3,6 +3,7 @@ package edu.cnm.deepdive.abq_film_tour_backend.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
@@ -147,6 +148,7 @@ public class FilmLocation {
    *
    * @return the id
    */
+  @ApiModelProperty(value = "Internal ID for this location.", readOnly = true)
   public UUID getId() {
     return id;
   }
@@ -165,6 +167,7 @@ public class FilmLocation {
    *
    * @return the transient user id of the user who submitted the entity.
    */
+  @ApiModelProperty(value = "Transient ID to reference the user in a post.")
   public UUID getUserId() {
     return userId;
   }
@@ -183,6 +186,7 @@ public class FilmLocation {
    *
    * @return the user who submitted this location.
    */
+  @ApiModelProperty(value = "The user who submitted this location.", readOnly = true)
   public GoogleUser getUser() {
     return user;
   }
@@ -202,6 +206,7 @@ public class FilmLocation {
    * @return the time of creation
    */
   @JsonIgnore
+  @ApiModelProperty(value = "The time this entity was created.", readOnly = true)
   public Date getCreated() {
     return created;
   }
@@ -221,6 +226,7 @@ public class FilmLocation {
    *
    * @return the site name
    */
+  @ApiModelProperty(value = "The name of the site.", required = true)
   public String getSiteName() {
     return siteName;
   }
@@ -239,6 +245,7 @@ public class FilmLocation {
    *
    * @return the imdb id
    */
+  @ApiModelProperty(value = "The IMDb ID for this location. Included in city data entries.")
   public String getImdbId() {
     return imdbId;
   }
@@ -257,6 +264,7 @@ public class FilmLocation {
    *
    * @return the address
    */
+  @ApiModelProperty(value = "The address for this location. Included in city data entries.")
   public String getAddress() {
     return address;
   }
@@ -275,6 +283,7 @@ public class FilmLocation {
    *
    * @return the shoot date
    */
+  @ApiModelProperty(value = "The time of the last shoot in epoch date format. Included in city data entries.")
   public long getShootDate() {
     return shootDate;
   }
@@ -293,6 +302,7 @@ public class FilmLocation {
    *
    * @return the original details
    */
+  @ApiModelProperty(value = "General information about the last shoot. Included in city data entries")
   public String getOriginalDetails() {
     return originalDetails;
   }
@@ -311,6 +321,7 @@ public class FilmLocation {
    *
    * @return the longitude coordinate
    */
+  @ApiModelProperty(value = "The longitude coordinate of the location.", required = true)
   public double getLongCoordinate() {
     return longCoordinate;
   }
@@ -329,6 +340,7 @@ public class FilmLocation {
    *
    * @return the latitude coordinate
    */
+  @ApiModelProperty(value = "The latitude coordinate of the location.", required = true)
   public double getLatCoordinate() {
     return latCoordinate;
   }
@@ -347,6 +359,7 @@ public class FilmLocation {
    *
    * @return the production
    */
+  @ApiModelProperty(value = "The production (film or television series) associated with this location.", readOnly = true)
   public Production getProduction() {
     return production;
   }
@@ -365,6 +378,7 @@ public class FilmLocation {
    *
    * @return the production id
    */
+  @ApiModelProperty(value = "The transient ID of the production, used to reference during a post.")
   public String getProductionId() {
     return productionId;
   }
@@ -392,6 +406,7 @@ public class FilmLocation {
    *
    * @return the approval status
    */
+  @ApiModelProperty(value = "The approval status of the location.", required = true)
   public boolean isApproved() {
     return approved;
   }
@@ -408,6 +423,7 @@ public class FilmLocation {
   /**
    * Used transiently to assign Google information to user submitted content.
    */
+  @ApiModelProperty(value = "Transient Google ID of the user, used to reference the user during a post.")
   public String getGoogleId() {
     return googleId;
   }
