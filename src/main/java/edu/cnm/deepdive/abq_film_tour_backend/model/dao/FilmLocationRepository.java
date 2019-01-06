@@ -10,8 +10,8 @@ public interface FilmLocationRepository extends CrudRepository<FilmLocation, UUI
 
   List<FilmLocation> findAllByOrderByCreatedDesc();
 
-  List<FilmLocation> findAllByUser(GoogleUser user);
+  List<FilmLocation> findAllByGoogleId(String googleId);
 
-  List<FilmLocation> findAllByUserOrderByCreatedDesc(GoogleUser user);
+  List<FilmLocation> findAllByGoogleIdOrderByCreatedDesc(String googleId);
 
 }

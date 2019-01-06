@@ -133,7 +133,7 @@ public class UserController {
   @GetMapping(value = "{userId}/user_comments", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<UserComment> getUserComments(@PathVariable UUID userId){
     GoogleUser user = userRepository.findById(userId).get();
-    return userCommentRepository.findAllByUserOrderByCreatedDesc(user);
+    return userCommentRepository.findAllByGoogleIdOrderByCreatedDesc(user.getGoogleId());
   }
 
   /**
@@ -146,7 +146,7 @@ public class UserController {
   @GetMapping(value = "{userId}/images", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Image> getImages(@PathVariable UUID userId){
     GoogleUser user = userRepository.findById(userId).get();
-    return imageRepository.findAllByUserOrderByCreatedDesc(user);
+    return imageRepository.findAllByGoogleIdOrderByCreatedDesc(user.getGoogleId());
   }
 
   /**
@@ -159,22 +159,22 @@ public class UserController {
   @GetMapping(value = "{userId}/film_locations", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<FilmLocation> getFilmLocations(@PathVariable UUID userId){
     GoogleUser user = userRepository.findById(userId).get();
-    return filmLocationRepository.findAllByUserOrderByCreatedDesc(user);
+    return filmLocationRepository.findAllByGoogleIdOrderByCreatedDesc(user.getGoogleId());
   }
 
   @ApiOperation(value = USER_PURGE_SUMMARY, notes = USER_PURGE_DESC)
   @RequestMapping(value = "{userId}/purge")
   public void purge(@PathVariable UUID userId) {
     GoogleUser user = userRepository.findById(userId).get();
-    List<UserComment> userComments = userCommentRepository.findAllByUser(user);
+    List<UserComment> userComments = userCommentRepository.findAllByGoogleId(user.getGoogleId());
     for (UserComment comment : userComments) {
       userCommentRepository.delete(comment);
     }
-    List<Image> images = imageRepository.findAllByUser(user);
+    List<Image> images = imageRepository.findAllByGoogleId(user.getGoogleId());
     for (Image image : images) {
       imageRepository.delete(image);
     }
-    List<FilmLocation> locations = filmLocationRepository.findAllByUser(user);
+    List<FilmLocation> locations = filmLocationRepository.findAllByGoogleId(user.getGoogleId());
     for (FilmLocation location : locations) {
       filmLocationRepository.delete(location);
     }

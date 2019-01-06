@@ -107,8 +107,9 @@ public class FilmLocationController {
           productionRepository.findById(UUID.fromString(filmLocation.getProductionId())).get());
     }
     GoogleUser user = userRepository.findByGoogleId(filmLocation.getGoogleId());
-    filmLocation.setGoogleId(filmLocation.getGoogleId());
-    filmLocation.setUser(user);
+    filmLocation.setGoogleId(user.getGoogleId());
+    filmLocation.setUserName(user.getGoogleName());
+    filmLocation.setUserPictureUrl(user.getPictureUrl());
     filmLocationRepository.save(filmLocation);
     return ResponseEntity.created(filmLocation.getHref()).body(filmLocation);
   }
@@ -192,8 +193,9 @@ public class FilmLocationController {
       @PathVariable UUID filmLocationId) {
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
     GoogleUser user = userRepository.findByGoogleId(image.getGoogleId());
-    image.setGoogleId(image.getGoogleId());
-    image.setUser(user);
+    image.setGoogleId(user.getGoogleId());
+    image.setUserName(user.getGoogleName());
+    image.setUserPictureUrl(user.getPictureUrl());
     image.setFilmLocation(filmLocation);
     imageRepository.save(image);
     return ResponseEntity.created(image.getHref()).body(image);
@@ -268,9 +270,10 @@ public class FilmLocationController {
       @PathVariable UUID filmLocationId) {
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
     GoogleUser user = userRepository.findByGoogleId(userComment.getGoogleId());
-    userComment.setGoogleId(userComment.getGoogleId());
-    userComment.setUser(user);
+    userComment.setGoogleId(user.getGoogleId());
     userComment.setFilmLocation(filmLocation);
+    userComment.setUserName(user.getGoogleName());
+    userComment.setUserPictureUrl(user.getPictureUrl());
     userCommentRepository.save(userComment);
     return ResponseEntity.created(userComment.getHref()).body(userComment);
   }
