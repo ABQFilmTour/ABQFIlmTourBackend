@@ -11,8 +11,11 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -67,6 +70,11 @@ public class UserController {
    */
   @ApiOperation(value = USER_LIST_SUMMARY, notes = USER_LIST_DESC)
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_ADMIN)
+  })
   public List<GoogleUser> list() {
     return userRepository.findAllByOrderByGoogleNameAsc();
   }

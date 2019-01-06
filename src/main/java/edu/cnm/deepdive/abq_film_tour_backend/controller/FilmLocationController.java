@@ -81,7 +81,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
   })
   public List<FilmLocation> list() {
     return filmLocationRepository.findAllByOrderByCreatedDesc();
@@ -98,15 +98,16 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
   })
   public FilmLocation get(@PathVariable("filmLocationId") UUID filmLocationId) {
     return filmLocationRepository.findById(filmLocationId).get();
   }
 
   /**
-   * Posts a new FilmLocation. Requires a Google ID to connect a user to (the submitter), will connect a
-   * production to the FilmLocation if a production ID is provided. Should include a site name and long and lat coordinates.
+   * Posts a new FilmLocation. Will connect a production to the FilmLocation if a production ID is
+   * provided. Should include a site name and long and lat coordinates. Should include a Google ID,
+   * name, profile image URL for the submitter.
    *
    * @param filmLocation the film location
    * @return the response entity
@@ -117,7 +118,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
   })
   public ResponseEntity<FilmLocation> post(@RequestBody FilmLocation filmLocation) {
     if (filmLocation.getProductionId() != null) {
@@ -145,7 +146,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_SUPER)
   })
   public void delete(@PathVariable("filmLocationId") UUID filmLocationId){
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
@@ -173,7 +174,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_SUPER)
   })
   public void patch(@RequestBody FilmLocation filmLocation) {
     // This will overwrite everything,
@@ -192,7 +193,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
   })
   public List<Image> getImages(@PathVariable UUID filmLocationId) {
     return imageRepository.findAllByFilmLocationOrderByCreatedDesc
@@ -206,12 +207,12 @@ public class FilmLocationController {
    * @param imageId the image id
    * @return the image
    */
-  @ApiOperation(value = IMAGE_GET_SUMMARY, notes = IMAGE_GET_DESC)
   @GetMapping(value = "{filmLocationId}/images/{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = IMAGE_GET_SUMMARY, notes = IMAGE_GET_DESC)
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
   })
   public Image getImage(@PathVariable UUID filmLocationId, @PathVariable UUID imageId){
     return imageRepository.findById(imageId).get();
@@ -224,13 +225,13 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @return the response entity
    */
-  @ApiOperation(value = IMAGE_POST_SUMMARY, notes = IMAGE_POST_DESC)
   @PostMapping(value = "{filmLocationId}/images", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = IMAGE_POST_SUMMARY, notes = IMAGE_POST_DESC)
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
   })
   public ResponseEntity<Image> post(@RequestBody Image image,
       @PathVariable UUID filmLocationId) {
@@ -257,7 +258,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_SUPER)
   })
   public void deleteImage(@PathVariable UUID filmLocationId, @PathVariable("imageId") UUID imageId){
     imageRepository.deleteById(imageId);
@@ -275,7 +276,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_SUPER)
   })
   public void patch(@PathVariable UUID filmLocationId, @RequestBody Image image) {
     // This will overwrite everything,
@@ -294,7 +295,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
   })
   public List<UserComment> getUserComments(@PathVariable UUID filmLocationId) {
     return userCommentRepository.findAllByFilmLocationOrderByCreatedDesc
@@ -313,7 +314,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
   })
   public UserComment getUserComment(@PathVariable UUID filmLocationId, @PathVariable UUID userCommentId){
     return userCommentRepository.findById(userCommentId).get();
@@ -332,7 +333,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
   })
   public ResponseEntity<UserComment> post(@RequestBody UserComment userComment,
       @PathVariable UUID filmLocationId) {
@@ -359,7 +360,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_SUPER)
   })
   public void deleteUserComment(@PathVariable UUID filmLocationId, @PathVariable("userCommentId") UUID userCommentId){
     userCommentRepository.deleteById(userCommentId);
@@ -377,7 +378,7 @@ public class FilmLocationController {
   @ApiResponses({
       @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
       @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
-      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_SUPER)
   })
   public void patch(@PathVariable UUID filmLocationId, @RequestBody UserComment userComment) {
     // This will overwrite everything,

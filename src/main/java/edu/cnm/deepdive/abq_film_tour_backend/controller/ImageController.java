@@ -5,8 +5,11 @@ import static edu.cnm.deepdive.abq_film_tour_backend.controller.Constants.*;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ImageRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
@@ -47,8 +50,13 @@ public class ImageController {
    *
    * @return a list of images ordered by their time of creation.
    */
-  @ApiOperation(value = IMAGE_ALL_SUMMARY, notes = IMAGE_ALL_DESC)
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = IMAGE_ALL_SUMMARY, notes = IMAGE_ALL_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
+  })
   public List<Image> list() {
     return imageRepository.findAllByOrderByCreatedDesc();
   }
@@ -59,21 +67,31 @@ public class ImageController {
    * @param imageId the image id
    * @return the image
    */
-  @ApiOperation(value = IMAGE_GET_SUMMARY, notes = IMAGE_GET_DESC)
   @GetMapping(value = "{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = IMAGE_GET_SUMMARY, notes = IMAGE_GET_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
+  })
   public Image get(@PathVariable("imageId") UUID imageId) {
     return imageRepository.findById(imageId).get();
   }
 
   /**
-   * Posts an image.
+   * Posts an image. Posting should not be done directly, it should be done on a specific FilmLocation endpoint.
    *
    * @param image the image
    * @return the response entity
    */
-  @ApiOperation(value = IMAGE_POST_SUMMARY, notes = IMAGE_POST_DESC)
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = IMAGE_POST_SUMMARY, notes = IMAGE_POST_BAD_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_USER)
+  })
   public ResponseEntity<Image> post(@RequestBody Image image) {
     imageRepository.save(image);
     return ResponseEntity.created(image.getHref()).body(image);
@@ -85,9 +103,14 @@ public class ImageController {
    * @param imageId the image id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = IMAGE_DELETE_SUMMARY, notes = IMAGE_DELETE_DESC)
   @DeleteMapping(value = "{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ApiOperation(value = IMAGE_DELETE_SUMMARY, notes = IMAGE_DELETE_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403_SUPER)
+  })
   public void delete(@PathVariable("imageId") UUID imageId) {
     imageRepository.deleteById(imageId);
   }
