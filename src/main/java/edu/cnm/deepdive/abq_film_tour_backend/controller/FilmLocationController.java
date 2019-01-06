@@ -12,8 +12,11 @@ import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -75,6 +78,11 @@ public class FilmLocationController {
    */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiOperation(value = FILM_LOCATION_LIST_SUMMARY, notes = FILM_LOCATION_LIST_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public List<FilmLocation> list() {
     return filmLocationRepository.findAllByOrderByCreatedDesc();
   }
@@ -87,6 +95,11 @@ public class FilmLocationController {
    */
   @GetMapping(value = "{filmLocationId}", produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiOperation(value = FILM_LOCATION_GET_SUMMARY, notes = FILM_LOCATION_GET_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public FilmLocation get(@PathVariable("filmLocationId") UUID filmLocationId) {
     return filmLocationRepository.findById(filmLocationId).get();
   }
@@ -98,9 +111,14 @@ public class FilmLocationController {
    * @param filmLocation the film location
    * @return the response entity
    */
-  @ApiOperation(value = FILM_LOCATION_POST_SUMMARY, notes = FILM_LOCATION_POST_DESC)
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = FILM_LOCATION_POST_SUMMARY, notes = FILM_LOCATION_POST_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public ResponseEntity<FilmLocation> post(@RequestBody FilmLocation filmLocation) {
     if (filmLocation.getProductionId() != null) {
       filmLocation.setProduction(
@@ -120,10 +138,15 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = FILM_LOCATION_DELETE_SUMMARY, notes = FILM_LOCATION_DELETE_DESC)
   @Transactional
   @DeleteMapping(value = "{filmLocationId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ApiOperation(value = FILM_LOCATION_DELETE_SUMMARY, notes = FILM_LOCATION_DELETE_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public void delete(@PathVariable("filmLocationId") UUID filmLocationId){
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
     List<UserComment> userComments = userCommentRepository.
@@ -140,13 +163,18 @@ public class FilmLocationController {
 
   /**
    * Patches a FilmLocation. All data will be overwritten - current fields to stay the same must be
-   * included as well.
+   * included as well. Can be used to approve a user submitted location.
    *
    * @param filmLocation the updated film location
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = FILM_LOCATION_PATCH_SUMMARY, notes = FILM_LOCATION_PATCH_DESC)
   @PatchMapping
+  @ApiOperation(value = FILM_LOCATION_PATCH_SUMMARY, notes = FILM_LOCATION_PATCH_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public void patch(@RequestBody FilmLocation filmLocation) {
     // This will overwrite everything,
     // if just changing one field all other current fields must be included
@@ -159,8 +187,13 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @return the images
    */
-  @ApiOperation(value = IMAGE_LIST_SUMMARY, notes = IMAGE_LIST_DESC)
   @GetMapping(value = "{filmLocationId}/images", produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = IMAGE_LIST_SUMMARY, notes = IMAGE_LIST_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public List<Image> getImages(@PathVariable UUID filmLocationId) {
     return imageRepository.findAllByFilmLocationOrderByCreatedDesc
         (filmLocationRepository.findById(filmLocationId).get());
@@ -175,6 +208,11 @@ public class FilmLocationController {
    */
   @ApiOperation(value = IMAGE_GET_SUMMARY, notes = IMAGE_GET_DESC)
   @GetMapping(value = "{filmLocationId}/images/{imageId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public Image getImage(@PathVariable UUID filmLocationId, @PathVariable UUID imageId){
     return imageRepository.findById(imageId).get();
   }
@@ -189,6 +227,11 @@ public class FilmLocationController {
   @ApiOperation(value = IMAGE_POST_SUMMARY, notes = IMAGE_POST_DESC)
   @PostMapping(value = "{filmLocationId}/images", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public ResponseEntity<Image> post(@RequestBody Image image,
       @PathVariable UUID filmLocationId) {
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
@@ -208,9 +251,14 @@ public class FilmLocationController {
    * @param imageId the image id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = IMAGE_DELETE_SUMMARY, notes = IMAGE_DELETE_DESC)
   @DeleteMapping(value = "{filmLocationId}/images/{imageId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ApiOperation(value = IMAGE_DELETE_SUMMARY, notes = IMAGE_DELETE_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public void deleteImage(@PathVariable UUID filmLocationId, @PathVariable("imageId") UUID imageId){
     imageRepository.deleteById(imageId);
   }
@@ -222,8 +270,13 @@ public class FilmLocationController {
    * @param image the updated image
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = IMAGE_PATCH_SUMMARY, notes = IMAGE_PATCH_DESC)
   @PatchMapping(value = "{filmLocationId}/images/")
+  @ApiOperation(value = IMAGE_PATCH_SUMMARY, notes = IMAGE_PATCH_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public void patch(@PathVariable UUID filmLocationId, @RequestBody Image image) {
     // This will overwrite everything,
     // if just changing one field all other current fields must be included
@@ -236,8 +289,13 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @return the user comments
    */
-  @ApiOperation(value = USER_COMMENT_LIST_SUMMARY, notes = USER_COMMENT_LIST_DESC)
   @GetMapping(value = "{filmLocationId}/user_comments", produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = USER_COMMENT_LIST_SUMMARY, notes = USER_COMMENT_LIST_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public List<UserComment> getUserComments(@PathVariable UUID filmLocationId) {
     return userCommentRepository.findAllByFilmLocationOrderByCreatedDesc
         (filmLocationRepository.findById(filmLocationId).get());
@@ -250,8 +308,13 @@ public class FilmLocationController {
    * @param userCommentId the user comment id
    * @return the user comment
    */
-  @ApiOperation(value = USER_COMMENT_GET_SUMMARY, notes = USER_COMMENT_GET_DESC)
   @GetMapping(value = "{filmLocationId}/user_comments/{userCommentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = USER_COMMENT_GET_SUMMARY, notes = USER_COMMENT_GET_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public UserComment getUserComment(@PathVariable UUID filmLocationId, @PathVariable UUID userCommentId){
     return userCommentRepository.findById(userCommentId).get();
   }
@@ -263,9 +326,14 @@ public class FilmLocationController {
    * @param filmLocationId the film location id
    * @return the response entity
    */
-  @ApiOperation(value = USER_COMMENT_POST_SUMMARY, notes = USER_COMMENT_POST_DESC)
   @PostMapping(value = "{filmLocationId}/user_comments", consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
+  @ApiOperation(value = USER_COMMENT_POST_SUMMARY, notes = USER_COMMENT_POST_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public ResponseEntity<UserComment> post(@RequestBody UserComment userComment,
       @PathVariable UUID filmLocationId) {
     FilmLocation filmLocation = filmLocationRepository.findById(filmLocationId).get();
@@ -285,9 +353,14 @@ public class FilmLocationController {
    * @param userCommentId the user comment id
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = USER_COMMENT_DELETE_SUMMARY, notes = USER_COMMENT_DELETE_DESC)
   @DeleteMapping(value = "{filmLocationId}/user_comments/{userCommentId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ApiOperation(value = USER_COMMENT_DELETE_SUMMARY, notes = USER_COMMENT_DELETE_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_NO_CONTENT, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public void deleteUserComment(@PathVariable UUID filmLocationId, @PathVariable("userCommentId") UUID userCommentId){
     userCommentRepository.deleteById(userCommentId);
   }
@@ -299,8 +372,13 @@ public class FilmLocationController {
    * @param userComment the updated user comment
    */
   @Secured("ROLE_SUPER")
-  @ApiOperation(value = USER_COMMENT_PATCH_SUMMARY, notes = USER_COMMENT_PATCH_DESC)
   @PatchMapping(value = "{filmLocationId}/user_comments")
+  @ApiOperation(value = USER_COMMENT_PATCH_SUMMARY, notes = USER_COMMENT_PATCH_DESC)
+  @ApiResponses({
+      @ApiResponse(code = HttpServletResponse.SC_OK, message = RESPONSE_SUCCESSFUL),
+      @ApiResponse(code = HttpServletResponse.SC_UNAUTHORIZED, message = RESPONSE_401),
+      @ApiResponse(code = HttpServletResponse.SC_FORBIDDEN, message = RESPONSE_403)
+  })
   public void patch(@PathVariable UUID filmLocationId, @RequestBody UserComment userComment) {
     // This will overwrite everything,
     // if just changing one field all other current fields must be included

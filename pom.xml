@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
 
   <name>abq_film_tour_backend</name>
-  <description>Demo project for Spring Boot</description>
+  <description>RESTful API for the ABQ Film Tour application</description>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -120,9 +120,9 @@
                 <host>jscpeterson.com</host>
                 <basePath>/rest/</basePath>
                 <info>
-                  <title>Swagger documentation for the Project Odeon backend</title>
-                  <version>v2</version>
-                  <description>Documentation for the Project Odeon backend</description>
+                  <title>ABQ Film Tour Backend</title>
+                  <version>0.1.1</version>
+                  <description>Documentation for the RESTful API for ABQ Film Tour</description>
                 </info>
                 <templatePath>classpath:/templates/markdown.hbs</templatePath>
                 <!--<templatePath>classpath:/templates/strapdown.html.hbs</templatePath>-->
