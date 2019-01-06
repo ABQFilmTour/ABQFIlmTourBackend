@@ -16,4 +16,6 @@ public interface UserCommentRepository extends CrudRepository<UserComment, UUID>
 
   List<UserComment> findAllByUser(GoogleUser user);
 
+  List<UserComment> findAllByUserOrderByCreatedDesc(GoogleUser user);
+
 }

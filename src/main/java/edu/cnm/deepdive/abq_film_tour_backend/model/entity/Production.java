@@ -45,27 +45,38 @@ public class Production {
       nullable = false, updatable = false)
   private UUID id;
 
+  /**
+   * The 7 digit String ID starting with "tt", corresponds to i in omdbapi
+   */
   @Column(unique = true)
   @SerializedName("imdbID")
-  //corresponds to i in omdbapi
   private String imdbId;
 
+  /**
+   * The title of the production, corresponds to t in omdbapi
+   */
   @SerializedName("Title")
-  //corresponds to t in omdbapi
   private String title;
 
+  /**
+   * The type of production, corresponds to "type" in omdbapi. Valid options - movie, series, episode
+   */
   @SerializedName("Type")
-  //corresponds to type in omdbapi
-  //valid options - movie, series, episode
   private String type;
 
+  /**
+   * The release year of the production, corresponds to y in omdbapi. String as this can cover a
+   * range e.g 2008-2010
+   */
   @SerializedName("Year")
   //corresponds to y in omdbapi
   private String releaseYear;
 
+  /**
+   * A plot summary of the production, corresponds to plot in omdbapi. 300 character max.
+   */
   @Column(length = 300)
   @SerializedName("Plot")
-  //corresponds to plot in omdbapi
   private String plot;
 
   /**

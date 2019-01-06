@@ -2,9 +2,13 @@ package edu.cnm.deepdive.abq_film_tour_backend.controller;
 
 import static edu.cnm.deepdive.abq_film_tour_backend.controller.Constants.*;
 
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.FilmLocationRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.dao.ImageRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserCommentRepository;
 import edu.cnm.deepdive.abq_film_tour_backend.model.dao.UserRepository;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.FilmLocation;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.GoogleUser;
+import edu.cnm.deepdive.abq_film_tour_backend.model.entity.Image;
 import edu.cnm.deepdive.abq_film_tour_backend.model.entity.UserComment;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -38,6 +42,8 @@ public class UserController {
 
   private UserRepository userRepository;
   private UserCommentRepository userCommentRepository;
+  private ImageRepository imageRepository;
+  private FilmLocationRepository filmLocationRepository;
 
   /**
    * Instantiates a new User controller.
@@ -47,9 +53,11 @@ public class UserController {
    */
   @Autowired
   public UserController(UserRepository userRepository,
-      UserCommentRepository userCommentRepository) {
+      UserCommentRepository userCommentRepository, ImageRepository imageRepository, FilmLocationRepository filmLocationRepository) {
     this.userRepository = userRepository;
     this.userCommentRepository = userCommentRepository;
+    this.imageRepository = imageRepository;
+    this.filmLocationRepository = filmLocationRepository;
   }
 
   /**
@@ -100,10 +108,6 @@ public class UserController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("userId") UUID userId) {
     GoogleUser user = userRepository.findById(userId).get();
-    List<UserComment> userComments = userCommentRepository.findAllByUser(user);
-    for (UserComment comment : userComments) {
-      userCommentRepository.delete(comment);
-    }
     userRepository.delete(user);
   }
 
@@ -119,4 +123,60 @@ public class UserController {
     userRepository.save(user);
   }
 
+  /**
+   * Gets all of the comments a user has submitted in order of creation
+   *
+   * @param userId the user UUID
+   * @return a list of all comments submitted by a user, in order by the time of creation.
+   */
+  @ApiOperation(value = USER_LIST_COMMENTS_SUMMARY, notes = USER_LIST_COMMENTS_DESC)
+  @GetMapping(value = "{userId}/user_comments", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<UserComment> getUserComments(@PathVariable UUID userId){
+    GoogleUser user = userRepository.findById(userId).get();
+    return userCommentRepository.findAllByUserOrderByCreatedDesc(user);
+  }
+
+  /**
+   * Gets all of the images a user has submitted in order of creation
+   *
+   * @param userId the user UUID
+   * @return a list of all comments submitted by a user, in order by the time of creation.
+   */
+  @ApiOperation(value = USER_LIST_IMAGES_SUMMARY, notes = USER_LIST_IMAGES_DESC)
+  @GetMapping(value = "{userId}/images", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Image> getImages(@PathVariable UUID userId){
+    GoogleUser user = userRepository.findById(userId).get();
+    return imageRepository.findAllByUserOrderByCreatedDesc(user);
+  }
+
+  /**
+   * Gets all of the film locations a user has submitted in order of creation
+   *
+   * @param userId the user UUID
+   * @return a list of all comments submitted by a user, in order by the time of creation.
+   */
+  @ApiOperation(value = USER_LIST_LOCATIONS_SUMMARY, notes = USER_LIST_LOCATIONS_DESC)
+  @GetMapping(value = "{userId}/film_locations", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<FilmLocation> getFilmLocations(@PathVariable UUID userId){
+    GoogleUser user = userRepository.findById(userId).get();
+    return filmLocationRepository.findAllByUserOrderByCreatedDesc(user);
+  }
+
+  @ApiOperation(value = USER_PURGE_SUMMARY, notes = USER_PURGE_DESC)
+  @RequestMapping(value = "{userId}/purge")
+  public void purge(@PathVariable UUID userId) {
+    GoogleUser user = userRepository.findById(userId).get();
+    List<UserComment> userComments = userCommentRepository.findAllByUser(user);
+    for (UserComment comment : userComments) {
+      userCommentRepository.delete(comment);
+    }
+    List<Image> images = imageRepository.findAllByUser(user);
+    for (Image image : images) {
+      imageRepository.delete(image);
+    }
+    List<FilmLocation> locations = filmLocationRepository.findAllByUser(user);
+    for (FilmLocation location : locations) {
+      filmLocationRepository.delete(location);
+    }
+  }
 }

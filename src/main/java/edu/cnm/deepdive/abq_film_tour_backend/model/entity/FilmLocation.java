@@ -51,20 +51,33 @@ public class FilmLocation {
     FilmLocation.entityLinks = entityLinks;
   }
 
+  /**
+   * The transient internal ID for the user who submitted this location, should be generally
+   * disfavored for GoogleID.
+   */
   @Transient
   private UUID userId;
 
+  /**
+   * The user who submitted this location.
+   */
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", updatable = false)
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private GoogleUser user;
 
+  /**
+   * The time of creation for this location.
+   */
   @NonNull
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
   private Date created;
 
+  /**
+   * The internal ID for this location.
+   */
   @Id
   @GeneratedValue(generator = "uui2d")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -72,21 +85,31 @@ public class FilmLocation {
       nullable = false, updatable = false)
   private UUID id;
 
-  //These fields exist in the city data but are critical to the entity and should be the minimum
-  //requirements for submitted data.
+  /**
+   * The longitude coordinate for this location.
+   */
   private double longCoordinate;
+  /**
+   * The latitude coordinate for this location.
+   */
   private double latCoordinate;
 
-  //Even if a location may not necessarily have a site name, it probably should be required if this
-  //data will be displayed in a a table.
+  /**
+   * The name of the site.
+   */
   @NonNull
   @Column(nullable = false)
   private String siteName;
 
-  //Film and series listed on imdb are 7 digit ids prefixed with "tt".
-  //can be accessed with www.omdbapi.com/
+  /**
+   * Film and series listed on imdb are 7 digit ids prefixed with "tt". can be accessed with
+   * www.omdbapi.com
+   */
   private String imdbId;
 
+  /**
+   * The production ID associated with this location.
+   */
   @Transient
   private String productionId;
 
@@ -94,10 +117,20 @@ public class FilmLocation {
   @OnDelete(action = OnDeleteAction.NO_ACTION)
   private Production production;
 
-  //These fields exist in the city data and may be useful, perhaps could be mentioned in a comment,
-  // but do not seem critically important.
+  /**
+   * This field exists in the city data and is used to construct a comment with information about
+   * the latest shoot.
+   */
   private String address;
+  /**
+   * This field exists in the city data and is used to construct a comment with information about
+   * the latest shoot.
+   */
   private long shootDate;
+  /**
+   * This field exists in the city data and is used to construct a comment with information about
+   * the latest shoot.
+   */
   private String originalDetails;
 
   /**

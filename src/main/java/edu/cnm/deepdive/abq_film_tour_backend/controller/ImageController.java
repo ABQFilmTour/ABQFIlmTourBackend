@@ -47,7 +47,7 @@ public class ImageController {
    *
    * @return a list of images ordered by their time of creation.
    */
-  @ApiOperation(value = IMAGE_LIST_SUMMARY, notes = IMAGE_LIST_DESC)
+  @ApiOperation(value = IMAGE_ALL_SUMMARY, notes = IMAGE_ALL_DESC)
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Image> list() {
     return imageRepository.findAllByOrderByCreatedDesc();

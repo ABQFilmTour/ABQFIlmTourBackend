@@ -13,8 +13,10 @@ final class Constants {
   static final String FILM_LOCATION_PATCH_SUMMARY = "Modifies a film location.";
   static final String FILM_LOCATION_PATCH_DESC = "Restricted to superuser privileges or above. Patches a film location. All data will be overwritten - current fields to stay the same must be included as well. The ID of the image should be included in the body. Can be used to approve a location submission.";
 
-  static final String IMAGE_LIST_SUMMARY = "Gets all images.";
+  static final String IMAGE_LIST_SUMMARY = "Gets all images for a location.";
   static final String IMAGE_LIST_DESC = "Gets all of the images on a film location endpoint, ordered by the time of creation.";
+  static final String IMAGE_ALL_SUMMARY = "Gets all images.";
+  static final String IMAGE_ALL_DESC = "Gets all images, ordered by their time of creation.";
   static final String IMAGE_GET_SUMMARY = "Gets an image.";
   static final String IMAGE_GET_DESC = "Gets a single image on a film location endpoint, referenced by its internal ID";
   static final String IMAGE_POST_SUMMARY = "Posts a new image.";
@@ -24,10 +26,12 @@ final class Constants {
   static final String IMAGE_PATCH_SUMMARY = "Modifies an image.";
   static final String IMAGE_PATCH_DESC = "Restricted to superuser privileges or above. Patches an image from the images endpoint on a film location. All data will be overwritten - current fields to stay the same must be included as well. The ID of the image should be included in the body. Can be used to approve an image submission.";
 
-  static final String USER_COMMENT_LIST_SUMMARY = "Gets all user comments.";
+  static final String USER_COMMENT_LIST_SUMMARY = "Gets all user comments for a location.";
   static final String USER_COMMENT_LIST_DESC = "Gets all of the user comments on a film location endpoint, ordered by the time of creation.";
+  static final String USER_COMMENT_ALL_SUMMARY = "Gets all user comments.";
+  static final String USER_COMMENT_ALL_DESC = "Gets all user comments, ordered by their time of creation.";
   static final String USER_COMMENT_GET_SUMMARY = "Gets a user comment.";
-  static final String USER_COMMENT_GET_DESC = "Gets a single user comment on a film location endpoint, referenced by its internal ID";
+  static final String USER_COMMENT_GET_DESC = "Gets a single user comment, referenced by its internal ID";
   static final String USER_COMMENT_POST_SUMMARY = "Posts a new user comment.";
   static final String USER_COMMENT_POST_DESC = "Posts a new user comment to a film location endpoint. Should contain a Google ID for the author and the text content of the comment.";
   static final String USER_COMMENT_DELETE_SUMMARY = "Deletes a user comment.";
@@ -45,6 +49,14 @@ final class Constants {
   static final String USER_DELETE_DESC = "Admin access only. Deletes a user from the users endpoint, referenced by their internal ID.";
   static final String USER_PATCH_SUMMARY = "Modifies a user.";
   static final String USER_PATCH_DESC = "Admin access only. Patches a user from the users endpoint. All data will be overwritten - current fields to stay the same must be included as well. Can be used to ban or unban a user.";
+  static final String USER_LIST_COMMENTS_SUMMARY = "Gets all comments submitted by a user.";
+  static final String USER_LIST_COMMENTS_DESC = "Admin access only. Shows all of the comments submitted by a user in descending order by timestamp. Can be used to monitor activity.";
+  static final String USER_LIST_LOCATIONS_SUMMARY = "Gets all locations submitted by a user.";
+  static final String USER_LIST_LOCATIONS_DESC = "Admin access only. Shows all of the locations submitted by a user in descending order by timestamp. Can be used to monitor activity.";
+  static final String USER_LIST_IMAGES_SUMMARY = "Gets all images submitted by a user.";
+  static final String USER_LIST_IMAGES_DESC = "Admin access only. Shows all of the locations submitted by a user in descending order by timestamp. Can be used to monitor activity.";
+  static final String USER_PURGE_SUMMARY = "Deletes all submitted content from this user.";
+  static final String USER_PURGE_DESC = "Admin access only. Deletes all locations, comments, and images submitted by a user. Efficient way to eliminate the contributions of a malicious user.";
 
   static final String PRODUCTION_LIST_SUMMARY = "Gets all productions/";
   static final String PRODUCTION_LIST_DESC = "Gets all of the productions on the productions endpoint, ordered alphabetically by their title.";
@@ -63,7 +75,7 @@ final class Constants {
   static final String RESPONSE_400 = "Failure to parse request. Double check any IDs.";
   static final String RESPONSE_401 = "Failure to authorize. Advised to check authorization token header.";
   static final String RESPONSE_403 = "Forbidden to access. User has insufficient privileges or is banned from using the service.";
-  //TODO 404 capability should be added, at the moment "No value present" throws a 500.
-  static final String RESPONSE_500 = "Internal server error. This is frequently thrown by unexpected exceptions.";
+  static final String RESPONSE_404 = "Unrecognized request. Double check URL.";
+  static final String RESPONSE_500 = "Internal server error. This is frequently caused by a runtime error or an unexpected exception.";
 
 }

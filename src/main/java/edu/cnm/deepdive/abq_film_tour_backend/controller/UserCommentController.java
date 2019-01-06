@@ -47,7 +47,7 @@ public class UserCommentController {
    *
    * @return a list of comments ordered by their time of creation.
    */
-  @ApiOperation(value = USER_COMMENT_LIST_SUMMARY, notes = USER_COMMENT_LIST_DESC)
+  @ApiOperation(value = USER_COMMENT_ALL_SUMMARY, notes = USER_COMMENT_ALL_DESC)
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public List<UserComment> list() {
     return userCommentRepository.findAllByOrderByCreatedDesc();
