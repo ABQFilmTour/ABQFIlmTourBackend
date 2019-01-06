@@ -1,9 +1,9 @@
 ---
 swagger: "2.0"
 info:
-  description: "Documentation for the Project Odeon backend"
-  version: "v2"
-  title: "Swagger documentation for the Project Odeon backend"
+  description: "Documentation for the RESTful API for ABQ Film Tour"
+  version: "0.1.1"
+  title: "ABQ Film Tour Backend"
 host: "jscpeterson.com"
 basePath: "/rest/"
 schemes:
@@ -11,22 +11,30 @@ schemes:
 paths:
   /film_locations:
     get:
-      summary: "Gets a list of film locations"
-      description: "Gets a list of film locations."
+      summary: "Gets all film locations. "
+      description: "Gets all film locations, ordered by the time of creation."
       operationId: "list"
       produces:
       - "application/json"
       parameters: []
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             type: "array"
             items:
               $ref: "#/definitions/FilmLocation"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     post:
-      summary: "Posts a film location."
-      description: ""
+      summary: "Posts a new film location."
+      description: "Posts a new film location to the film locations endpoint. Should\
+        \ include coordinates, a site name, a Google ID, Google name, profile picture\
+        \ URL, and an associated Production at the minimum."
       operationId: "post"
       consumes:
       - "application/json"
@@ -40,13 +48,21 @@ paths:
           $ref: "#/definitions/FilmLocation"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/FilmLocation"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     patch:
-      summary: "Patches a single film location"
-      description: "Patches a film location. All data will be overwritten - current\
-        \ fields to stay the same must be included as well."
+      summary: "Modifies a film location."
+      description: "Restricted to superuser privileges or above. Patches a film location.\
+        \ All data will be overwritten - current fields to stay the same must be included\
+        \ as well. The ID of the image should be included in the body. Can be used\
+        \ to approve a location submission."
       operationId: "patch"
       parameters:
       - in: "body"
@@ -55,12 +71,18 @@ paths:
         schema:
           $ref: "#/definitions/FilmLocation"
       responses:
-        default:
-          description: "successful operation"
+        200:
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /film_locations/{filmLocationId}:
     get:
-      summary: "Gets a single film location"
-      description: "Gets a single film location."
+      summary: "Gets a film location."
+      description: "Gets a single film location by its internal ID."
       operationId: "get"
       produces:
       - "application/json"
@@ -72,12 +94,19 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/FilmLocation"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     delete:
-      summary: "Deletes a film location"
-      description: "Deletes a film location"
+      summary: "Deletes a film location."
+      description: "Restricted to superuser privileges or above. Deletes a film location\
+        \ by its internal ID."
       operationId: "delete"
       parameters:
       - name: "filmLocationId"
@@ -87,11 +116,18 @@ paths:
         format: "uuid"
       responses:
         204:
-          description: ""
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /film_locations/{filmLocationId}/images:
     get:
-      summary: "Gets all images on a FilmLocation."
-      description: ""
+      summary: "Gets all images for a location."
+      description: "Gets all of the images on a film location endpoint, ordered by\
+        \ the time of creation."
       operationId: "getImages"
       produces:
       - "application/json"
@@ -103,14 +139,22 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             type: "array"
             items:
               $ref: "#/definitions/Image"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     post:
-      summary: "Posts an image to a film location."
-      description: ""
+      summary: "Posts a new image."
+      description: "Posts a new image to a film location endpoint. Should contain\
+        \ a Google ID, Google name, and profile picture URL for the submitter and\
+        \ the URL the image is located at."
       operationId: "post"
       consumes:
       - "application/json"
@@ -129,13 +173,22 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/Image"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
   /film_locations/{filmLocationId}/images/:
     patch:
-      summary: "Patches an image. All data will be overwritten."
-      description: ""
+      summary: "Modifies an image."
+      description: "Restricted to superuser privileges or above. Patches an image\
+        \ from the images endpoint on a film location. All data will be overwritten\
+        \ - current fields to stay the same must be included as well. The ID of the\
+        \ image should be included in the body. Can be used to approve an image submission."
       operationId: "patch"
       parameters:
       - name: "filmLocationId"
@@ -149,12 +202,19 @@ paths:
         schema:
           $ref: "#/definitions/Image"
       responses:
-        default:
-          description: "successful operation"
+        200:
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /film_locations/{filmLocationId}/images/{imageId}:
     get:
-      summary: "Gets all images on a FilmLocation."
-      description: ""
+      summary: "Gets an image."
+      description: "Gets a single image on a film location endpoint, referenced by\
+        \ its internal ID"
       operationId: "getImage"
       produces:
       - "application/json"
@@ -171,12 +231,19 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/Image"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     delete:
-      summary: "Deletes an image on a film location."
-      description: ""
+      summary: "Deletes an image."
+      description: "Restricted to superuser privileges or above. Deletes a single\
+        \ image on a film location endpoint, referenced by its internal ID."
       operationId: "deleteImage"
       parameters:
       - name: "filmLocationId"
@@ -191,11 +258,18 @@ paths:
         format: "uuid"
       responses:
         204:
-          description: ""
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /film_locations/{filmLocationId}/user_comments:
     get:
-      summary: "Gets all user comments on a location."
-      description: ""
+      summary: "Gets all user comments for a location."
+      description: "Gets all of the user comments on a film location endpoint, ordered\
+        \ by the time of creation."
       operationId: "getUserComments"
       produces:
       - "application/json"
@@ -207,14 +281,22 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             type: "array"
             items:
               $ref: "#/definitions/UserComment"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     post:
-      summary: "Posts a user comment to a location."
-      description: ""
+      summary: "Posts a new user comment."
+      description: "Posts a new user comment to a film location endpoint. Should contain\
+        \ a Google ID, Google name, and profile picture URL for the author and the\
+        \ text content of the comment."
       operationId: "post"
       consumes:
       - "application/json"
@@ -233,13 +315,22 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/UserComment"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     patch:
-      summary: "Patches a UserComment on a location. All data to stay the same must\
-        \ be included."
-      description: ""
+      summary: "Modifies a user comment."
+      description: "Restricted to superuser privileges or above. Patches a user comment\
+        \ from the user comments endpoint on a film location. All data will be overwritten\
+        \ - current fields to stay the same must be included as well. The ID of the\
+        \ user comment should be included in the body. Can be used to approve a comment\
+        \ submission. "
       operationId: "patch"
       parameters:
       - name: "filmLocationId"
@@ -253,12 +344,18 @@ paths:
         schema:
           $ref: "#/definitions/UserComment"
       responses:
-        default:
-          description: "successful operation"
+        200:
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /film_locations/{filmLocationId}/user_comments/{userCommentId}:
     get:
-      summary: "Gets a single UserComment from a location."
-      description: ""
+      summary: "Gets a user comment."
+      description: "Gets a single user comment, referenced by its internal ID"
       operationId: "getUserComment"
       produces:
       - "application/json"
@@ -275,12 +372,19 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/UserComment"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     delete:
-      summary: "Deletes a UserComment from a location."
-      description: ""
+      summary: "Deletes a user comment."
+      description: "Restricted to superuser privileges or above. Deletes a single\
+        \ user comment on a film location endpoint, referenced by its internal ID."
       operationId: "deleteUserComment"
       parameters:
       - name: "filmLocationId"
@@ -295,25 +399,38 @@ paths:
         format: "uuid"
       responses:
         204:
-          description: ""
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /images:
     get:
-      summary: "Orders Images"
-      description: "Orders by Id ascending."
+      summary: "Gets all images."
+      description: "Gets all images, ordered by their time of creation."
       operationId: "list"
       produces:
       - "application/json"
       parameters: []
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             type: "array"
             items:
               $ref: "#/definitions/Image"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     post:
-      summary: "Post Image"
-      description: "Saves image to image repository"
+      summary: "Posts a new image."
+      description: "Posts an image. Posting should not be done directly, it should\
+        \ be done on a specific FilmLocation endpoint."
       operationId: "post"
       consumes:
       - "application/json"
@@ -327,13 +444,20 @@ paths:
           $ref: "#/definitions/Image"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/Image"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
   /images/{imageId}:
     get:
-      summary: "Gets an image"
-      description: "Finds image by the image UUID"
+      summary: "Gets an image."
+      description: "Gets a single image on a film location endpoint, referenced by\
+        \ its internal ID"
       operationId: "get"
       produces:
       - "application/json"
@@ -345,12 +469,19 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/Image"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     delete:
-      summary: "Deletes an image"
-      description: "Enables you to delete an image from database"
+      summary: "Deletes an image."
+      description: "Restricted to superuser privileges or above. Deletes a single\
+        \ image on a film location endpoint, referenced by its internal ID."
       operationId: "delete"
       parameters:
       - name: "imageId"
@@ -360,21 +491,39 @@ paths:
         format: "uuid"
       responses:
         204:
-          description: ""
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /productions:
     get:
+      summary: "Gets all productions/"
+      description: "Gets all of the productions on the productions endpoint, ordered\
+        \ alphabetically by their title."
       operationId: "list"
       produces:
       - "application/json"
       parameters: []
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             type: "array"
             items:
               $ref: "#/definitions/Production"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     post:
+      summary: "Posts a new production."
+      description: "Restricted to superuser privileges or above. Posts a new production.\
+        \ Should have an IMDb ID, plot summary, and title at least."
       operationId: "post"
       consumes:
       - "application/json"
@@ -388,10 +537,21 @@ paths:
           $ref: "#/definitions/Production"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/Production"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     patch:
+      summary: "Modifies a production."
+      description: "Restricted to superuser privileges or above. Patches a production\
+        \ from the productions endpoint. All data will be overwritten - current fields\
+        \ to stay the same must be included as well. The ID should be included in\
+        \ the body."
       operationId: "patch"
       parameters:
       - in: "body"
@@ -400,10 +560,19 @@ paths:
         schema:
           $ref: "#/definitions/Production"
       responses:
-        default:
-          description: "successful operation"
+        200:
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /productions/{productionId}:
     get:
+      summary: "Gets a single production."
+      description: "Gets a single production from the productions endpoint, referenced\
+        \ by its internal ID."
       operationId: "get"
       produces:
       - "application/json"
@@ -415,10 +584,19 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/Production"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     delete:
+      summary: "Deletes a production."
+      description: "Restricted to superuser privileges or above. Deletes a production\
+        \ from the productions endpoint, referenced by its internal ID."
       operationId: "delete"
       parameters:
       - name: "productionId"
@@ -428,9 +606,18 @@ paths:
         format: "uuid"
       responses:
         204:
-          description: ""
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /productions/{productionId}/poster:
     get:
+      summary: "Retrieves a poster image for the production."
+      description: "Retrieves a poster image relayed its source on the OMDb API. Image\
+        \ is returned as a raw StreamingBodyResponse to be deserialized."
       operationId: "getPoster"
       produces:
       - "image/gif"
@@ -447,27 +634,43 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/StreamingResponseBody"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
+        404:
+          description: "Not found. Possible problem in reaching the OMDb API, or no\
+            \ poster for the production may be available."
   /user_comments:
     get:
       summary: "Gets all user comments."
-      description: ""
+      description: "Gets all user comments, ordered by their time of creation."
       operationId: "list"
       produces:
       - "application/json"
       parameters: []
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             type: "array"
             items:
               $ref: "#/definitions/UserComment"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
     post:
-      summary: "Posts a user comment."
-      description: ""
+      summary: "Posts a new user comment."
+      description: "Posts a new user comment. Posting should not be done directly,\
+        \ it should be done on a specific FilmLocation endpoint."
       operationId: "post"
       consumes:
       - "application/json"
@@ -481,13 +684,23 @@ paths:
           $ref: "#/definitions/UserComment"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/UserComment"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
   /user_comments/{userCommentId}:
     delete:
-      summary: "Deletes a user comment."
-      description: ""
+      summary: "Modifies a user comment."
+      description: "Restricted to superuser privileges or above. Patches a user comment\
+        \ from the user comments endpoint on a film location. All data will be overwritten\
+        \ - current fields to stay the same must be included as well. The ID of the\
+        \ user comment should be included in the body. Can be used to approve a comment\
+        \ submission. "
       operationId: "delete"
       parameters:
       - name: "userCommentId"
@@ -497,11 +710,18 @@ paths:
         format: "uuid"
       responses:
         204:
-          description: ""
+          description: "Operation successful."
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint requires superuser privileges\
+            \ or higher."
   /user_comments/{user_comments}:
     get:
-      summary: "Gets a single comment."
-      description: ""
+      summary: "Deletes a user comment."
+      description: "Restricted to superuser privileges or above. Deletes a single\
+        \ user comment on a film location endpoint, referenced by its internal ID."
       operationId: "get"
       produces:
       - "application/json"
@@ -513,27 +733,41 @@ paths:
         format: "uuid"
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             $ref: "#/definitions/UserComment"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. The user attempting to access this endpoint\
+            \ may be banned from the service."
   /users:
     get:
-      summary: "Gets all users"
-      description: "Retrieves all users with their ID in an list."
+      summary: "Gets all users."
+      description: "Admin access only. Gets all users, ordered alphabetically by the\
+        \ name on their account."
       operationId: "list"
       produces:
       - "application/json"
       parameters: []
       responses:
         200:
-          description: "successful operation"
+          description: "Operation successful."
           schema:
             type: "array"
             items:
               $ref: "#/definitions/GoogleUser"
+        401:
+          description: "Failure to authorize. Advised to check authorization token\
+            \ header."
+        403:
+          description: "Forbidden to access. This endpoint is restricted to the administrator\
+            \ only."
     post:
-      summary: "Posts a google user."
-      description: "Posts a googel user."
+      summary: "Posts a new user."
+      description: "Admin access only. Posts a new user to the users endpoint. Should\
+        \ include a Google ID, full name, and gmail address."
       operationId: "post"
       consumes:
       - "application/json"
@@ -551,9 +785,10 @@ paths:
           schema:
             $ref: "#/definitions/GoogleUser"
     patch:
-      summary: "Patches a google user"
-      description: "Patches a user. This will overwrite everything. if just changing\
-        \ one field all other current fields must be included."
+      summary: "Modifies a user."
+      description: "Admin access only. Patches a user from the users endpoint. All\
+        \ data will be overwritten - current fields to stay the same must be included\
+        \ as well. Can be used to ban or unban a user."
       operationId: "patch"
       parameters:
       - in: "body"
@@ -566,8 +801,9 @@ paths:
           description: "successful operation"
   /users/{userId}:
     get:
-      summary: "Gets google user"
-      description: "Gets google user id and returns google user."
+      summary: "Gets a single user."
+      description: "Admin access only. Gets a user from the users endpoint, referenced\
+        \ by their internal ID."
       operationId: "get"
       produces:
       - "application/json"
@@ -583,8 +819,9 @@ paths:
           schema:
             $ref: "#/definitions/GoogleUser"
     delete:
-      summary: "Deletes google user"
-      description: "Takes user id as a parameter and deletes google user."
+      summary: "Deletes a user."
+      description: "Admin access only. Deletes a user from the users endpoint, referenced\
+        \ by their internal ID."
       operationId: "delete"
       parameters:
       - name: "userId"
@@ -595,43 +832,130 @@ paths:
       responses:
         204:
           description: ""
+  /users/{userId}/film_locations:
+    get:
+      summary: "Gets all locations submitted by a user."
+      description: "Admin access only. Shows all of the locations submitted by a user\
+        \ in descending order by timestamp. Can be used to monitor activity."
+      operationId: "getFilmLocations"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/FilmLocation"
+  /users/{userId}/images:
+    get:
+      summary: "Gets all images submitted by a user."
+      description: "Admin access only. Shows all of the locations submitted by a user\
+        \ in descending order by timestamp. Can be used to monitor activity."
+      operationId: "getImages"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Image"
+  /users/{userId}/user_comments:
+    get:
+      summary: "Gets all comments submitted by a user."
+      description: "Admin access only. Shows all of the comments submitted by a user\
+        \ in descending order by timestamp. Can be used to monitor activity."
+      operationId: "getUserComments"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserComment"
 definitions:
   FilmLocation:
     type: "object"
+    required:
+    - "approved"
+    - "latCoordinate"
+    - "longCoordinate"
+    - "siteName"
     properties:
-      userId:
-        type: "string"
-        format: "uuid"
-      user:
-        $ref: "#/definitions/GoogleUser"
       id:
         type: "string"
         format: "uuid"
+        description: "Internal ID for this location."
+        readOnly: true
       longCoordinate:
         type: "number"
         format: "double"
+        description: "The longitude coordinate of the location."
       latCoordinate:
         type: "number"
         format: "double"
+        description: "The latitude coordinate of the location."
       siteName:
         type: "string"
+        description: "The name of the site."
       imdbId:
         type: "string"
+        description: "The IMDb ID for this location. Included in city data entries."
       productionId:
         type: "string"
+        description: "The transient ID of the production, used to reference during\
+          \ a post."
       production:
+        description: "The production (film or television series) associated with this\
+          \ location."
+        readOnly: true
         $ref: "#/definitions/Production"
       address:
         type: "string"
+        description: "The address for this location. Included in city data entries."
       shootDate:
         type: "integer"
         format: "int64"
+        description: "The time of the last shoot in epoch date format. Included in\
+          \ city data entries."
       originalDetails:
         type: "string"
+        description: "General information about the last shoot. Included in city data\
+          \ entries"
       approved:
         type: "boolean"
+        description: "The approval status of the location."
       googleId:
         type: "string"
+        description: "Google ID of the user"
+      userName:
+        type: "string"
+        description: "The full name of the Google user who submitted this content"
+      userPictureUrl:
+        type: "string"
+        description: "The URL of the Google user's profile image."
       href:
         type: "string"
         format: "uri"
@@ -641,61 +965,96 @@ definitions:
       id:
         type: "string"
         format: "uuid"
+        description: "Internal ID for this location."
+        readOnly: true
       googleId:
         type: "string"
+        description: "Transient Google ID of the user, used to reference the user\
+          \ during a post."
       googleName:
         type: "string"
+        description: "The full name on the user's Google Account"
+        readOnly: true
       gmailAddress:
         type: "string"
+        description: "The email address on the Google account."
+        readOnly: true
       banned:
         type: "boolean"
+        description: "The banned status of the user"
       banReason:
         type: "string"
+        description: "The reason for a ban."
       userRole:
         type: "string"
+        description: "The user's privilege role in the database, primarily for internal\
+          \ records."
+      pictureUrl:
+        type: "string"
+        description: "The URL to the user's profile image."
       href:
         type: "string"
         format: "uri"
   Image:
     type: "object"
+    required:
+    - "approved"
     properties:
       id:
         type: "string"
         format: "uuid"
+        description: "Internal ID for this location."
+        readOnly: true
       filmLocation:
         $ref: "#/definitions/FilmLocation"
       description:
         type: "string"
+        description: "An optional description of the image's contents."
       url:
         type: "string"
-      userId:
-        type: "string"
-        format: "uuid"
-      user:
-        $ref: "#/definitions/GoogleUser"
+        description: "The URL the image is located at."
       googleId:
         type: "string"
+        description: "Google ID of the user"
+      userName:
+        type: "string"
+        description: "The full name of the Google user who submitted this content"
+      userPictureUrl:
+        type: "string"
+        description: "The URL of the Google user's profile image."
       approved:
         type: "boolean"
+        description: "The approval status of the location."
       href:
         type: "string"
         format: "uri"
   Production:
     type: "object"
+    required:
+    - "imdbId"
+    - "title"
+    - "type"
     properties:
       id:
         type: "string"
         format: "uuid"
+        description: "Internal ID for this location."
+        readOnly: true
       imdbId:
         type: "string"
+        description: "ID of this production associated with its entry in the IMDb."
       title:
         type: "string"
+        description: "Title of the production."
       type:
         type: "string"
+        description: "Type of \"movie\" or \"series\""
       releaseYear:
         type: "string"
+        description: "Release year, can cover a range such as \"2008-2010\"."
       plot:
         type: "string"
+        description: "Plot summary of the production, 300 char max."
       href:
         type: "string"
         format: "uri"
@@ -703,23 +1062,33 @@ definitions:
     type: "object"
   UserComment:
     type: "object"
+    required:
+    - "approved"
     properties:
       id:
         type: "string"
         format: "uuid"
+        description: "Internal ID for this location."
+        readOnly: true
       filmLocation:
+        description: "The Film Location associated with this entity."
+        readOnly: true
         $ref: "#/definitions/FilmLocation"
       text:
         type: "string"
-      userId:
-        type: "string"
-        format: "uuid"
-      user:
-        $ref: "#/definitions/GoogleUser"
+        description: "The text content of this comment. 4096 character max"
       googleId:
         type: "string"
+        description: "Google ID of the user"
+      userName:
+        type: "string"
+        description: "The full name of the Google user who submitted this content"
+      userPictureUrl:
+        type: "string"
+        description: "The URL of the Google user's profile image."
       approved:
         type: "boolean"
+        description: "The approval status of the location."
       href:
         type: "string"
         format: "uri"

@@ -1,12 +1,12 @@
-# Swagger documentation for the Project Odeon backend
+# ABQ Film Tour Backend
 
 ## HTTPS://jscpeterson.com/rest/
 
-Documentation for the Project Odeon backend
+Documentation for the RESTful API for ABQ Film Tour
 
 
 
-**Version** v2
+**Version** 0.1.1
 
 
 
@@ -38,12 +38,12 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/film_locations</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list">Gets a list of film locations</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list">Gets all film locations. </a></td></tr>
         
-        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a film location.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a new film location.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch">Patches a single film location</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch">Modifies a film location.</a></td></tr>
         
       
     
@@ -51,10 +51,10 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/film_locations/{filmLocationId}</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Gets a single film location</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Gets a film location.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Deletes a film location</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Deletes a film location.</a></td></tr>
         
         
         
@@ -64,9 +64,9 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/film_locations/{filmLocationId}/images</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getImages">Gets all images on a FilmLocation.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getImages">Gets all images for a location.</a></td></tr>
         
-        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts an image to a film location.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a new image.</a></td></tr>
         
         
         
@@ -82,7 +82,7 @@ Documentation for the Project Odeon backend
         
         
         
-        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch">Patches an image. All data will be overwritten.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch">Modifies an image.</a></td></tr>
         
       
     
@@ -90,10 +90,10 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/film_locations/{filmLocationId}/images/{imageId}</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getImage">Gets all images on a FilmLocation.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getImage">Gets an image.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#deleteImage">Deletes an image on a film location.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#deleteImage">Deletes an image.</a></td></tr>
         
         
         
@@ -103,12 +103,12 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/film_locations/{filmLocationId}/user_comments</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getUserComments">Gets all user comments on a location.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getUserComments">Gets all user comments for a location.</a></td></tr>
         
-        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a user comment to a location.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a new user comment.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch">Patches a UserComment on a location. All data to stay the same must be included.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch">Modifies a user comment.</a></td></tr>
         
       
     
@@ -116,10 +116,10 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/film_locations/{filmLocationId}/user_comments/{userCommentId}</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getUserComment">Gets a single UserComment from a location.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getUserComment">Gets a user comment.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#deleteUserComment">Deletes a UserComment from a location.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#deleteUserComment">Deletes a user comment.</a></td></tr>
         
         
         
@@ -129,9 +129,9 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/images</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list">Orders Images</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list">Gets all images.</a></td></tr>
         
-        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Post Image</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a new image.</a></td></tr>
         
         
         
@@ -142,10 +142,10 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/images/{imageId}</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Gets an image</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Gets an image.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Deletes an image</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Deletes an image.</a></td></tr>
         
         
         
@@ -155,12 +155,12 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/productions</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list">Gets all productions/</a></td></tr>
         
-        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a new production.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch">Modifies a production.</a></td></tr>
         
       
     
@@ -168,10 +168,10 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/productions/{productionId}</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Gets a single production.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Deletes a production.</a></td></tr>
         
         
         
@@ -181,7 +181,7 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/productions/{productionId}/poster</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getPoster"></a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getPoster">Retrieves a poster image for the production.</a></td></tr>
         
         
         
@@ -196,7 +196,7 @@ Documentation for the Project Odeon backend
       
         <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list">Gets all user comments.</a></td></tr>
         
-        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a user comment.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a new user comment.</a></td></tr>
         
         
         
@@ -210,7 +210,7 @@ Documentation for the Project Odeon backend
         
         
         
-        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Deletes a user comment.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Modifies a user comment.</a></td></tr>
         
         
         
@@ -220,7 +220,7 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/user_comments/{user_comments}</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Gets a single comment.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Deletes a user comment.</a></td></tr>
         
         
         
@@ -233,12 +233,12 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/users</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list">Gets all users</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#list">Gets all users.</a></td></tr>
         
-        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a google user.</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>POST</code></td><td><a href="#post">Posts a new user.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch">Patches a google user</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>PATCH</code></td><td><a href="#patch">Modifies a user.</a></td></tr>
         
       
     
@@ -246,10 +246,49 @@ Documentation for the Project Odeon backend
         <th colspan="3" style="text-align: left;"><strong>/users/{userId}</strong></th>
       </tr>
       
-        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Gets google user</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#get">Gets a single user.</a></td></tr>
         
         
-        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Deletes google user</a></td></tr>
+        <tr><td>&nbsp;</td><td><code>DELETE</code></td><td><a href="#delete">Deletes a user.</a></td></tr>
+        
+        
+        
+      
+    
+      <tr>
+        <th colspan="3" style="text-align: left;"><strong>/users/{userId}/film_locations</strong></th>
+      </tr>
+      
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getFilmLocations">Gets all locations submitted by a user.</a></td></tr>
+        
+        
+        
+        
+        
+        
+      
+    
+      <tr>
+        <th colspan="3" style="text-align: left;"><strong>/users/{userId}/images</strong></th>
+      </tr>
+      
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getImages">Gets all images submitted by a user.</a></td></tr>
+        
+        
+        
+        
+        
+        
+      
+    
+      <tr>
+        <th colspan="3" style="text-align: left;"><strong>/users/{userId}/user_comments</strong></th>
+      </tr>
+      
+        <tr><td>&nbsp;</td><td><code>GET</code></td><td><a href="#getUserComments">Gets all comments submitted by a user.</a></td></tr>
+        
+        
+        
         
         
         
@@ -265,9 +304,9 @@ Documentation for the Project Odeon backend
 
 ### <a name="list"></a>GET
 
-Gets a list of film locations
+Gets all film locations. 
 
-Gets a list of film locations.
+Gets all film locations, ordered by the time of creation.
 
 
 
@@ -292,7 +331,9 @@ Gets a list of film locations.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | Array[<a href="#/definitions/FilmLocation">FilmLocation</a>]|
+| 200    | Operation successful. | Array[<a href="#/definitions/FilmLocation">FilmLocation</a>]|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -301,9 +342,9 @@ Gets a list of film locations.
 
 ### <a name="post"></a>POST
 
-Posts a film location.
+Posts a new film location.
 
-
+Posts a new film location to the film locations endpoint. Should include coordinates, a site name, a Google ID, Google name, profile picture URL, and an associated Production at the minimum.
 
 
 
@@ -363,7 +404,9 @@ Posts a film location.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/FilmLocation">FilmLocation</a>|
+| 200    | Operation successful. | <a href="#/definitions/FilmLocation">FilmLocation</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -374,9 +417,9 @@ Posts a film location.
 
 ### <a name="patch"></a>PATCH
 
-Patches a single film location
+Modifies a film location.
 
-Patches a film location. All data will be overwritten - current fields to stay the same must be included as well.
+Restricted to superuser privileges or above. Patches a film location. All data will be overwritten - current fields to stay the same must be included as well. The ID of the image should be included in the body. Can be used to approve a location submission.
 
 
 
@@ -435,7 +478,9 @@ Patches a film location. All data will be overwritten - current fields to stay t
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| default    | successful operation |  - |
+| 200    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -449,9 +494,9 @@ Patches a film location. All data will be overwritten - current fields to stay t
 
 ### <a name="get"></a>GET
 
-Gets a single film location
+Gets a film location.
 
-Gets a single film location.
+Gets a single film location by its internal ID.
 
 
 
@@ -509,7 +554,9 @@ Gets a single film location.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/FilmLocation">FilmLocation</a>|
+| 200    | Operation successful. | <a href="#/definitions/FilmLocation">FilmLocation</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -520,9 +567,9 @@ Gets a single film location.
 
 ### <a name="delete"></a>DELETE
 
-Deletes a film location
+Deletes a film location.
 
-Deletes a film location
+Restricted to superuser privileges or above. Deletes a film location by its internal ID.
 
 
 
@@ -580,7 +627,9 @@ Deletes a film location
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 204    |  |  - |
+| 204    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -598,9 +647,9 @@ Deletes a film location
 
 ### <a name="getImages"></a>GET
 
-Gets all images on a FilmLocation.
+Gets all images for a location.
 
-
+Gets all of the images on a film location endpoint, ordered by the time of creation.
 
 
 
@@ -658,7 +707,9 @@ Gets all images on a FilmLocation.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | Array[<a href="#/definitions/Image">Image</a>]|
+| 200    | Operation successful. | Array[<a href="#/definitions/Image">Image</a>]|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -667,9 +718,9 @@ Gets all images on a FilmLocation.
 
 ### <a name="post"></a>POST
 
-Posts an image to a film location.
+Posts a new image.
 
-
+Posts a new image to a film location endpoint. Should contain a Google ID, Google name, and profile picture URL for the submitter and the URL the image is located at.
 
 
 
@@ -742,7 +793,9 @@ Posts an image to a film location.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/Image">Image</a>|
+| 200    | Operation successful. | <a href="#/definitions/Image">Image</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -772,9 +825,9 @@ Posts an image to a film location.
 
 ### <a name="patch"></a>PATCH
 
-Patches an image. All data will be overwritten.
+Modifies an image.
 
-
+Restricted to superuser privileges or above. Patches an image from the images endpoint on a film location. All data will be overwritten - current fields to stay the same must be included as well. The ID of the image should be included in the body. Can be used to approve an image submission.
 
 
 
@@ -846,7 +899,9 @@ Patches an image. All data will be overwritten.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| default    | successful operation |  - |
+| 200    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -860,9 +915,9 @@ Patches an image. All data will be overwritten.
 
 ### <a name="getImage"></a>GET
 
-Gets all images on a FilmLocation.
+Gets an image.
 
-
+Gets a single image on a film location endpoint, referenced by its internal ID
 
 
 
@@ -933,7 +988,9 @@ Gets all images on a FilmLocation.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/Image">Image</a>|
+| 200    | Operation successful. | <a href="#/definitions/Image">Image</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -944,9 +1001,9 @@ Gets all images on a FilmLocation.
 
 ### <a name="deleteImage"></a>DELETE
 
-Deletes an image on a film location.
+Deletes an image.
 
-
+Restricted to superuser privileges or above. Deletes a single image on a film location endpoint, referenced by its internal ID.
 
 
 
@@ -1017,7 +1074,9 @@ Deletes an image on a film location.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 204    |  |  - |
+| 204    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -1035,9 +1094,9 @@ Deletes an image on a film location.
 
 ### <a name="getUserComments"></a>GET
 
-Gets all user comments on a location.
+Gets all user comments for a location.
 
-
+Gets all of the user comments on a film location endpoint, ordered by the time of creation.
 
 
 
@@ -1095,7 +1154,9 @@ Gets all user comments on a location.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | Array[<a href="#/definitions/UserComment">UserComment</a>]|
+| 200    | Operation successful. | Array[<a href="#/definitions/UserComment">UserComment</a>]|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -1104,9 +1165,9 @@ Gets all user comments on a location.
 
 ### <a name="post"></a>POST
 
-Posts a user comment to a location.
+Posts a new user comment.
 
-
+Posts a new user comment to a film location endpoint. Should contain a Google ID, Google name, and profile picture URL for the author and the text content of the comment.
 
 
 
@@ -1179,7 +1240,9 @@ Posts a user comment to a location.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/UserComment">UserComment</a>|
+| 200    | Operation successful. | <a href="#/definitions/UserComment">UserComment</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -1190,9 +1253,9 @@ Posts a user comment to a location.
 
 ### <a name="patch"></a>PATCH
 
-Patches a UserComment on a location. All data to stay the same must be included.
+Modifies a user comment.
 
-
+Restricted to superuser privileges or above. Patches a user comment from the user comments endpoint on a film location. All data will be overwritten - current fields to stay the same must be included as well. The ID of the user comment should be included in the body. Can be used to approve a comment submission. 
 
 
 
@@ -1264,7 +1327,9 @@ Patches a UserComment on a location. All data to stay the same must be included.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| default    | successful operation |  - |
+| 200    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -1278,9 +1343,9 @@ Patches a UserComment on a location. All data to stay the same must be included.
 
 ### <a name="getUserComment"></a>GET
 
-Gets a single UserComment from a location.
+Gets a user comment.
 
-
+Gets a single user comment, referenced by its internal ID
 
 
 
@@ -1351,7 +1416,9 @@ Gets a single UserComment from a location.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/UserComment">UserComment</a>|
+| 200    | Operation successful. | <a href="#/definitions/UserComment">UserComment</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -1362,9 +1429,9 @@ Gets a single UserComment from a location.
 
 ### <a name="deleteUserComment"></a>DELETE
 
-Deletes a UserComment from a location.
+Deletes a user comment.
 
-
+Restricted to superuser privileges or above. Deletes a single user comment on a film location endpoint, referenced by its internal ID.
 
 
 
@@ -1435,7 +1502,9 @@ Deletes a UserComment from a location.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 204    |  |  - |
+| 204    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -1453,9 +1522,9 @@ Deletes a UserComment from a location.
 
 ### <a name="list"></a>GET
 
-Orders Images
+Gets all images.
 
-Orders by Id ascending.
+Gets all images, ordered by their time of creation.
 
 
 
@@ -1480,7 +1549,9 @@ Orders by Id ascending.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | Array[<a href="#/definitions/Image">Image</a>]|
+| 200    | Operation successful. | Array[<a href="#/definitions/Image">Image</a>]|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -1489,9 +1560,9 @@ Orders by Id ascending.
 
 ### <a name="post"></a>POST
 
-Post Image
+Posts a new image.
 
-Saves image to image repository
+Posts an image. Posting should not be done directly, it should be done on a specific FilmLocation endpoint.
 
 
 
@@ -1551,7 +1622,9 @@ Saves image to image repository
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/Image">Image</a>|
+| 200    | Operation successful. | <a href="#/definitions/Image">Image</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -1571,9 +1644,9 @@ Saves image to image repository
 
 ### <a name="get"></a>GET
 
-Gets an image
+Gets an image.
 
-Finds image by the image UUID
+Gets a single image on a film location endpoint, referenced by its internal ID
 
 
 
@@ -1631,7 +1704,9 @@ Finds image by the image UUID
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/Image">Image</a>|
+| 200    | Operation successful. | <a href="#/definitions/Image">Image</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -1642,9 +1717,9 @@ Finds image by the image UUID
 
 ### <a name="delete"></a>DELETE
 
-Deletes an image
+Deletes an image.
 
-Enables you to delete an image from database
+Restricted to superuser privileges or above. Deletes a single image on a film location endpoint, referenced by its internal ID.
 
 
 
@@ -1702,7 +1777,9 @@ Enables you to delete an image from database
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 204    |  |  - |
+| 204    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -1720,9 +1797,9 @@ Enables you to delete an image from database
 
 ### <a name="list"></a>GET
 
+Gets all productions/
 
-
-
+Gets all of the productions on the productions endpoint, ordered alphabetically by their title.
 
 
 
@@ -1747,7 +1824,9 @@ Enables you to delete an image from database
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | Array[<a href="#/definitions/Production">Production</a>]|
+| 200    | Operation successful. | Array[<a href="#/definitions/Production">Production</a>]|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -1756,9 +1835,9 @@ Enables you to delete an image from database
 
 ### <a name="post"></a>POST
 
+Posts a new production.
 
-
-
+Restricted to superuser privileges or above. Posts a new production. Should have an IMDb ID, plot summary, and title at least.
 
 
 
@@ -1818,7 +1897,9 @@ Enables you to delete an image from database
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/Production">Production</a>|
+| 200    | Operation successful. | <a href="#/definitions/Production">Production</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -1829,9 +1910,9 @@ Enables you to delete an image from database
 
 ### <a name="patch"></a>PATCH
 
+Modifies a production.
 
-
-
+Restricted to superuser privileges or above. Patches a production from the productions endpoint. All data will be overwritten - current fields to stay the same must be included as well. The ID should be included in the body.
 
 
 
@@ -1890,7 +1971,9 @@ Enables you to delete an image from database
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| default    | successful operation |  - |
+| 200    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -1904,9 +1987,9 @@ Enables you to delete an image from database
 
 ### <a name="get"></a>GET
 
+Gets a single production.
 
-
-
+Gets a single production from the productions endpoint, referenced by its internal ID.
 
 
 
@@ -1964,7 +2047,9 @@ Enables you to delete an image from database
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/Production">Production</a>|
+| 200    | Operation successful. | <a href="#/definitions/Production">Production</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -1975,9 +2060,9 @@ Enables you to delete an image from database
 
 ### <a name="delete"></a>DELETE
 
+Deletes a production.
 
-
-
+Restricted to superuser privileges or above. Deletes a production from the productions endpoint, referenced by its internal ID.
 
 
 
@@ -2035,7 +2120,9 @@ Enables you to delete an image from database
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 204    |  |  - |
+| 204    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -2053,9 +2140,9 @@ Enables you to delete an image from database
 
 ### <a name="getPoster"></a>GET
 
+Retrieves a poster image for the production.
 
-
-
+Retrieves a poster image relayed its source on the OMDb API. Image is returned as a raw StreamingBodyResponse to be deserialized.
 
 
 
@@ -2113,7 +2200,10 @@ Enables you to delete an image from database
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/StreamingResponseBody">StreamingResponseBody</a>|
+| 200    | Operation successful. | <a href="#/definitions/StreamingResponseBody">StreamingResponseBody</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
+| 404    | Not found. Possible problem in reaching the OMDb API, or no poster for the production may be available. |  - |
 
 
 
@@ -2139,7 +2229,7 @@ Enables you to delete an image from database
 
 Gets all user comments.
 
-
+Gets all user comments, ordered by their time of creation.
 
 
 
@@ -2164,7 +2254,9 @@ Gets all user comments.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | Array[<a href="#/definitions/UserComment">UserComment</a>]|
+| 200    | Operation successful. | Array[<a href="#/definitions/UserComment">UserComment</a>]|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -2173,9 +2265,9 @@ Gets all user comments.
 
 ### <a name="post"></a>POST
 
-Posts a user comment.
+Posts a new user comment.
 
-
+Posts a new user comment. Posting should not be done directly, it should be done on a specific FilmLocation endpoint.
 
 
 
@@ -2235,7 +2327,9 @@ Posts a user comment.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/UserComment">UserComment</a>|
+| 200    | Operation successful. | <a href="#/definitions/UserComment">UserComment</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -2261,9 +2355,9 @@ Posts a user comment.
 
 ### <a name="delete"></a>DELETE
 
-Deletes a user comment.
+Modifies a user comment.
 
-
+Restricted to superuser privileges or above. Patches a user comment from the user comments endpoint on a film location. All data will be overwritten - current fields to stay the same must be included as well. The ID of the user comment should be included in the body. Can be used to approve a comment submission. 
 
 
 
@@ -2321,7 +2415,9 @@ Deletes a user comment.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 204    |  |  - |
+| 204    | Operation successful. |  - |
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint requires superuser privileges or higher. |  - |
 
 
 
@@ -2339,9 +2435,9 @@ Deletes a user comment.
 
 ### <a name="get"></a>GET
 
-Gets a single comment.
+Deletes a user comment.
 
-
+Restricted to superuser privileges or above. Deletes a single user comment on a film location endpoint, referenced by its internal ID.
 
 
 
@@ -2399,7 +2495,9 @@ Gets a single comment.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | <a href="#/definitions/UserComment">UserComment</a>|
+| 200    | Operation successful. | <a href="#/definitions/UserComment">UserComment</a>|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. The user attempting to access this endpoint may be banned from the service. |  - |
 
 
 
@@ -2423,9 +2521,9 @@ Gets a single comment.
 
 ### <a name="list"></a>GET
 
-Gets all users
+Gets all users.
 
-Retrieves all users with their ID in an list.
+Admin access only. Gets all users, ordered alphabetically by the name on their account.
 
 
 
@@ -2450,7 +2548,9 @@ Retrieves all users with their ID in an list.
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | successful operation | Array[<a href="#/definitions/GoogleUser">GoogleUser</a>]|
+| 200    | Operation successful. | Array[<a href="#/definitions/GoogleUser">GoogleUser</a>]|
+| 401    | Failure to authorize. Advised to check authorization token header. |  - |
+| 403    | Forbidden to access. This endpoint is restricted to the administrator only. |  - |
 
 
 
@@ -2459,9 +2559,9 @@ Retrieves all users with their ID in an list.
 
 ### <a name="post"></a>POST
 
-Posts a google user.
+Posts a new user.
 
-Posts a googel user.
+Admin access only. Posts a new user to the users endpoint. Should include a Google ID, full name, and gmail address.
 
 
 
@@ -2532,9 +2632,9 @@ Posts a googel user.
 
 ### <a name="patch"></a>PATCH
 
-Patches a google user
+Modifies a user.
 
-Patches a user. This will overwrite everything. if just changing one field all other current fields must be included.
+Admin access only. Patches a user from the users endpoint. All data will be overwritten - current fields to stay the same must be included as well. Can be used to ban or unban a user.
 
 
 
@@ -2607,9 +2707,9 @@ Patches a user. This will overwrite everything. if just changing one field all o
 
 ### <a name="get"></a>GET
 
-Gets google user
+Gets a single user.
 
-Gets google user id and returns google user.
+Admin access only. Gets a user from the users endpoint, referenced by their internal ID.
 
 
 
@@ -2678,9 +2778,9 @@ Gets google user id and returns google user.
 
 ### <a name="delete"></a>DELETE
 
-Deletes google user
+Deletes a user.
 
-Takes user id as a parameter and deletes google user.
+Admin access only. Deletes a user from the users endpoint, referenced by their internal ID.
 
 
 
@@ -2750,6 +2850,258 @@ Takes user id as a parameter and deletes google user.
 
 
 
+## /users/{userId}/film_locations
+
+
+
+### <a name="getFilmLocations"></a>GET
+
+Gets all locations submitted by a user.
+
+Admin access only. Shows all of the locations submitted by a user in descending order by timestamp. Can be used to monitor activity.
+
+
+
+
+
+
+
+#### Request
+
+
+
+
+
+##### Parameters
+
+<table border="1">
+    <colgroup>
+      <col span="3" width="15%">
+      <col width="25%">
+      <col span="2" width="15%">
+    </colgroup>
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <td><strong>userId</strong></td>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td></td>
+
+    
+            <td>string (uuid)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type:** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | successful operation | Array[<a href="#/definitions/FilmLocation">FilmLocation</a>]|
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name=""></a>
+
+
+
+## /users/{userId}/images
+
+
+
+### <a name="getImages"></a>GET
+
+Gets all images submitted by a user.
+
+Admin access only. Shows all of the locations submitted by a user in descending order by timestamp. Can be used to monitor activity.
+
+
+
+
+
+
+
+#### Request
+
+
+
+
+
+##### Parameters
+
+<table border="1">
+    <colgroup>
+      <col span="3" width="15%">
+      <col width="25%">
+      <col span="2" width="15%">
+    </colgroup>
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <td><strong>userId</strong></td>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td></td>
+
+    
+            <td>string (uuid)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type:** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | successful operation | Array[<a href="#/definitions/Image">Image</a>]|
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name=""></a>
+
+
+
+## /users/{userId}/user_comments
+
+
+
+### <a name="getUserComments"></a>GET
+
+Gets all comments submitted by a user.
+
+Admin access only. Shows all of the comments submitted by a user in descending order by timestamp. Can be used to monitor activity.
+
+
+
+
+
+
+
+#### Request
+
+
+
+
+
+##### Parameters
+
+<table border="1">
+    <colgroup>
+      <col span="3" width="15%">
+      <col width="25%">
+      <col span="2" width="15%">
+    </colgroup>
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <td><strong>userId</strong></td>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td></td>
+
+    
+            <td>string (uuid)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type:** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| 200    | successful operation | Array[<a href="#/definitions/UserComment">UserComment</a>]|
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name=""></a>
+
+
+
 
 # Definitions
 
@@ -2770,36 +3122,6 @@ Takes user id as a parameter and deletes google user.
     </tr>
     
         <tr>
-            <td><strong>userId</strong></td>
-            <td>
-                
-                    
-                    string (uuid)
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
-            <td><strong>user</strong></td>
-            <td>
-                
-                    <a href="#/definitions/GoogleUser">GoogleUser</a>
-                    
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
             <td><strong>id</strong></td>
             <td>
                 
@@ -2808,9 +3130,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              read-only
             </td>
-            <td>-</td>
+            <td>Internal ID for this location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2823,9 +3145,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              required
             </td>
-            <td>-</td>
+            <td>The longitude coordinate of the location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2838,9 +3160,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              required
             </td>
-            <td>-</td>
+            <td>The latitude coordinate of the location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2853,9 +3175,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              required
             </td>
-            <td>-</td>
+            <td>The name of the site.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2870,7 +3192,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>The IMDb ID for this location. Included in city data entries.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2885,7 +3207,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>The transient ID of the production, used to reference during a post.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2898,9 +3220,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              read-only
             </td>
-            <td>-</td>
+            <td>The production (film or television series) associated with this location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2915,7 +3237,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>The address for this location. Included in city data entries.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2930,7 +3252,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>The time of the last shoot in epoch date format. Included in city data entries.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2945,7 +3267,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>General information about the last shoot. Included in city data entries</td>
             <!--<td></td>-->
         </tr>
     
@@ -2958,9 +3280,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              required
             </td>
-            <td>-</td>
+            <td>The approval status of the location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -2975,7 +3297,37 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>Google ID of the user</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>userName</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>The full name of the Google user who submitted this content</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>userPictureUrl</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>The URL of the Google user's profile image.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3021,9 +3373,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              read-only
             </td>
-            <td>-</td>
+            <td>Internal ID for this location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3038,7 +3390,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>Transient Google ID of the user, used to reference the user during a post.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3051,9 +3403,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              read-only
             </td>
-            <td>-</td>
+            <td>The full name on the user's Google Account</td>
             <!--<td></td>-->
         </tr>
     
@@ -3066,9 +3418,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              read-only
             </td>
-            <td>-</td>
+            <td>The email address on the Google account.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3083,7 +3435,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>The banned status of the user</td>
             <!--<td></td>-->
         </tr>
     
@@ -3098,7 +3450,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>The reason for a ban.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3113,7 +3465,22 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>The user's privilege role in the database, primarily for internal records.</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>pictureUrl</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>The URL to the user's profile image.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3159,9 +3526,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              read-only
             </td>
-            <td>-</td>
+            <td>Internal ID for this location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3191,7 +3558,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>An optional description of the image's contents.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3206,37 +3573,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
-            <td><strong>userId</strong></td>
-            <td>
-                
-                    
-                    string (uuid)
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
-            <td><strong>user</strong></td>
-            <td>
-                
-                    <a href="#/definitions/GoogleUser">GoogleUser</a>
-                    
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
+            <td>The URL the image is located at.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3251,7 +3588,37 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>Google ID of the user</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>userName</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>The full name of the Google user who submitted this content</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>userPictureUrl</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>The URL of the Google user's profile image.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3264,9 +3631,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              required
             </td>
-            <td>-</td>
+            <td>The approval status of the location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3312,9 +3679,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              read-only
             </td>
-            <td>-</td>
+            <td>Internal ID for this location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3327,9 +3694,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              required
             </td>
-            <td>-</td>
+            <td>ID of this production associated with its entry in the IMDb.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3342,9 +3709,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              required
             </td>
-            <td>-</td>
+            <td>Title of the production.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3357,9 +3724,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              required
             </td>
-            <td>-</td>
+            <td>Type of "movie" or "series"</td>
             <!--<td></td>-->
         </tr>
     
@@ -3374,7 +3741,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>Release year, can cover a range such as "2008-2010".</td>
             <!--<td></td>-->
         </tr>
     
@@ -3389,7 +3756,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>Plot summary of the production, 300 char max.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3453,9 +3820,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              read-only
             </td>
-            <td>-</td>
+            <td>Internal ID for this location.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3468,9 +3835,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              read-only
             </td>
-            <td>-</td>
+            <td>The Film Location associated with this entity.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3485,37 +3852,7 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
-            <td><strong>userId</strong></td>
-            <td>
-                
-                    
-                    string (uuid)
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
-            <!--<td></td>-->
-        </tr>
-    
-        <tr>
-            <td><strong>user</strong></td>
-            <td>
-                
-                    <a href="#/definitions/GoogleUser">GoogleUser</a>
-                    
-                
-            </td>
-            <td>
-              optional
-            </td>
-            <td>-</td>
+            <td>The text content of this comment. 4096 character max</td>
             <!--<td></td>-->
         </tr>
     
@@ -3530,7 +3867,37 @@ Takes user id as a parameter and deletes google user.
             <td>
               optional
             </td>
-            <td>-</td>
+            <td>Google ID of the user</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>userName</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>The full name of the Google user who submitted this content</td>
+            <!--<td></td>-->
+        </tr>
+    
+        <tr>
+            <td><strong>userPictureUrl</strong></td>
+            <td>
+                
+                    
+                    string
+                
+            </td>
+            <td>
+              optional
+            </td>
+            <td>The URL of the Google user's profile image.</td>
             <!--<td></td>-->
         </tr>
     
@@ -3543,9 +3910,9 @@ Takes user id as a parameter and deletes google user.
                 
             </td>
             <td>
-              optional
+              required
             </td>
-            <td>-</td>
+            <td>The approval status of the location.</td>
             <!--<td></td>-->
         </tr>
     
